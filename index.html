@@ -1720,17 +1720,17 @@
           const key = addCalendarDays(calendarConfig.startDate, index);
           const entries = calendarData[key] || [];
           const parts = shortCalendarDate(key);
-          const optionCount = activityOptionCount(entries);
           const cell = document.createElement('section'); cell.className = 'snapshot-day'; cell.id = 'day-' + key;
           const headingId = 'day-heading-' + key; cell.setAttribute('aria-labelledby', headingId);
           const date = document.createElement('header'); date.className = 'snapshot-date';
-          date.innerHTML = '<span>' + (index === 0 ? 'Today · ' : '') + parts.day + '</span><h3 id="' + headingId + '"><time datetime="' + key + '">' + parts.date + ' ' + parts.month + '</time></h3><small class="day-count" data-original-count="' + optionCount + '">' + optionCount + (optionCount === 1 ? ' option' : ' options') + '</small>';
           const nap = document.createElement('div'); nap.className = 'nap-band'; nap.innerHTML = '<strong><time datetime="' + key + 'T12:00">12:00</time>–<time datetime="' + key + 'T14:00">14:00</time></strong><span>Usual nap window · timing may shift</span>';
           const list = document.createElement('div'); list.className = 'calendar-day-list';
           if (entries.length) appendCalendarEntries(list, entries, 3, false, key, 'week');
           else { const empty = document.createElement('span'); empty.className = 'snapshot-empty'; empty.textContent = 'No researched activities for this day.'; list.appendChild(empty); }
-          cell.appendChild(date); cell.appendChild(nap); cell.appendChild(list);
           cell._allEntries = Array.from(list.querySelectorAll('.snapshot-entry'));
+          const optionCount = cell._allEntries.length;
+          date.innerHTML = '<span>' + (index === 0 ? 'Today · ' : '') + parts.day + '</span><h3 id="' + headingId + '"><time datetime="' + key + '">' + parts.date + ' ' + parts.month + '</time></h3><small class="day-count" data-original-count="' + optionCount + '">' + optionCount + (optionCount === 1 ? ' option' : ' options') + '</small>';
+          cell.appendChild(date); cell.appendChild(nap); cell.appendChild(list);
           container.appendChild(cell);
         }
       }
@@ -1994,8 +1994,11 @@
             if (!empty) { empty = document.createElement('div'); empty.className = 'filter-empty'; empty.textContent = 'No activities match these filters.'; list.appendChild(empty); }
           } else if (empty) empty.remove();
           const count = day.querySelector('.day-count');
-          const displayedCount = active ? visible : Number(count.dataset.originalCount);
-          if (count) count.textContent = displayedCount + (displayedCount === 1 ? ' option' : ' options');
+          const displayedCount = active ? visible : allEntries.length;
+          if (count) {
+            count.dataset.originalCount = String(allEntries.length);
+            count.textContent = displayedCount + (displayedCount === 1 ? ' option' : ' options');
+          }
           totalVisible += visible;
         });
         const activeNames = []; if (filterState.category !== 'all') { const button = document.querySelector('[data-category-filter="' + filterState.category + '"]'); activeNames.push(button.textContent.trim()); } if (filterState.napSafe) activeNames.push('Nap-safe'); if (filterState.free) activeNames.push('Free'); if (filterState.dropIn) activeNames.push('Drop-in');
