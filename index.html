@@ -1507,9 +1507,7 @@
       }
       function entryStatusClass(entry) { return entry.verified ? '' : ' check'; }
       function activityOptionCount(entries) {
-        return entries.filter(function (entry) {
-          return entry && entry.activity !== 'Nap' && !/fallback/i.test(entry.status || '');
-        }).length;
+        return entries.filter(Boolean).length;
       }
 
       function openCalendarDate(key) {
