@@ -846,6 +846,7 @@
     .calendar-overview { margin-bottom: 38px; }
     .week-snapshot { display: grid; grid-template-columns: 1fr; gap: 16px; overflow: visible; border: 0; background: transparent; }
     .snapshot-day { min-height: 0; padding: 0; display: block; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: var(--surface); cursor: default; scroll-margin-top: 124px; }
+    .snapshot-day[aria-current="date"] { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
     .snapshot-day:last-child { border-right: 1px solid var(--line); }
     .snapshot-date { min-height: 64px; margin: 0; padding: 12px 15px; display: grid; grid-template-columns: 1fr auto; align-items: center; border-bottom: 1px solid var(--line); background: var(--surface-soft); }
     .snapshot-date span { grid-row: 1 / 3; font-size: 14px; color: var(--accent-strong); }
@@ -1118,7 +1119,7 @@
     </aside>
 
     <nav class="sticky-days" aria-label="Jump to a day">
-      <button type="button" data-day-target="day-2026-10-08" aria-current="date">Today <span>8</span></button>
+      <button type="button" data-day-target="day-2026-10-08">Thu <span>8</span></button>
       <button type="button" data-day-target="day-2026-10-09">Fri <span>9</span></button>
       <button type="button" data-day-target="day-2026-10-10">Sat <span>10</span></button>
       <button type="button" data-day-target="day-2026-10-11">Sun <span>11</span></button>
@@ -1584,14 +1585,15 @@
         'Treasure Island Adventure Park toddler area':'2026-10-08',
         'The Baby Fayre Hastings':'2026-10-08'
       };
-      function londonTodayKey() {
-        const parts = new Intl.DateTimeFormat('en-CA', {timeZone:'Europe/London', year:'numeric', month:'2-digit', day:'2-digit'}).formatToParts(new Date());
+      function londonTodayKey(instant) {
+        const parts = new Intl.DateTimeFormat('en-GB', {timeZone:'Europe/London', year:'numeric', month:'2-digit', day:'2-digit'}).formatToParts(instant || new Date());
         const values = {}; parts.forEach(function (part) { if (part.type !== 'literal') values[part.type] = part.value; });
         return values.year + '-' + values.month + '-' + values.day;
       }
+      const pageTodayKey = londonTodayKey();
       function isNewTitle(title) {
         const added = newlyAddedOn[title]; if (!added) return false;
-        const days = Math.floor((dateFromKey(londonTodayKey()) - dateFromKey(added)) / 86400000);
+        const days = Math.floor((dateFromKey(pageTodayKey) - dateFromKey(added)) / 86400000);
         return days >= 0 && days < 7;
       }
       const calendarEvents = {
@@ -1720,8 +1722,10 @@
           const key = addCalendarDays(calendarConfig.startDate, index);
           const entries = calendarData[key] || [];
           const parts = shortCalendarDate(key);
+          const isToday = key === pageTodayKey;
           const cell = document.createElement('section'); cell.className = 'snapshot-day'; cell.id = 'day-' + key;
           const headingId = 'day-heading-' + key; cell.setAttribute('aria-labelledby', headingId);
+          if (isToday) cell.setAttribute('aria-current', 'date');
           const date = document.createElement('header'); date.className = 'snapshot-date';
           const nap = document.createElement('div'); nap.className = 'nap-band'; nap.innerHTML = '<strong><time datetime="' + key + 'T12:00">12:00</time>–<time datetime="' + key + 'T14:00">14:00</time></strong><span>Usual nap window · timing may shift</span>';
           const list = document.createElement('div'); list.className = 'calendar-day-list';
@@ -1729,7 +1733,7 @@
           else { const empty = document.createElement('span'); empty.className = 'snapshot-empty'; empty.textContent = 'No researched activities for this day.'; list.appendChild(empty); }
           cell._allEntries = Array.from(list.querySelectorAll('.snapshot-entry'));
           const optionCount = cell._allEntries.length;
-          date.innerHTML = '<span>' + (index === 0 ? 'Today · ' : '') + parts.day + '</span><h3 id="' + headingId + '"><time datetime="' + key + '">' + parts.date + ' ' + parts.month + '</time></h3><small class="day-count" data-original-count="' + optionCount + '">' + optionCount + (optionCount === 1 ? ' option' : ' options') + '</small>';
+          date.innerHTML = '<span>' + (isToday ? 'Today · ' : '') + parts.day + '</span><h3 id="' + headingId + '"><time datetime="' + key + '">' + parts.date + ' ' + parts.month + '</time></h3><small class="day-count" data-original-count="' + optionCount + '">' + optionCount + (optionCount === 1 ? ' option' : ' options') + '</small>';
           cell.appendChild(date); cell.appendChild(nap); cell.appendChild(list);
           container.appendChild(cell);
         }
@@ -1881,6 +1885,20 @@
       document.getElementById('resultCount').textContent = cards.length + ' options in seven categories';
       renderWeekSnapshot();
 
+      document.querySelectorAll('.sticky-days [data-day-target]').forEach(function (button) {
+        const key = button.dataset.dayTarget.replace('day-', '');
+        const parts = shortCalendarDate(key);
+        const isToday = key === pageTodayKey;
+        button.childNodes[0].nodeValue = (isToday ? 'Today' : parts.day) + ' ';
+        if (isToday) {
+          button.setAttribute('aria-current', 'date');
+          button.setAttribute('aria-label', 'Today, ' + fullCalendarDate(key));
+        } else {
+          button.removeAttribute('aria-current');
+          button.removeAttribute('aria-label');
+        }
+      });
+
       // Day jumps are buttons rather than hash links, so in-page navigation never
       // adds a browser-history entry. The selected day updates immediately and
       // then follows the section nearest the sticky controls while scrolling.
@@ -1924,7 +1942,7 @@
             return;
           }
           const marker = stickyOffset() + 4;
-          let activeSection = sections[0];
+          let activeSection = document.getElementById('day-' + pageTodayKey) || sections[0];
           sections.forEach(function (section) {
             if (section.getBoundingClientRect().top <= marker) activeSection = section;
           });
@@ -2013,10 +2031,10 @@
 
       // One-line summary uses Europe/London for both date and the next session.
       function updateTodayGlance() {
-        const today = londonTodayKey(); const entries = calendarData[today] || []; const count = activityOptionCount(entries);
+        const today = pageTodayKey; const entries = calendarData[today] || []; const count = activityOptionCount(entries);
         const nowParts = new Intl.DateTimeFormat('en-GB', {timeZone:'Europe/London', hour:'2-digit', minute:'2-digit', hour12:false}).formatToParts(new Date()); const clock = {}; nowParts.forEach(function (part) { if (part.type !== 'literal') clock[part.type] = Number(part.value); }); const nowMinutes = (clock.hour || 0) * 60 + (clock.minute || 0);
         const upcoming = entries.find(function (entry) { const minutes = startMinutes(entry.time); return minutes < 2000 && minutes >= nowMinutes; });
-        const dayLabel = new Intl.DateTimeFormat('en-GB', {timeZone:'Europe/London', weekday:'long', day:'numeric', month:'long'}).format(new Date());
+        const dayLabel = fullCalendarDate(today);
         let nextText = 'No more sessions today'; if (upcoming) nextText = 'Next: ' + upcoming.activity + ' at ' + upcoming.time.split(/[–-]| to /)[0];
         if (!entries.length) nextText = 'No activities currently listed';
         document.getElementById('todayGlanceText').innerHTML = '<strong>' + dayLabel + '</strong> <span class="glance-divider">·</span> ' + count + (count === 1 ? ' activity' : ' activities') + ' <span class="glance-divider">·</span> ' + nextText;
