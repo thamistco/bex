@@ -298,21 +298,18 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 4px 7px;
-      border-radius: 7px;
-      background: var(--surface-soft);
-      color: var(--text);
-      font-size: 12px;
+      color: var(--category-color);
+      font-size: 11px;
       font-weight: 700;
     }
-    .category-chip::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--chip-color); }
-    .category-chip.sports { --chip-color: var(--cat-sports); }
-    .category-chip.hubs { --chip-color: var(--cat-hubs); }
-    .category-chip.music { --chip-color: var(--cat-music); }
-    .category-chip.play { --chip-color: var(--cat-play); }
-    .category-chip.library { --chip-color: var(--cat-library); }
-    .category-chip.events { --chip-color: var(--cat-events); }
-    .category-chip.cafes { --chip-color: var(--cat-cafes); }
+    .category-chip::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+    .category-chip.sports { --category-color: var(--cat-sports); }
+    .category-chip.hubs { --category-color: var(--cat-hubs); }
+    .category-chip.music { --category-color: var(--cat-music); }
+    .category-chip.play { --category-color: var(--cat-play); }
+    .category-chip.library { --category-color: var(--cat-library); }
+    .category-chip.events { --category-color: var(--cat-events); }
+    .category-chip.cafes { --category-color: var(--cat-cafes); }
     .travel-pill {
       display: inline-flex;
       align-items: center;
@@ -366,10 +363,7 @@
       cursor: pointer;
     }
     .view-btn[aria-selected="true"] { background: var(--text); color: var(--bg); }
-    .verification-key { display: flex; flex-wrap: wrap; gap: 8px; color: var(--muted); font-size: 12px; }
-    .verification-mark { display: inline-flex; align-items: center; gap: 5px; }
-    .verification-mark::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
-    .verification-mark.check::before { background: var(--gold); }
+    .verification-key { display: flex; flex-wrap: wrap; gap: 8px; }
     .overview-panel[hidden] { display: none; }
     .week-snapshot {
       display: grid;
@@ -964,7 +958,7 @@
       .travel-key .legend-group { display: block; }
       .travel-key .legend-group strong { margin-bottom: 5px; }
       .travel-key-items, .category-key { gap: 5px; }
-      .travel-key .travel-pill, .travel-key .category-chip { padding: 3px 6px; font-size: 11px; }
+      .travel-key .travel-pill { padding: 3px 6px; font-size: 11px; }
       .section-head h2 { font-size: 31px; }
       .callout-grid { margin-top: 30px; }
       .panel { padding: 19px; }
@@ -1043,7 +1037,25 @@
       line-height: 1.2;
     }
     .week-filter:hover { border-color: var(--accent); }
+    .week-filter:focus-visible, .filter-toggle:focus-visible, .filter-reset:focus-visible {
+      outline: 3px solid var(--sunny);
+      outline-offset: 2px;
+    }
     .week-filter[aria-pressed="true"] { border-color: var(--text); background: var(--text); color: var(--bg); }
+    .week-filter[data-travel-filter]:not([data-travel-filter="all"])::before {
+      content: "";
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      margin-right: 6px;
+      border-radius: 50%;
+      background: var(--travel-filter-color);
+    }
+    .week-filter[data-travel-filter="walk"] { --travel-filter-color: var(--walk); }
+    .week-filter[data-travel-filter="transit"] { --travel-filter-color: var(--transit); }
+    .week-filter[data-travel-filter="awkward"] { --travel-filter-color: var(--awkward); }
+    .week-filter[data-travel-filter="drive"] { --travel-filter-color: var(--drive); }
+    .week-filter[data-travel-filter][aria-pressed="true"]::before { background: currentColor; }
     .filter-status { margin: 7px 3px 0; color: var(--muted); font-size: 12px; }
     .entry-filtered-out { display: none !important; }
     .filter-empty { padding: 16px 15px; color: var(--muted); font-size: 14px; }
@@ -1234,8 +1246,8 @@
           <p class="calendar-intro">Activities within each day are in start-time order. Prices, travel and booking details are shown together; details that still need a call are marked clearly.</p>
         </div>
         <div class="verification-key" aria-label="Verification status">
-          <span class="verification-mark">Verified for this date</span>
-          <span class="verification-mark check">Call to check</span>
+          <span class="entry-verify verified">Verified for this date</span>
+          <span class="entry-verify check">Call to check</span>
         </div>
       </div>
       <div class="filter-dock" id="filterDock">
@@ -1252,6 +1264,13 @@
             <button class="week-filter" type="button" data-category-filter="libraries-story" aria-pressed="false">Libraries and story</button>
             <button class="week-filter" type="button" data-category-filter="outdoors" aria-pressed="false">Outdoors</button>
             <button class="week-filter" type="button" data-category-filter="special" aria-pressed="false">Special events</button>
+          </div>
+          <div class="filter-group" role="group" aria-label="Travel from the Marina area">
+            <button class="week-filter" type="button" data-travel-filter="all" aria-pressed="true">All travel</button>
+            <button class="week-filter" type="button" data-travel-filter="walk" aria-pressed="false">Walkable</button>
+            <button class="week-filter" type="button" data-travel-filter="transit" aria-pressed="false">Easy public transport</button>
+            <button class="week-filter" type="button" data-travel-filter="awkward" aria-pressed="false">Longer or needs a change</button>
+            <button class="week-filter" type="button" data-travel-filter="drive" aria-pressed="false">Best by car</button>
           </div>
           <div class="filter-group" role="group" aria-label="Useful filters">
             <button class="week-filter" type="button" data-toggle-filter="napSafe" aria-pressed="false">Nap-safe <span class="visually-explained">(ends by 12:00)</span></button>
@@ -1773,16 +1792,18 @@
       function buildSnapshotEntry(entry, key) {
         const meta = activityMetaFor(entry);
         const facets = entryFacets(entry, meta);
+        const travelInfo = travelForEntry(meta, entry);
         const line = document.createElement('article');
         line.className = 'snapshot-entry' + entryStatusClass(entry);
         line.dataset.categories = facets.categories.join(' ');
+        line.dataset.travel = travelInfo[0];
         line.dataset.napSafe = String(facets.napSafe); line.dataset.free = String(facets.free); line.dataset.dropIn = String(facets.dropIn);
         const time = document.createElement('span'); time.className = 'entry-time'; appendSemanticClockText(time, entry.time, key);
         if (!time.querySelector('time')) { const datedLabel = document.createElement('time'); datedLabel.dateTime = key; datedLabel.textContent = entry.time; time.textContent = ''; time.appendChild(datedLabel); }
         const body = document.createElement('div'); body.className = 'entry-body';
         const title = document.createElement('h4'); appendSourceTitle(title, entry.activity, meta && meta.sourceUrl);
         const facts = document.createElement('div'); facts.className = 'entry-facts';
-        const travelInfo = travelForEntry(meta, entry); const travel = document.createElement('span'); travel.className = 'travel-pill ' + travelInfo[0]; travel.textContent = travelInfo[1]; facts.appendChild(travel);
+        const travel = document.createElement('span'); travel.className = 'travel-pill ' + travelInfo[0]; travel.textContent = travelInfo[1]; facts.appendChild(travel);
         const travelLine = document.createElement('span'); travelLine.className = 'entry-travel'; travelLine.textContent = shortTravelLine(meta, entry); facts.appendChild(travelLine);
         const price = document.createElement('span'); price.className = 'entry-price'; price.textContent = entry.price; facts.appendChild(price);
         const verify = document.createElement('span'); verify.className = 'entry-verify ' + (entry.verified ? 'verified' : 'check'); verify.textContent = entry.verified ? 'Verified for this date' : 'Call to check'; facts.appendChild(verify);
@@ -2205,11 +2226,11 @@
       document.querySelectorAll('[data-new-title]').forEach(function (tag) { if (!isNewTitle(tag.dataset.newTitle)) tag.hidden = true; });
 
       // Compact, instant filters for every activity in the seven-day view, including overflow entries.
-      const filterState = {category:'all', napSafe:false, free:false, dropIn:false};
+      const filterState = {category:'all', travel:'all', napSafe:false, free:false, dropIn:false};
       const filterToggle = document.getElementById('filterToggle'); const filterPanel = document.getElementById('filterPanel');
       const filterInitiallyOpen = window.matchMedia('(min-width: 761px)').matches; filterToggle.setAttribute('aria-expanded', String(filterInitiallyOpen)); filterPanel.hidden = !filterInitiallyOpen;
       filterToggle.addEventListener('click', function () { const opening = filterToggle.getAttribute('aria-expanded') !== 'true'; filterToggle.setAttribute('aria-expanded', String(opening)); filterPanel.hidden = !opening; });
-      function filtersActive() { return filterState.category !== 'all' || filterState.napSafe || filterState.free || filterState.dropIn; }
+      function filtersActive() { return filterState.category !== 'all' || filterState.travel !== 'all' || filterState.napSafe || filterState.free || filterState.dropIn; }
       function applyWeekFilters() {
         const active = filtersActive(); let totalVisible = 0;
         document.querySelectorAll('.snapshot-day').forEach(function (day) {
@@ -2217,6 +2238,7 @@
           const matchingEntries = allEntries.filter(function (entry) {
             const categories = (entry.dataset.categories || '').split(' ');
             return (filterState.category === 'all' || categories.indexOf(filterState.category) !== -1) &&
+              (filterState.travel === 'all' || entry.dataset.travel === filterState.travel) &&
               (!filterState.napSafe || entry.dataset.napSafe === 'true') &&
               (!filterState.free || entry.dataset.free === 'true') &&
               (!filterState.dropIn || entry.dataset.dropIn === 'true');
@@ -2252,14 +2274,18 @@
           }
           totalVisible += visible;
         });
-        const activeNames = []; if (filterState.category !== 'all') { const button = document.querySelector('[data-category-filter="' + filterState.category + '"]'); activeNames.push(button.textContent.trim()); } if (filterState.napSafe) activeNames.push('Nap-safe'); if (filterState.free) activeNames.push('Free'); if (filterState.dropIn) activeNames.push('Drop-in');
+        const activeNames = [];
+        if (filterState.category !== 'all') { const button = document.querySelector('[data-category-filter="' + filterState.category + '"]'); activeNames.push(button.textContent.trim()); }
+        if (filterState.travel !== 'all') { const button = document.querySelector('[data-travel-filter="' + filterState.travel + '"]'); activeNames.push(button.textContent.trim()); }
+        if (filterState.napSafe) activeNames.push('Nap-safe'); if (filterState.free) activeNames.push('Free'); if (filterState.dropIn) activeNames.push('Drop-in');
         document.getElementById('activeFilterSummary').textContent = activeNames.length ? '· ' + activeNames.join(', ') : 'All activities';
         document.getElementById('filterStatus').textContent = active ? 'Showing ' + totalVisible + (totalVisible === 1 ? ' matching activity.' : ' matching activities.') : 'Showing all activities.';
         document.getElementById('filterReset').disabled = !active;
       }
       document.querySelectorAll('[data-category-filter]').forEach(function (button) { button.addEventListener('click', function () { filterState.category = button.dataset.categoryFilter; document.querySelectorAll('[data-category-filter]').forEach(function (item) { item.setAttribute('aria-pressed', String(item === button)); }); applyWeekFilters(); }); });
+      document.querySelectorAll('[data-travel-filter]').forEach(function (button) { button.addEventListener('click', function () { filterState.travel = button.dataset.travelFilter; document.querySelectorAll('[data-travel-filter]').forEach(function (item) { item.setAttribute('aria-pressed', String(item === button)); }); applyWeekFilters(); }); });
       document.querySelectorAll('[data-toggle-filter]').forEach(function (button) { button.addEventListener('click', function () { const key = button.dataset.toggleFilter; filterState[key] = !filterState[key]; button.setAttribute('aria-pressed', String(filterState[key])); applyWeekFilters(); }); });
-      document.getElementById('filterReset').addEventListener('click', function () { filterState.category = 'all'; filterState.napSafe = false; filterState.free = false; filterState.dropIn = false; document.querySelectorAll('[data-category-filter]').forEach(function (button) { button.setAttribute('aria-pressed', String(button.dataset.categoryFilter === 'all')); }); document.querySelectorAll('[data-toggle-filter]').forEach(function (button) { button.setAttribute('aria-pressed', 'false'); }); applyWeekFilters(); });
+      document.getElementById('filterReset').addEventListener('click', function () { filterState.category = 'all'; filterState.travel = 'all'; filterState.napSafe = false; filterState.free = false; filterState.dropIn = false; document.querySelectorAll('[data-category-filter]').forEach(function (button) { button.setAttribute('aria-pressed', String(button.dataset.categoryFilter === 'all')); }); document.querySelectorAll('[data-travel-filter]').forEach(function (button) { button.setAttribute('aria-pressed', String(button.dataset.travelFilter === 'all')); }); document.querySelectorAll('[data-toggle-filter]').forEach(function (button) { button.setAttribute('aria-pressed', 'false'); }); applyWeekFilters(); });
       applyWeekFilters();
 
       // One-line summary uses Europe/London for both date and the next session.
