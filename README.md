@@ -11,7 +11,7 @@ anyone with the address can open it, and this repository is public.
 | --- | --- |
 | `index.html` | The whole page: styles, script and the activity data. |
 | `manifest.json` | What Chrome reads to install the page as an app. |
-| `service-worker.js` | Opens the installed app offline with the last copy; online, every launch fetches the latest page. |
+| `service-worker.js` | Saves the page on the first visit. Online, every launch fetches the latest page; with no signal, a weak one (no answer in 4 seconds) or a server error, it opens the last saved copy. |
 | `icon-192.png`, `icon-512.png`, `icon-maskable-512.png` | App icons. |
 | `images/` | Photos (16:9 WebP, at most 800 px wide) and the 156 px logo. |
 | `logo.webp` | The full-size logo artwork. The page does not load it. |
