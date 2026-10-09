@@ -844,6 +844,23 @@
     .filter-status { margin: 7px 3px 0; color: var(--muted); font-size: 12px; }
     .entry-filtered-out { display: none !important; }
     .filter-empty { padding: 16px 15px; color: var(--muted); font-size: 14px; }
+    .filter-done { display: none; }
+    @media (max-width: 760px) {
+      /* On a phone the open panel covers much of the screen; close it from the bottom. */
+      .filter-done {
+        display: block;
+        width: 100%;
+        min-height: 44px;
+        margin-top: 8px;
+        border: 1px solid var(--accent);
+        border-radius: 999px;
+        background: var(--accent);
+        color: var(--on-accent);
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .filter-done:focus-visible { outline: 3px solid var(--sunny); outline-offset: 2px; }
+    }
 
     .snapshot-date h3 { margin: 0; font-family: "Newsreader", serif; font-size: 25px; line-height: 1; }
     .entry-body h4 { margin: 0 0 7px; font-size: 17px; line-height: 1.25; }
@@ -1060,6 +1077,7 @@
             <button class="week-filter" type="button" data-toggle-filter="dropIn" aria-pressed="false">Drop-in, no booking needed</button>
           </div>
           <p class="filter-status" id="filterStatus" aria-live="polite">Showing all activities.</p>
+          <button class="filter-done" id="filterDone" type="button">Done</button>
         </div>
       </div>
       <div class="week-snapshot" id="weekSnapshot"></div>
@@ -1977,6 +1995,9 @@
       const filterToggle = document.getElementById('filterToggle'); const filterPanel = document.getElementById('filterPanel');
       const filterInitiallyOpen = window.matchMedia('(min-width: 761px)').matches; filterToggle.setAttribute('aria-expanded', String(filterInitiallyOpen)); filterPanel.hidden = !filterInitiallyOpen;
       filterToggle.addEventListener('click', function () { const opening = filterToggle.getAttribute('aria-expanded') !== 'true'; filterToggle.setAttribute('aria-expanded', String(opening)); filterPanel.hidden = !opening; });
+      document.getElementById('filterDone').addEventListener('click', function () {
+        filterToggle.setAttribute('aria-expanded', 'false'); filterPanel.hidden = true; filterToggle.focus();
+      });
       function filtersActive() { return filterState.category !== 'all' || filterState.travel !== 'all' || filterState.napSafe || filterState.free || filterState.dropIn; }
       function applyWeekFilters() {
         const active = filtersActive(); let totalVisible = 0;
