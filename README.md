@@ -23,12 +23,21 @@ anyone with the address can open it, and this repository is public.
    URL. Chrome resolves the manifest's addresses against the manifest's own
    address, so a `data:` manifest loses its start page and every icon, and
    Chrome will not install the app.
-2. Keep `start_url` and `scope` in `manifest.json` as `"./"`. They are resolved
-   against `manifest.json`, so the app follows the repository if it is renamed.
-   Absolute paths broke on each rename (`/F-A-Bex/`, `/f-a-bex/`, `/bex/`).
-3. Keep the service worker registration in `index.html`, next to the install
+2. **Do not rename the repository again.** Every installed copy keeps the
+   address it was installed from, and GitHub does not redirect a renamed
+   project's Pages address, so a rename turns the app into a 404 on every phone
+   that has it. That is what happened on 9 October 2026, when the repository
+   became `bex`. If the name must change, use a custom domain first.
+3. Keep `start_url` and `scope` in `manifest.json` as `"./"`. They are resolved
+   against `manifest.json`, so the manifest is right wherever the site is served
+   and a fresh install works. They cannot rescue copies already installed.
+4. Keep the manifest's `id` as `"family-activities-bexhill"`. Chrome uses it to
+   recognise the installed app; a new id makes the next install a separate app.
+   Never use `"./"` or `"/"`: an id resolves against the site's origin, so those
+   mean `https://thamistco.github.io/`, which every thamistco Pages site shares.
+5. Keep the service worker registration in `index.html`, next to the install
    code.
-4. Photos go in `images/` as files, not base64 inside the page. Inline, every
+6. Photos go in `images/` as files, not base64 inside the page. Inline, every
    photo downloaded on every launch.
 
 ## If the installed app shows a 404

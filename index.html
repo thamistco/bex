@@ -8,8 +8,10 @@
   <!-- Keep the manifest a real file beside this page. Chrome resolves the
        manifest's start_url, scope and icons against the manifest's own address,
        so a data: URL manifest loses all of them and Chrome will not install the
-       app. Paths inside manifest.json stay relative ("./") so renaming the
-       repository cannot point the installed app at a page that no longer exists. -->
+       app. Paths inside manifest.json stay relative ("./"), so the manifest is
+       right wherever the site is served. That does not make renaming the
+       repository safe: every installed copy keeps the address it was installed
+       from, and a rename turns that address into a 404 on every phone. -->
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0e6e8c">
   <link rel="apple-touch-icon" href="icon-192.png">
