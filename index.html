@@ -983,7 +983,7 @@
       <img class="install-prompt-icon" src="images/logo-156.webp" alt="" width="52" height="52">
       <div>
         <h2 id="installPromptTitle">Add to your phone</h2>
-        <p id="installPromptText">Open Family Activities from your home screen and always see the latest website.</p>
+        <p id="installPromptText">Open Family Activities from your home screen. It opens the latest version, or the last one you saw when there is little or no signal.</p>
       </div>
       <div class="install-prompt-actions">
         <button type="button" id="installPromptClose">Not now</button>
@@ -1153,8 +1153,8 @@
         try { localStorage.setItem('fa-theme', activeTheme); } catch (e) {}
       });
 
-      // Lets the installed app open offline with the last copy it saw; while
-      // online every launch still fetches the latest page (see the worker).
+      // Lets the installed app open with the last copy it saw when there is
+      // little or no signal; otherwise every launch fetches the latest page.
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function () {
           navigator.serviceWorker.register('service-worker.js').catch(function () {});
@@ -1180,7 +1180,7 @@
         } else if (!deferredInstallPrompt) {
           installPromptText.textContent = 'On Android, use Install app in the browser menu. On iPhone, tap Share, then Add to Home Screen.';
         } else {
-          installPromptText.textContent = 'Install Family Activities on your home screen. It will show the latest website whenever it opens.';
+          installPromptText.textContent = 'Install Family Activities on your home screen. It opens the latest version, or the last one you saw when there is little or no signal.';
         }
       }
 
