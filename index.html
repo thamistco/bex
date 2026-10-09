@@ -414,10 +414,12 @@
     }
     .card-top {
       display: flex;
-      gap: 12px;
+      flex-wrap: wrap;
+      gap: 8px 12px;
       align-items: flex-start;
       justify-content: space-between;
     }
+    .card-top > :first-child { flex: 1 1 14em; min-width: 0; }
     .category {
       display: inline-flex;
       align-items: center;
@@ -435,13 +437,13 @@
       background: currentColor;
       flex: 0 0 auto;
     }
-    .card[data-category~="sports"] { --category-color: var(--cat-sports); }
-    .card[data-category~="hubs"] { --category-color: var(--cat-hubs); }
-    .card[data-category~="music"] { --category-color: var(--cat-music); }
-    .card[data-category~="play"] { --category-color: var(--cat-play); }
-    .card[data-category~="library"] { --category-color: var(--cat-library); }
-    .card[data-category~="events"] { --category-color: var(--cat-events); }
-    .card[data-category~="cafes"] { --category-color: var(--cat-cafes); }
+    .card[data-category="sports"] { --category-color: var(--cat-sports); }
+    .card[data-category="hubs"] { --category-color: var(--cat-hubs); }
+    .card[data-category="music"] { --category-color: var(--cat-music); }
+    .card[data-category="play"] { --category-color: var(--cat-play); }
+    .card[data-category="library"] { --category-color: var(--cat-library); }
+    .card[data-category="events"] { --category-color: var(--cat-events); }
+    .card[data-category="cafes"] { --category-color: var(--cat-cafes); }
     .card-photo {
       width: 100%;
       aspect-ratio: 16 / 9;
@@ -457,8 +459,7 @@
       border-radius: 8px;
       font-size: 12px;
       font-weight: 700;
-      text-align: right;
-      max-width: 140px;
+      max-width: 100%;
     }
     .meta { display: grid; gap: 8px; }
     .meta-row {
@@ -479,7 +480,6 @@
       color: var(--muted);
     }
     .note.warn { background: var(--gold-soft); color: var(--text); }
-    .photo-note { font-size: 14px; color: var(--muted); margin: -4px 0 0; }
     .actions {
       display: flex;
       flex-wrap: nowrap;
@@ -557,7 +557,7 @@
     .ahead-item strong { display: block; }
     .ahead-item strong .travel-pill { margin-left: 6px; vertical-align: middle; }
     .ahead-item span { font-size: 16px; opacity: .9; }
-    .ahead-item a { display: inline-flex; align-items: center; min-height: 44px; }
+    .ahead-item a { padding-block: 10px; }
     .ahead-item .travel-pill { opacity: 1; }
     .fallbacks .travel-pill { margin-right: 5px; }
     .fallbacks { margin: 0; padding-left: 18px; }
@@ -620,7 +620,6 @@
 
     @media (max-width: 390px) {
       .meta-row { grid-template-columns: 64px 1fr; }
-      .price { max-width: 110px; }
     }
 
     /* Mobile-first rolling week */
@@ -713,6 +712,7 @@
     .calendar-extra[hidden] { display: none; }
     button.snapshot-more { min-height: 48px; margin: 0; padding: 8px 15px; border-top: 1px solid var(--line); color: var(--accent-strong); font-size: 16px; }
     .snapshot-empty { margin: 0; padding: 18px 15px; font-size: 14px; }
+    .stale-note { border: 1px solid var(--line); border-radius: 16px; background: var(--surface); font-size: 16px; }
     .category-sections { display: grid; gap: 12px; }
     .category-section { border: 1px solid var(--line); border-radius: 14px; background: var(--surface); overflow: hidden; }
     .category-section .activity-grid { padding: 0 14px 14px; grid-template-columns: 1fr; }
@@ -792,6 +792,8 @@
       font-weight: 700;
     }
     .filter-toggle { flex: 1; padding: 8px 10px; text-align: left; }
+    #activeFilterSummary { color: var(--muted); font-weight: 600; }
+    #activeFilterSummary::before { content: " · "; content: " · " / ""; }
     .filter-toggle::after { content: "+"; content: "+" / ""; float: right; color: var(--accent-strong); font-size: 19px; }
     .filter-toggle[aria-expanded="true"]::after { content: "−"; content: "−" / ""; }
     .filter-reset { padding: 8px 12px; color: var(--accent-strong); }
@@ -839,19 +841,19 @@
     .snapshot-date h3 { margin: 0; font-family: "Newsreader", serif; font-size: 25px; line-height: 1; }
     .entry-body h4 { margin: 0 0 7px; font-size: 17px; line-height: 1.25; }
     .source-title-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      min-height: 44px;
+      padding-block: 8px;
       color: inherit;
       text-decoration-line: underline;
       text-decoration-thickness: 1px;
       text-underline-offset: 3px;
       text-decoration-color: color-mix(in srgb, var(--accent) 55%, transparent);
     }
-    .source-title-link::after {
+    .source-title-link .title-tail { white-space: nowrap; }
+    .source-title-link .title-tail::after {
       content: "↗";
-      flex: 0 0 auto;
+      content: "↗" / "";
+      display: inline-block;
+      margin-left: .3em;
       color: var(--accent-strong);
       font-family: "DM Sans", sans-serif;
       font-size: .78em;
@@ -905,11 +907,11 @@
     .card h4 { margin: 0; font-size: 19px; line-height: 1.25; }
     .title-tags { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; margin-top: 4px; }
 
-    .later-lines .later-item { min-height: 70px; padding: 10px 2px; display: grid; grid-template-columns: 100px 1fr auto; gap: 2px 12px; align-items: center; border-bottom: 1px solid var(--line); }
+    .later-lines .later-item { min-height: 70px; padding: 10px 2px; display: grid; grid-template-columns: 100px minmax(0, 1fr) auto; gap: 2px 12px; align-items: center; border-bottom: 1px solid var(--line); }
     .later-lines .later-item > time { grid-row: 1 / 3; color: var(--accent-strong); font-size: 13px; font-weight: 700; }
     .later-lines .later-item a { min-height: 44px; padding: 0; display: inline-flex; align-items: center; border: 0; }
     .later-main-link { grid-column: 2; grid-row: 1; align-self: end; font-size: 15px; font-weight: 700; text-decoration: none; }
-    .later-copy { grid-column: 2; grid-row: 2; align-self: start; color: var(--muted); font-size: 14px; }
+    .later-copy { grid-column: 2; grid-row: 2; align-self: start; color: var(--muted); font-size: 14px; overflow-wrap: anywhere; }
     .later-item .calendar-link { grid-column: 3; grid-row: 1 / 3; white-space: nowrap; }
     .later-main-link:hover, .calendar-link:hover { text-decoration: underline; }
 
@@ -933,11 +935,10 @@
 
     @media (max-width: 460px) {
       .today-glance { align-items: flex-start; flex-direction: column; gap: 4px; }
-      .today-glance .glance-divider { display: none; }
       .filter-dock { top: 62px; }
       .filter-panel { max-height: min(56vh, 390px); overflow-y: auto; }
       .week-filter { flex: 1 1 calc(50% - 7px); }
-      .later-lines .later-item { grid-template-columns: 1fr auto; gap: 3px 10px; }
+      .later-lines .later-item { grid-template-columns: minmax(0, 1fr) auto; gap: 3px 10px; }
       .later-lines .later-item > time { grid-row: auto; grid-column: 1 / -1; }
       .later-main-link, .later-copy { grid-column: 1; }
       .later-item .calendar-link { grid-column: 2; grid-row: 2 / 4; }
@@ -1179,15 +1180,23 @@
         }
       }
 
+      const installDismissKey = 'fa-install-dismissed';
+      function dismissedRecently() {
+        try { return Date.now() - Number(localStorage.getItem(installDismissKey) || 0) < 14 * 86400000; } catch (e) { return false; }
+      }
+
       function showInstallPrompt() {
         if (standalone) return;
         updateInstallHelp();
         installPrompt.hidden = false;
       }
+      function offerInstallPrompt() {
+        if (!dismissedRecently()) showInstallPrompt();
+      }
 
       if (!standalone) {
         installApp.hidden = false;
-        window.setTimeout(showInstallPrompt, 450);
+        if (isiOS) window.setTimeout(offerInstallPrompt, 450);
       }
 
       window.addEventListener('beforeinstallprompt', function (event) {
@@ -1195,11 +1204,14 @@
         if (standalone) return;
         deferredInstallPrompt = event;
         installApp.hidden = false;
-        showInstallPrompt();
+        offerInstallPrompt();
       });
 
       installApp.addEventListener('click', showInstallPrompt);
-      installPromptClose.addEventListener('click', function () { installPrompt.hidden = true; });
+      installPromptClose.addEventListener('click', function () {
+        installPrompt.hidden = true;
+        try { localStorage.setItem(installDismissKey, String(Date.now())); } catch (e) {}
+      });
       installPromptAction.addEventListener('click', function () {
         if (!deferredInstallPrompt) {
           updateInstallHelp();
@@ -1508,7 +1520,11 @@
         link.href = sourceUrl;
         link.target = '_blank';
         link.rel = 'noopener';
-        link.textContent = titleText;
+        // The last word and the arrow wrap together, so the arrow never sits on a line of its own.
+        const words = String(titleText).split(' ');
+        const tail = document.createElement('span'); tail.className = 'title-tail'; tail.textContent = words.pop();
+        if (words.length) link.appendChild(document.createTextNode(words.join(' ') + ' '));
+        link.appendChild(tail);
         link.setAttribute('aria-label', titleText + ', opens provider website');
         heading.appendChild(link);
       }
@@ -1528,7 +1544,7 @@
         const title = document.createElement('h4'); appendSourceTitle(title, entry.activity, meta && meta.sourceUrl);
         const facts = document.createElement('div'); facts.className = 'entry-facts';
         const travel = document.createElement('span'); travel.className = 'travel-pill ' + travelInfo[0]; travel.textContent = travelInfo[1]; facts.appendChild(travel);
-        const travelLine = document.createElement('span'); travelLine.className = 'entry-travel'; travelLine.textContent = shortTravelLine(meta, entry); facts.appendChild(travelLine);
+        const travelText = shortTravelLine(meta, entry); if (travelText !== travelInfo[1]) { const travelLine = document.createElement('span'); travelLine.className = 'entry-travel'; travelLine.textContent = travelText; facts.appendChild(travelLine); }
         const price = document.createElement('span'); price.className = 'entry-price'; price.textContent = entry.price; facts.appendChild(price);
         const verify = document.createElement('span'); verify.className = 'entry-verify ' + (entry.verified ? 'verified' : 'check'); verify.textContent = entry.verified ? 'Verified for this date' : 'Call to check'; facts.appendChild(verify);
         if (isNewTitle(entry.activity)) { const fresh = document.createElement('span'); fresh.className = 'new-tag'; fresh.textContent = 'New'; fresh.title = 'Added within the last 7 days'; facts.appendChild(fresh); }
@@ -1596,6 +1612,11 @@
       function renderWeekSnapshot() {
         const container = document.getElementById('weekSnapshot');
         container.innerHTML = '';
+        if (!visibleWindowDates.length) {
+          const stale = document.createElement('p'); stale.className = 'snapshot-empty stale-note';
+          stale.textContent = 'No activities are researched for today onwards yet. The latest research ends on ' + fullCalendarDate(embeddedWeekDates[embeddedWeekDates.length - 1]) + '.';
+          container.appendChild(stale);
+        }
         visibleWindowDates.forEach(function (key) {
           const entries = calendarData[key] || [];
           const parts = shortCalendarDate(key);
@@ -1652,55 +1673,55 @@
       }
 
       const activities = [
-        {cat:'music', label:'MUSIC &amp; MOVEMENT · BOOK', title:'Tots Play Social Tots', price:'£9–£59.50', when:'Fri 9, Mon 12, Tue 13 and Fri 16 Oct', where:"Totsy’s Treehouse, Victoria Road, Bexhill TN39 3PD", travel:['walk','Walkable','About 25 to 30 minutes on foot from the seafront, or use a local bus.'], note:'For ages 8 months to 2 years. Fri/Tue 09:45 to 10:30; Mon 11:00 to 11:45. Booking required; no drop-ins. Source: Happity live venue timetable, checked 9 Oct.', verified:true, url:'https://www.totsplay.co.uk/bexhill', action:'Book', photoNote:'No real activity/venue photo found'},
-        {cat:'music sports', label:'MUSIC &amp; MOVEMENT · DANCE', title:'babyballet Tinies', price:'£6.50–£7.25', when:'Sat 10, 09:00 to 09:40 or 09:40 to 10:15 · Fri 9 and 16, 10:05 to 10:40 · Tue 13, 09:15 to 09:50 or 10:55 to 11:30', where:'The Hastings Centre, The Ridge, Hastings TN34 2SA', travel:['transit','Coast bus + Ridge','Stagecoach 98/99 from Bexhill to Hastings in about 25 minutes, then bus or taxi up The Ridge.'], note:'For ages 18 months to 3 years. Saturday is £6.50 per class or a £21 three-week trial for new starters; booking is required. Existing Friday and Tuesday prices differ by source, so confirm those when booking. Call 07891 952104.', verified:true, url:'https://babyballet.co.uk/babyballet-school/hastings-bexhill-battle/', action:'Book', photoNote:'No real activity/venue photo found'},
-        {cat:'play', label:'DROP-IN PLAY · CHECK PRICE', title:'Clambers Playcentre open play', price:'Around £8 child · check on arrival', when:'Sat 10 to Thu 15 Oct · open play, no fixed session', where:'White Rock Gardens, Hastings TN34 1LD', travel:['transit','Coast bus','Stagecoach 98/99 from Bexhill to Hastings in about 25 minutes, then a 10-minute walk.'], note:'Around £8 for ages 18 months to 12 years, £5 under 18 months and £2 adults. Check prices on arrival. No booking; turn up.', verified:true, url:'http://www.clambers.co.uk/', action:'Details', photoNote:'No real activity/venue photo found'},
-        {cat:'sports play', label:'SPORTS · GYMNASTICS', title:'1066 Gymnastics Teeny Turtles', price:'Around £7 · indicative', when:'Sat 10, 08:45 · Wed 14 and Thu 15, 10:00', where:'Unit 3A Brett Drive, Sidley, Bexhill-on-Sea TN40 2JP', travel:['transit','Local Bexhill','Short local bus or taxi journey from central Bexhill.'], note:'Drop-in class. Around £7, £3.50 for non-walkers and carers free; prices are indicative. Book online.', verified:true, url:'https://bookwhen.com/1066gymnastics', action:'Book', photoNote:'No real activity/venue photo found'},
-        {cat:'play', label:'SOFT PLAY · TURN UP', title:'Fort Fun soft play', price:'£6.75 + £2 adult', when:'Sat 10 and Sun 11 Oct, 10:00 to 18:00', where:'Royal Parade, Eastbourne BN22 7LQ', travel:['transit','Coast bus','Stagecoach 98/99 from Bexhill to Eastbourne in about 40 minutes; seafront location.'], note:'Price shown is for ages 12 to 24 months, plus £2 per adult. No booking; just turn up.', verified:true, url:'https://www.fort-fun.co.uk/softplay.html', action:'Details', photoNote:'No real activity/venue photo found'},
-        {cat:'play', label:'SOFT PLAY · CLEANLINESS WARNING', title:'Leo’s Play Den', price:'£4 child + £1.50 adult', when:'Sat 10 and Mon 12 to Thu 15, 10:00 to 18:00 · Sun 11, 10:00 to 17:00', where:'1–3 Pevensey Road, Eastbourne BN21 3HJ', travel:['transit','Coast bus','Stagecoach 98/99 from Bexhill to Eastbourne in about 40 minutes.'], note:'No booking. TripAdvisor rating was 1.1/5 with cleanliness complaints; consider checking recent reviews before going.', verified:true, url:'http://leosplayden.com/', action:'Details', photoNote:'No real activity/venue photo found'},
-        {cat:'sports events', label:'SWIMMING · FREE DISCOVERY DAY', title:'Freedom Leisure Discovery Day', price:'Free trial swim', when:'Sat 10 Oct · morning sessions', where:'Hailsham Leisure Centre, Vicarage Lane, Hailsham BN27 2AX', travel:['awkward','Bus to Hailsham','Stagecoach 98 from Bexhill; allow about 35 to 40 minutes.'], note:'Includes an 18 to 36 months slot, suitable for a 22-month-old. Booking is required and places are limited.', verified:true, url:'https://www.freedom-leisure.co.uk/centres/hailsham-leisure-centre/latest-news/discovery-day/', action:'Book', photoNote:'No real activity/venue photo found'},
-        {cat:'sports', label:'SWIMMING · CHECK PRICE', title:'Water Babies swimming · Hailsham', price:'Around £23.50 · check price', when:'Sat 10 and Sun 11 Oct, 08:30 to 11:30', where:'London Road, Hailsham BN27 3DD', travel:['awkward','Bus to Hailsham','Stagecoach 98 from Bexhill to Hailsham.'], note:'Group session for ages 0 to 6 years. Booking is required; call 01424 892568. Check the price when booking.', verified:true, url:'tel:01424892568', action:'Call', photoNote:'No real activity/venue photo found'},
-        {cat:'sports', label:'SWIMMING · WARM-WATER POOL', title:'Blue Lagoon open swims', price:'Child free · adult £7.95–£13.95', when:'Sat 10 to Thu 15 Oct · bookable 30-minute sessions', where:'Blue Lagoon Warm Water Centre, 14 Brassey Parade, Hampden Park, Eastbourne BN22 9NG', travel:['transit','Bus stop outside','Use the Eastbourne route and local connection; the bus stop is outside the door.'], note:'Children aged 0 to 9 swim free. The pools are heated to 34°C. Booking is required via eastbourne.bluelagooncentres.com/findsession.', verified:true, photoNote:'No real activity/venue photo found'},
-        {cat:'sports', label:'SWIMMING · DRIVE-ONLY WEEKEND OPTION', title:'Puddle Ducks swimming', price:'£18.50', when:'Sun 11 Oct, 09:00 to 11:30', where:'Sir Henry Fermor Primary School, Crowborough Hill, Crowborough TN6 2SD', travel:['drive','Drive only','Weekend option: allow about 45 to 60 minutes by car via the A267 and A26.'], note:'Kickers class for ages 15 to 30 months fits a 22-month-old. Booking required; call 01892 617246.', verified:true, url:'tel:01892617246', action:'Call', photoNote:'No real activity/venue photo found'},
-        {cat:'library', label:'LIBRARY · RHYMETIME', title:'Hampden Park Library Rhymetime', price:'Free', when:'Mon 12 Oct, 10:30 to 11:00', where:'Hampden Park Library, Brodrick Close, Hampden Park, Eastbourne BN22 9NQ', travel:['awkward','Bus + local connection','Stagecoach 98/99 to Eastbourne, then a local bus to Hampden Park.'], note:'No booking. Term-time only. Source: East Sussex Libraries.', verified:true, photoNote:'No real activity/venue photo found'},
-        {cat:'play', label:'TODDLER GROUP · TERM-TIME', title:'Polegate Pre-School Toddler group', price:'£1.50 per family', when:'Mon 12 Oct, 09:15 to 11:00', where:'Polegate Community Centre, 54 Windsor Way, Polegate BN26 6QF', travel:['transit','Direct coast bus','Stagecoach 98/99 from Bexhill runs through Polegate.'], note:'Term-time only. Booking requirement is not stated; contact contact@polegatepreschool.co.uk before a first visit.', verified:true, url:'mailto:contact@polegatepreschool.co.uk', action:'Email', photoNote:'No real activity/venue photo found'},
-        {cat:'music', label:'MUSIC &amp; MOVEMENT · BOOK', title:'Hartbeeps Happy House · Polegate', price:'£8–£8.60', when:'Mon 12 Oct, 10:00 to 10:45', where:'Polegate Community Association, 54 Windsor Way, Polegate BN26 6QF', travel:['transit','Direct coast bus','Stagecoach 98/99 from Bexhill runs through Polegate.'], note:'For ages 16 months to 4 years 6 months. Book via Happity; term-time only.', verified:true, photoNote:'No real activity/venue photo found'},
-        {cat:'play', label:'ROLE PLAY · CALL TO CHECK', title:'KiddiCity Mingle Mondays', price:'£8.95 · Monday discount £5', when:'Mon 12 Oct, 11:00 and 12:30 · call to check class times', where:'Unit 44, Langney Shopping Centre, 64 Kingfisher Drive, Eastbourne BN23 7RT', travel:['transit','Coast bus','Stagecoach 98/99 from Bexhill to Eastbourne in about 40 minutes.'], note:'£8.95 for one adult and child; Super Discount is £5 on Mondays. Booking requirement is not stated. Call 07947 080902 to check class times.', verified:false, url:'tel:07947080902', action:'Call', photoNote:'No real activity/venue photo found'},
-        {cat:'play', label:'SOFT PLAY · CALL TO CHECK', title:'Sovey Tumblers soft play', price:'Call to check price', when:'Mon 12 Oct, 09:00 to 12:00', where:'The Sovereign Centre, Royal Parade, Eastbourne BN22 7LQ', travel:['transit','Coast bus','Stagecoach 98/99 from Bexhill to Eastbourne in about 40 minutes.'], note:'Giant bouncy castle and soft play. Booking requirement is not stated. Call 01323 738822 to check the price.', verified:false, url:'tel:01323738822', action:'Call', photoNote:'No real activity/venue photo found'},
-        {cat:'play', label:'SOFT PLAY · CALL TO CHECK', title:'Treasure Island indoor soft play', price:'Call to check hours/prices', when:'Mon 12 to Wed 14 Oct', where:'Eastbourne seafront', travel:['transit','Coast bus','Stagecoach 98/99 from Bexhill to Eastbourne in about 40 minutes.'], note:'Fort Fun’s website directs visitors here on days Fort Fun is closed. Booking requirement is not stated. Call to check hours and prices before going.', verified:false, url:'https://www.treasure-island.co.uk/', action:'Details', photoNote:'No real activity/venue photo found'},
-        {cat:'library', label:'LIBRARY · RHYMETIME', title:'Eastbourne Library Rhymetime', price:'Free', when:'Tue 13 Oct, 10:30 to 11:00', where:'Eastbourne Library, Grove Road, Eastbourne BN21 4TL', travel:['transit','Coast bus','Stagecoach 98/99 from Bexhill to Eastbourne town centre.'], note:'No booking. Term-time only. Source: East Sussex Libraries.', verified:true, photoNote:'No real activity/venue photo found'},
-        {cat:'events play', label:'ARTS · FREE DROP-IN', title:'Wriggle Room at Towner Eastbourne', price:'Free', when:'Tue 13 Oct · arrive 10:00 to 11:30', where:'Towner Eastbourne, Devonshire Park, College Road, Eastbourne BN21 4JJ', travel:['transit','Coast bus','Stagecoach 98/99 from Bexhill to Eastbourne in about 40 minutes.'], note:'For under-5s and caregivers. Drop-in; booking a free ticket gives priority.', verified:true, url:'https://townereastbourne.org.uk/whats-on/wriggle-room', action:'Details', photoNote:'No real activity/venue photo found'},
-        {cat:'library', label:'LIBRARY · RHYMES &amp; STORIES', title:'Eastbourne Library Rhymes and Stories', price:'Free', when:'Wed 14 Oct, 10:30 to 11:00', where:'Eastbourne Library, Grove Road, Eastbourne BN21 4TL', travel:['transit','Coast bus','Stagecoach 98/99 from Bexhill to Eastbourne town centre.'], note:'No booking. Term-time only. Source: East Sussex Libraries.', verified:true, photoNote:'No real activity/venue photo found'},
-        {cat:'play', label:'BABY &amp; TODDLER GROUP · CALL TO CHECK', title:'KiddiCity Baby and Toddler group', price:'Call to check price', when:'Wed 14 Oct, 11:00 to 12:00 · call to check class times', where:'Unit 44, Langney Shopping Centre, 64 Kingfisher Drive, Eastbourne BN23 7RT', travel:['transit','Coast bus','Stagecoach 98/99 from Bexhill to Eastbourne in about 40 minutes.'], note:'Booking requirement is not stated. Call 07947 080902 to check class times and price.', verified:false, url:'tel:07947080902', action:'Call', photoNote:'No real activity/venue photo found'},
-        {cat:'sports', label:'SWIMMING · TERM BOOKING', title:'Water Babies at Blue Lagoon', price:'Term-based price', when:'Wed 14 Oct, 10:00 to 12:00 block', where:'Blue Lagoon Warm Water Centre, 14 Brassey Parade, Hampden Park, Eastbourne BN22 9NG', travel:['awkward','Bus + local connection','Stagecoach 98/99 toward Eastbourne, then connect to Hampden Park.'], note:'For ages 0 to 5 years. Term-based booking. Source: Happity listing.', verified:true, photoNote:'No real activity/venue photo found'},
-        {cat:'play', label:'TODDLER GROUP · DROP-IN', title:'Tiddlers and Toddlers', price:'£2.50 one child · £3.50 two+', when:'Wed 14 Oct, 09:30 to 11:30', where:'Herstmonceux Village Hall, Hailsham Road, Herstmonceux BN27 4JX', travel:['transit','Direct bus','Stagecoach 98 from Bexhill to Herstmonceux takes about 25 minutes.'], note:'Snack and drinks included; first session free. Drop-in, no booking. Term-time only.', verified:true, url:'https://www.escis.org.uk/baby-toddler-groups/tiddlers-and-toddlers-herstmonceux-under-5s-group/', action:'Details', photoNote:'No real activity/venue photo found'},
-        {cat:'music', label:'MUSIC &amp; MOVEMENT · BOOK', title:'Hartbeeps Happy House · Hailsham', price:'£8–£8.60', when:'Wed 14 Oct, 10:00 to 10:45', where:'Hailsham Methodist Church, Hailsham BN27 1AU', travel:['awkward','Bus to Hailsham','Stagecoach 98 from Bexhill to Hailsham.'], note:'For ages 16 months to 4 years 6 months. Must book in advance via Happity; term-time only. This is a secular franchise hiring the church hall.', verified:true, photoNote:'No real activity/venue photo found'},
-        {cat:'play', label:'NCT GROUP · CALL TO CHECK', title:'KiddiCity NCT Bump to Toddle', price:'Call to check', when:'Thu 15 Oct, 10:30 to 12:00', where:'Unit 44, Langney Shopping Centre, 64 Kingfisher Drive, Eastbourne BN23 7RT', travel:['transit','Coast bus','Stagecoach 98/99 from Bexhill to Eastbourne in about 40 minutes.'], note:'Booking requirement is not stated. Call 07947 080902 to check before going.', verified:false, url:'tel:07947080902', action:'Call', photoNote:'No real activity/venue photo found'},
-        {cat:'music play', label:'PLAY &amp; MUSIC · CHECK PRICE', title:"Kids Play ESK Tots N’ Tunes", price:'Check price', when:'Thu 15 Oct, 09:30 · 90-minute session', where:'ESK Warehouse, Courtlands Road, Eastbourne BN22 8TR', travel:['transit','Coast bus','Stagecoach 98/99 from Bexhill to Eastbourne in about 40 minutes.'], note:'For over-1s and walkers. Booking required online. Check the price when booking.', verified:true, url:'https://www.kidsplayesk.com/', action:'Book', photoNote:'No real activity/venue photo found'},
-        {cat:'music sports', label:'MUSIC &amp; MOVEMENT · CALL TO CHECK', title:'babyballet Tinies · Hailsham', price:'Call to check price', when:'Thu 15 Oct, 09:30 to 10:05', where:'Diplocks Hall, Hailsham BN27 3JY', travel:['awkward','Bus to Hailsham','Stagecoach 98 from Bexhill to Hailsham.'], note:'Thursday price is unconfirmed; the Saturday Tinies class at the same venue is £6.25. Call 07842 244210 to confirm price and spaces.', verified:false, url:'tel:07842244210', action:'Call', photoNote:'No real activity/venue photo found'},
-        {cat:'play', label:'STAY &amp; PLAY · BOOK', title:'Baby and Me Stay and Play', price:'£5 + £0.15 VAT', when:'Thu 15 Oct, 11:00', where:'Baby and Me Studio, 27 Sackville Road, Bexhill-on-Sea TN39 3JD', travel:['walk','Local Bexhill','Local Bexhill journey from the Marina area.'], note:'Booking required online.', verified:true, url:'https://bookwhen.com/babyandmees', action:'Book', photoNote:'No real activity/venue photo found'},
-        {cat:'library', label:'LIBRARY · CALL TO CHECK', title:'Hailsham Library Rhymetime', price:'Free drop-in', when:'Fri 9 and Fri 16 Oct, 11:00 to 11:30', where:'Hailsham Library, Western Road, Hailsham BN27 3DN', travel:['awkward','Longer bus trip','Check the current route in the Stagecoach app before leaving.'], note:'The series is live on Spydus, but the dated occurrence record is stale. Call 0345 6080196. Source: East Sussex Libraries Spydus, checked 9 Oct.', verified:false, url:'tel:03456080196', action:'Call', photoNote:'No real activity/venue photo found'},
-        {cat:'sports play', label:'SPORTS · TODDLER PLAY · CHECK', title:'Be Mini toddler play', price:'£6.50', when:'Fri 9, 11:00 to 12:30 · Wed 14, 10:00 to 11:30 · Fri 16, 11:00 to 12:30', where:'Be Gymnastics, Units 9–10 White Knight Business Park, Hammonds Drive, Eastbourne BN23 6PW', travel:['awkward','Longer journey','Stagecoach 98/99 toward Eastbourne, then walk or connect locally.'], note:'For ages 0 to 4. The activity page is around 523 days stale; the club homepage only confirms Be Mini is pay-as-you-go. Email before travelling. Source: Be Gymnastics site, checked 9 Oct.', verified:false, url:'mailto:begymnasticsclub@gmail.com', action:'Email', photoNote:'No real activity/venue photo found'},
+        {cat:'music', label:'MUSIC &amp; MOVEMENT · BOOK', title:'Tots Play Social Tots', price:'£9–£59.50', when:'Fri 9, Mon 12, Tue 13 and Fri 16 Oct', where:"Totsy’s Treehouse, Victoria Road, Bexhill TN39 3PD", travel:['walk','Walkable','About 25 to 30 minutes on foot from the seafront, or use a local bus.'], note:'For ages 8 months to 2 years. Fri/Tue 09:45 to 10:30; Mon 11:00 to 11:45. Booking required; no drop-ins. Source: Happity live venue timetable, checked 9 Oct.', verified:true, url:'https://www.totsplay.co.uk/bexhill', action:'Book'},
+        {cat:'music sports', label:'MUSIC &amp; MOVEMENT · DANCE', title:'babyballet Tinies', price:'£6.50–£7.25', when:'Sat 10, 09:00 to 09:40 or 09:40 to 10:15 · Fri 9 and 16, 10:05 to 10:40 · Tue 13, 09:15 to 09:50 or 10:55 to 11:30', where:'The Hastings Centre, The Ridge, Hastings TN34 2SA', travel:['transit','Coast bus + Ridge','Stagecoach 98/99 from Bexhill to Hastings in about 25 minutes, then bus or taxi up The Ridge.'], note:'For ages 18 months to 3 years. Saturday is £6.50 per class or a £21 three-week trial for new starters; booking is required. Existing Friday and Tuesday prices differ by source, so confirm those when booking. Call 07891 952104.', verified:true, url:'https://babyballet.co.uk/babyballet-school/hastings-bexhill-battle/', action:'Book'},
+        {cat:'play', label:'DROP-IN PLAY · CHECK PRICE', title:'Clambers Playcentre open play', price:'Around £8 child · check on arrival', when:'Sat 10 to Thu 15 Oct · open play, no fixed session', where:'White Rock Gardens, Hastings TN34 1LD', travel:['transit','Coast bus','Stagecoach 98/99 from Bexhill to Hastings in about 25 minutes, then a 10-minute walk.'], note:'Around £8 for ages 18 months to 12 years, £5 under 18 months and £2 adults. Check prices on arrival. No booking; turn up.', verified:true, url:'http://www.clambers.co.uk/', action:'Details'},
+        {cat:'sports play', label:'SPORTS · GYMNASTICS', title:'1066 Gymnastics Teeny Turtles', price:'Around £7 · indicative', when:'Sat 10, 08:45 · Wed 14 and Thu 15, 10:00', where:'Unit 3A Brett Drive, Sidley, Bexhill-on-Sea TN40 2JP', travel:['transit','Local Bexhill','Short local bus or taxi journey from central Bexhill.'], note:'Drop-in class. Around £7, £3.50 for non-walkers and carers free; prices are indicative. Book online.', verified:true, url:'https://bookwhen.com/1066gymnastics', action:'Book'},
+        {cat:'play', label:'SOFT PLAY · TURN UP', title:'Fort Fun soft play', price:'£6.75 + £2 adult', when:'Sat 10 and Sun 11 Oct, 10:00 to 18:00', where:'Royal Parade, Eastbourne BN22 7LQ', travel:['transit','Coast bus','Stagecoach 98/99 from Bexhill to Eastbourne in about 40 minutes; seafront location.'], note:'Price shown is for ages 12 to 24 months, plus £2 per adult. No booking; just turn up.', verified:true, url:'https://www.fort-fun.co.uk/softplay.html', action:'Details'},
+        {cat:'play', label:'SOFT PLAY · CLEANLINESS WARNING', title:'Leo’s Play Den', price:'£4 child + £1.50 adult', when:'Sat 10 and Mon 12 to Thu 15, 10:00 to 18:00 · Sun 11, 10:00 to 17:00', where:'1–3 Pevensey Road, Eastbourne BN21 3HJ', travel:['transit','Coast bus','Stagecoach 98/99 from Bexhill to Eastbourne in about 40 minutes.'], note:'No booking. TripAdvisor rating was 1.1/5 with cleanliness complaints; consider checking recent reviews before going.', verified:true, url:'http://leosplayden.com/', action:'Details'},
+        {cat:'sports events', label:'SWIMMING · FREE DISCOVERY DAY', title:'Freedom Leisure Discovery Day', price:'Free trial swim', when:'Sat 10 Oct · morning sessions', where:'Hailsham Leisure Centre, Vicarage Lane, Hailsham BN27 2AX', travel:['awkward','Bus to Hailsham','Stagecoach 98 from Bexhill; allow about 35 to 40 minutes.'], note:'Includes an 18 to 36 months slot, suitable for a 22-month-old. Booking is required and places are limited.', verified:true, url:'https://www.freedom-leisure.co.uk/centres/hailsham-leisure-centre/latest-news/discovery-day/', action:'Book'},
+        {cat:'sports', label:'SWIMMING · CHECK PRICE', title:'Water Babies swimming · Hailsham', price:'Around £23.50 · check price', when:'Sat 10 and Sun 11 Oct, 08:30 to 11:30', where:'London Road, Hailsham BN27 3DD', travel:['awkward','Bus to Hailsham','Stagecoach 98 from Bexhill to Hailsham.'], note:'Group session for ages 0 to 6 years. Booking is required; call 01424 892568. Check the price when booking.', verified:true, url:'tel:01424892568', action:'Call'},
+        {cat:'sports', label:'SWIMMING · WARM-WATER POOL', title:'Blue Lagoon open swims', price:'Child free · adult £7.95–£13.95', when:'Sat 10 to Thu 15 Oct · bookable 30-minute sessions', where:'Blue Lagoon Warm Water Centre, 14 Brassey Parade, Hampden Park, Eastbourne BN22 9NG', travel:['transit','Bus stop outside','Use the Eastbourne route and local connection; the bus stop is outside the door.'], note:'Children aged 0 to 9 swim free. The pools are heated to 34°C. Booking is required via eastbourne.bluelagooncentres.com/findsession.', verified:true},
+        {cat:'sports', label:'SWIMMING · DRIVE-ONLY WEEKEND OPTION', title:'Puddle Ducks swimming', price:'£18.50', when:'Sun 11 Oct, 09:00 to 11:30', where:'Sir Henry Fermor Primary School, Crowborough Hill, Crowborough TN6 2SD', travel:['drive','Drive only','Weekend option: allow about 45 to 60 minutes by car via the A267 and A26.'], note:'Kickers class for ages 15 to 30 months fits a 22-month-old. Booking required; call 01892 617246.', verified:true, url:'tel:01892617246', action:'Call'},
+        {cat:'library', label:'LIBRARY · RHYMETIME', title:'Hampden Park Library Rhymetime', price:'Free', when:'Mon 12 Oct, 10:30 to 11:00', where:'Hampden Park Library, Brodrick Close, Hampden Park, Eastbourne BN22 9NQ', travel:['awkward','Bus + local connection','Stagecoach 98/99 to Eastbourne, then a local bus to Hampden Park.'], note:'No booking. Term-time only. Source: East Sussex Libraries.', verified:true},
+        {cat:'play', label:'TODDLER GROUP · TERM-TIME', title:'Polegate Pre-School Toddler group', price:'£1.50 per family', when:'Mon 12 Oct, 09:15 to 11:00', where:'Polegate Community Centre, 54 Windsor Way, Polegate BN26 6QF', travel:['transit','Direct coast bus','Stagecoach 98/99 from Bexhill runs through Polegate.'], note:'Term-time only. Booking requirement is not stated; contact contact@polegatepreschool.co.uk before a first visit.', verified:true, url:'mailto:contact@polegatepreschool.co.uk', action:'Email'},
+        {cat:'music', label:'MUSIC &amp; MOVEMENT · BOOK', title:'Hartbeeps Happy House · Polegate', price:'£8–£8.60', when:'Mon 12 Oct, 10:00 to 10:45', where:'Polegate Community Association, 54 Windsor Way, Polegate BN26 6QF', travel:['transit','Direct coast bus','Stagecoach 98/99 from Bexhill runs through Polegate.'], note:'For ages 16 months to 4 years 6 months. Book via Happity; term-time only.', verified:true},
+        {cat:'play', label:'ROLE PLAY · CALL TO CHECK', title:'KiddiCity Mingle Mondays', price:'£8.95 · Monday discount £5', when:'Mon 12 Oct, 11:00 and 12:30 · call to check class times', where:'Unit 44, Langney Shopping Centre, 64 Kingfisher Drive, Eastbourne BN23 7RT', travel:['transit','Coast bus','Stagecoach 98/99 from Bexhill to Eastbourne in about 40 minutes.'], note:'£8.95 for one adult and child; Super Discount is £5 on Mondays. Booking requirement is not stated. Call 07947 080902 to check class times.', verified:false, url:'tel:07947080902', action:'Call'},
+        {cat:'play', label:'SOFT PLAY · CALL TO CHECK', title:'Sovey Tumblers soft play', price:'Call to check price', when:'Mon 12 Oct, 09:00 to 12:00', where:'The Sovereign Centre, Royal Parade, Eastbourne BN22 7LQ', travel:['transit','Coast bus','Stagecoach 98/99 from Bexhill to Eastbourne in about 40 minutes.'], note:'Giant bouncy castle and soft play. Booking requirement is not stated. Call 01323 738822 to check the price.', verified:false, url:'tel:01323738822', action:'Call'},
+        {cat:'play', label:'SOFT PLAY · CALL TO CHECK', title:'Treasure Island indoor soft play', price:'Call to check hours/prices', when:'Mon 12 to Wed 14 Oct', where:'Eastbourne seafront', travel:['transit','Coast bus','Stagecoach 98/99 from Bexhill to Eastbourne in about 40 minutes.'], note:'Fort Fun’s website directs visitors here on days Fort Fun is closed. Booking requirement is not stated. Call to check hours and prices before going.', verified:false, url:'https://www.treasure-island.co.uk/', action:'Details'},
+        {cat:'library', label:'LIBRARY · RHYMETIME', title:'Eastbourne Library Rhymetime', price:'Free', when:'Tue 13 Oct, 10:30 to 11:00', where:'Eastbourne Library, Grove Road, Eastbourne BN21 4TL', travel:['transit','Coast bus','Stagecoach 98/99 from Bexhill to Eastbourne town centre.'], note:'No booking. Term-time only. Source: East Sussex Libraries.', verified:true},
+        {cat:'events play', label:'ARTS · FREE DROP-IN', title:'Wriggle Room at Towner Eastbourne', price:'Free', when:'Tue 13 Oct · arrive 10:00 to 11:30', where:'Towner Eastbourne, Devonshire Park, College Road, Eastbourne BN21 4JJ', travel:['transit','Coast bus','Stagecoach 98/99 from Bexhill to Eastbourne in about 40 minutes.'], note:'For under-5s and caregivers. Drop-in; booking a free ticket gives priority.', verified:true, url:'https://townereastbourne.org.uk/whats-on/wriggle-room', action:'Details'},
+        {cat:'library', label:'LIBRARY · RHYMES &amp; STORIES', title:'Eastbourne Library Rhymes and Stories', price:'Free', when:'Wed 14 Oct, 10:30 to 11:00', where:'Eastbourne Library, Grove Road, Eastbourne BN21 4TL', travel:['transit','Coast bus','Stagecoach 98/99 from Bexhill to Eastbourne town centre.'], note:'No booking. Term-time only. Source: East Sussex Libraries.', verified:true},
+        {cat:'play', label:'BABY &amp; TODDLER GROUP · CALL TO CHECK', title:'KiddiCity Baby and Toddler group', price:'Call to check price', when:'Wed 14 Oct, 11:00 to 12:00 · call to check class times', where:'Unit 44, Langney Shopping Centre, 64 Kingfisher Drive, Eastbourne BN23 7RT', travel:['transit','Coast bus','Stagecoach 98/99 from Bexhill to Eastbourne in about 40 minutes.'], note:'Booking requirement is not stated. Call 07947 080902 to check class times and price.', verified:false, url:'tel:07947080902', action:'Call'},
+        {cat:'sports', label:'SWIMMING · TERM BOOKING', title:'Water Babies at Blue Lagoon', price:'Term-based price', when:'Wed 14 Oct, 10:00 to 12:00 block', where:'Blue Lagoon Warm Water Centre, 14 Brassey Parade, Hampden Park, Eastbourne BN22 9NG', travel:['awkward','Bus + local connection','Stagecoach 98/99 toward Eastbourne, then connect to Hampden Park.'], note:'For ages 0 to 5 years. Term-based booking. Source: Happity listing.', verified:true},
+        {cat:'play', label:'TODDLER GROUP · DROP-IN', title:'Tiddlers and Toddlers', price:'£2.50 one child · £3.50 two+', when:'Wed 14 Oct, 09:30 to 11:30', where:'Herstmonceux Village Hall, Hailsham Road, Herstmonceux BN27 4JX', travel:['transit','Direct bus','Stagecoach 98 from Bexhill to Herstmonceux takes about 25 minutes.'], note:'Snack and drinks included; first session free. Drop-in, no booking. Term-time only.', verified:true, url:'https://www.escis.org.uk/baby-toddler-groups/tiddlers-and-toddlers-herstmonceux-under-5s-group/', action:'Details'},
+        {cat:'music', label:'MUSIC &amp; MOVEMENT · BOOK', title:'Hartbeeps Happy House · Hailsham', price:'£8–£8.60', when:'Wed 14 Oct, 10:00 to 10:45', where:'Hailsham Methodist Church, Hailsham BN27 1AU', travel:['awkward','Bus to Hailsham','Stagecoach 98 from Bexhill to Hailsham.'], note:'For ages 16 months to 4 years 6 months. Must book in advance via Happity; term-time only. This is a secular franchise hiring the church hall.', verified:true},
+        {cat:'play', label:'NCT GROUP · CALL TO CHECK', title:'KiddiCity NCT Bump to Toddle', price:'Call to check', when:'Thu 15 Oct, 10:30 to 12:00', where:'Unit 44, Langney Shopping Centre, 64 Kingfisher Drive, Eastbourne BN23 7RT', travel:['transit','Coast bus','Stagecoach 98/99 from Bexhill to Eastbourne in about 40 minutes.'], note:'Booking requirement is not stated. Call 07947 080902 to check before going.', verified:false, url:'tel:07947080902', action:'Call'},
+        {cat:'music play', label:'PLAY &amp; MUSIC · CHECK PRICE', title:"Kids Play ESK Tots N’ Tunes", price:'Check price', when:'Thu 15 Oct, 09:30 · 90-minute session', where:'ESK Warehouse, Courtlands Road, Eastbourne BN22 8TR', travel:['transit','Coast bus','Stagecoach 98/99 from Bexhill to Eastbourne in about 40 minutes.'], note:'For over-1s and walkers. Booking required online. Check the price when booking.', verified:true, url:'https://www.kidsplayesk.com/', action:'Book'},
+        {cat:'music sports', label:'MUSIC &amp; MOVEMENT · CALL TO CHECK', title:'babyballet Tinies · Hailsham', price:'Call to check price', when:'Thu 15 Oct, 09:30 to 10:05', where:'Diplocks Hall, Hailsham BN27 3JY', travel:['awkward','Bus to Hailsham','Stagecoach 98 from Bexhill to Hailsham.'], note:'Thursday price is unconfirmed; the Saturday Tinies class at the same venue is £6.25. Call 07842 244210 to confirm price and spaces.', verified:false, url:'tel:07842244210', action:'Call'},
+        {cat:'play', label:'STAY &amp; PLAY · BOOK', title:'Baby and Me Stay and Play', price:'£5 + £0.15 VAT', when:'Thu 15 Oct, 11:00', where:'Baby and Me Studio, 27 Sackville Road, Bexhill-on-Sea TN39 3JD', travel:['walk','Local Bexhill','Local Bexhill journey from the Marina area.'], note:'Booking required online.', verified:true, url:'https://bookwhen.com/babyandmees', action:'Book'},
+        {cat:'library', label:'LIBRARY · CALL TO CHECK', title:'Hailsham Library Rhymetime', price:'Free drop-in', when:'Fri 9 and Fri 16 Oct, 11:00 to 11:30', where:'Hailsham Library, Western Road, Hailsham BN27 3DN', travel:['awkward','Longer bus trip','Check the current route in the Stagecoach app before leaving.'], note:'The series is live on Spydus, but the dated occurrence record is stale. Call 0345 6080196. Source: East Sussex Libraries Spydus, checked 9 Oct.', verified:false, url:'tel:03456080196', action:'Call'},
+        {cat:'sports play', label:'SPORTS · TODDLER PLAY · CHECK', title:'Be Mini toddler play', price:'£6.50', when:'Fri 9, 11:00 to 12:30 · Wed 14, 10:00 to 11:30 · Fri 16, 11:00 to 12:30', where:'Be Gymnastics, Units 9–10 White Knight Business Park, Hammonds Drive, Eastbourne BN23 6PW', travel:['awkward','Longer journey','Stagecoach 98/99 toward Eastbourne, then walk or connect locally.'], note:'For ages 0 to 4. The activity page is around 523 days stale; the club homepage only confirms Be Mini is pay-as-you-go. Email before travelling. Source: Be Gymnastics site, checked 9 Oct.', verified:false, url:'mailto:begymnasticsclub@gmail.com', action:'Email'},
         {cat:'events', label:'MUSEUM · LOCAL FALLBACK', title:'Bexhill Museum', price:'Adult £4 · under-5 free', when:'Tue to Sun, 11:00 to 16:00', where:'Egerton Road, Bexhill TN39 3HL', travel:['walk','Walkable','About 10 to 15 minutes on foot; Egerton Park is beside it.'], note:'Children 5–16 £2; concessions £3. Closed Mondays. Source: Bexhill Museum visit page, fetched 9 Oct.', verified:true, image:'images/bexhill-museum.webp', alt:'Exterior of Bexhill Museum'},
         {cat:'events', label:'EVENT · LIVING HISTORY', title:'Battle of Hastings reenactment', price:'Adult £24 · under-5 free', when:'Sat 10 and Sun 11 Oct, 10:00 to 17:00', where:'Battle Abbey, High Street, Battle TN33 0AE', travel:['transit','Train or drive','About 20 minutes by car; train from Bexhill to Battle takes about 15 minutes, then walk 10 to 15 minutes.'], note:'Child 5–17 £12, concession £21, family £36/£60. Booking recommended, not required. Advance online booking saves 20%; a Good Journey car-free discount is also available on the day. Source: English Heritage live event page, checked 9 Oct.', verified:true, nap:true, url:'http://www.english-heritage.org.uk/visit/whats-on/battle-abbey-battle-of-hastings-10-to-11-oct-2026/', action:'Book', image:'images/battle-abbey.webp', alt:'Battle Abbey grounds prepared for the Battle of Hastings reenactment'},
         {cat:'events', label:'EVENT · FARM', title:'PYO Pumpkins at Sharnfold Farm', price:'£7.45 online', when:'Sat 10 and Sun 11 Oct, 10:00 to 16:00', where:'Sharnfold Farm, Hailsham Road, Stone Cross, Pevensey BN24 5BU', travel:['drive','Best by car','About 25 minutes by car from Bexhill.'], note:'Under-2s free; pumpkins cost extra by weight. Pre-booking is recommended but not strictly necessary. Source: Visit Eastbourne and farm guide, checked 9 Oct. Call 01323 768490.', verified:true, nap:true, url:'tel:01323768490', action:'Call', image:'images/sharnfold-pumpkins.webp', alt:'Pumpkins arranged at Sharnfold Farm for pick-your-own days'},
-        {cat:'events', label:'EVENT · EXHIBITIONS', title:'DLWP Autumn Exhibitions Opening Party', price:'Free', when:'Sat 10 Oct, 12:00 to 14:30', where:'De La Warr Pavilion, Marina, Bexhill TN40 1DP', travel:['walk','Walkable','About 10 to 15 minutes on foot.'], note:'Doors at 12:00, introduction at 12:30; galleries stay open to 17:00. RSVP asked, but drop-ins are welcome. Source: De La Warr Pavilion event page, checked 9 Oct.', verified:true, nap:true, url:'https://www.dlwp.com/event/autumn-exhibitions-opening-party/', action:'Event page', photoNote:'No real activity/venue photo found'},
-        {cat:'events', label:'EXHIBITIONS · FREE', title:'DLWP autumn exhibitions', price:'Free', when:'Daily 10:00 to 17:00 from Sat 10 Oct', where:'De La Warr Pavilion, Marina, Bexhill TN40 1DP', travel:['walk','Walkable','About 10 to 15 minutes on foot.'], note:'Prem Sahib: Chamber and Gordon Matta-Clark: Discrete Violations run to 3 January 2027. A pre-nap or post-nap visit is easiest. Source: De La Warr Pavilion, checked 9 Oct.', verified:true, photoNote:'No real activity/venue photo found'},
-        {cat:'sports', label:'SPORTS · SWIMMING · CALL', title:'Water Babies at St Mary’s', price:'Price on request', when:'Sun 11 Oct, within 08:30 to 12:30', where:"St Mary’s School, Wrestwood Road, Bexhill TN40 2LU", travel:['drive','Best by car','North Bexhill; driving is simplest.'], note:'The Sunday window is published, but the exact slot and price are behind the booking wall. Call 01424 892568. Source: Water Babies listing, checked 9 Oct.', verified:false, url:'tel:01424892568', action:'Call', photoNote:'No real activity/venue photo found'},
-        {cat:'sports', label:'SPORTS · FOOTBALL · CALL', title:'Little Kickers Little Kicks', price:'£35/month', when:'Sun 11 Oct, within the 09:00 to 12:30 block', where:'Bexhill Community Centre, Station Road, Bexhill TN40 1RE', travel:['walk','Walkable','Town-centre walk from the Marina.'], note:'For ages 18 months to 2½ years. The exact slot is unpublished; call 07802 864719. Source: Little Kickers listing, checked 9 Oct.', verified:false, url:'tel:07802864719', action:'Call', photoNote:'No real activity/venue photo found'},
-        {cat:'play', label:'DROP-IN PLAY · CHECK DETAILS', title:'Birkdale Playcentre open play', price:'£5.50', when:'Mon 12 and Wed 14 Oct, 09:15 to 10:45', where:'London Road, Bexhill TN39 3JU · provider says no. 8, Happity says no. 10', travel:['walk','Walkable','About 25 to 30 minutes on foot from the seafront, or take a short bus ride.'], note:'Provider booking page time wins; Happity lists conflicting times. Address sources also conflict. Call 01424 212545 before travelling. Sources: provider booking page and Happity, checked 9 Oct.', verified:false, url:'tel:01424212545', action:'Call', photoNote:'No real activity/venue photo found'},
-        {cat:'play', label:'DROP-IN PLAY', title:'Catkins Baby and Toddler Group', price:'Price unpublished', when:'Mon 12, 10:00 to 14:45 · Tue 13, 09:00 to 11:00 · Wed 14, 10:00 to 12:00', where:"Wallis Hall, Ancaster Nursery, Gunter’s Lane, Bexhill TN39 4EB", travel:['transit','Bus toward Sidley','Use the 95, 98 or 101 toward Sidley, then walk a short distance.'], note:'Drop-in hours were verified from the Facebook hours listing. Posts are login-walled, so cancellations could not be checked. Call 01424 216670 for price or before a first visit. Source checked 9 Oct.', verified:true, nap:true, url:'tel:01424216670', action:'Call', photoNote:'No real activity/venue photo found'},
+        {cat:'events', label:'EVENT · EXHIBITIONS', title:'DLWP Autumn Exhibitions Opening Party', price:'Free', when:'Sat 10 Oct, 12:00 to 14:30', where:'De La Warr Pavilion, Marina, Bexhill TN40 1DP', travel:['walk','Walkable','About 10 to 15 minutes on foot.'], note:'Doors at 12:00, introduction at 12:30; galleries stay open to 17:00. RSVP asked, but drop-ins are welcome. Source: De La Warr Pavilion event page, checked 9 Oct.', verified:true, nap:true, url:'https://www.dlwp.com/event/autumn-exhibitions-opening-party/', action:'Event page'},
+        {cat:'events', label:'EXHIBITIONS · FREE', title:'DLWP autumn exhibitions', price:'Free', when:'Daily 10:00 to 17:00 from Sat 10 Oct', where:'De La Warr Pavilion, Marina, Bexhill TN40 1DP', travel:['walk','Walkable','About 10 to 15 minutes on foot.'], note:'Prem Sahib: Chamber and Gordon Matta-Clark: Discrete Violations run to 3 January 2027. A pre-nap or post-nap visit is easiest. Source: De La Warr Pavilion, checked 9 Oct.', verified:true},
+        {cat:'sports', label:'SPORTS · SWIMMING · CALL', title:'Water Babies at St Mary’s', price:'Price on request', when:'Sun 11 Oct, within 08:30 to 12:30', where:"St Mary’s School, Wrestwood Road, Bexhill TN40 2LU", travel:['drive','Best by car','North Bexhill; driving is simplest.'], note:'The Sunday window is published, but the exact slot and price are behind the booking wall. Call 01424 892568. Source: Water Babies listing, checked 9 Oct.', verified:false, url:'tel:01424892568', action:'Call'},
+        {cat:'sports', label:'SPORTS · FOOTBALL · CALL', title:'Little Kickers Little Kicks', price:'£35/month', when:'Sun 11 Oct, within the 09:00 to 12:30 block', where:'Bexhill Community Centre, Station Road, Bexhill TN40 1RE', travel:['walk','Walkable','Town-centre walk from the Marina.'], note:'For ages 18 months to 2½ years. The exact slot is unpublished; call 07802 864719. Source: Little Kickers listing, checked 9 Oct.', verified:false, url:'tel:07802864719', action:'Call'},
+        {cat:'play', label:'DROP-IN PLAY · CHECK DETAILS', title:'Birkdale Playcentre open play', price:'£5.50', when:'Mon 12 and Wed 14 Oct, 09:15 to 10:45', where:'London Road, Bexhill TN39 3JU · provider says no. 8, Happity says no. 10', travel:['walk','Walkable','About 25 to 30 minutes on foot from the seafront, or take a short bus ride.'], note:'Provider booking page time wins; Happity lists conflicting times. Address sources also conflict. Call 01424 212545 before travelling. Sources: provider booking page and Happity, checked 9 Oct.', verified:false, url:'tel:01424212545', action:'Call'},
+        {cat:'play', label:'DROP-IN PLAY', title:'Catkins Baby and Toddler Group', price:'Price unpublished', when:'Mon 12, 10:00 to 14:45 · Tue 13, 09:00 to 11:00 · Wed 14, 10:00 to 12:00', where:"Wallis Hall, Ancaster Nursery, Gunter’s Lane, Bexhill TN39 4EB", travel:['transit','Bus toward Sidley','Use the 95, 98 or 101 toward Sidley, then walk a short distance.'], note:'Drop-in hours were verified from the Facebook hours listing. Posts are login-walled, so cancellations could not be checked. Call 01424 216670 for price or before a first visit. Source checked 9 Oct.', verified:true, nap:true, url:'tel:01424216670', action:'Call'},
         {cat:'play', label:'SOFT PLAY · BOOK', title:'Let’s Go Play', price:'£5 walker', when:'Mon–Wed 09:15 / 12:00 / 15:45 · Thu 09:15 / 12:00', where:'2 Haywood Way, Hastings TN35 4PL', travel:['transit','Coast bus','Stagecoach 98/99 toward Hastings; allow around 30 minutes plus the local leg.'], note:'Sessions were visible as bookable on the 9 Oct Bookwhen grid. The 12:00 session overlaps nap. Source: Bookwhen, checked 9 Oct.', verified:true, nap:true, url:'https://bookwhen.com/lets-go-play', action:'Book', image:'images/lets-go-play.webp', alt:'Climbing nets and colourful soft-play equipment at Let’s Go Play'},
-        {cat:'hubs', label:'FAMILY HUB · FEEDING', title:'Hastings Town Baby Feeding Group', price:'Free', when:'Mon 12 Oct, 13:00 to 14:30', where:'Hastings Town Family Hub, Waterworks Road, Hastings TN34 1RT', travel:['transit','Coast bus','Stagecoach 98/99 to Hastings; allow around 25 minutes plus the local leg.'], note:'Free drop-in; no booking. Source: official Family Hubs page, checked 9 Oct.', verified:true, nap:true, photoNote:'No real activity/venue photo found'},
+        {cat:'hubs', label:'FAMILY HUB · FEEDING', title:'Hastings Town Baby Feeding Group', price:'Free', when:'Mon 12 Oct, 13:00 to 14:30', where:'Hastings Town Family Hub, Waterworks Road, Hastings TN34 1RT', travel:['transit','Coast bus','Stagecoach 98/99 to Hastings; allow around 25 minutes plus the local leg.'], note:'Free drop-in; no booking. Source: official Family Hubs page, checked 9 Oct.', verified:true, nap:true},
         {cat:'library', label:'LIBRARY · RHYMETIME', title:'Bexhill Library Rhymetime', price:'Free drop-in', when:'Tue 13 Oct, 10:30 to 11:00', where:'Bexhill Library, Western Road, Bexhill TN40 1DY', travel:['walk','Walkable','About 15 minutes on foot.'], note:'Series confirmed live on Spydus 9 Oct; dated occurrence carried from the 8 Oct check.', verified:true, image:'images/bexhill-library.webp', alt:'Brick frontage and entrance of Bexhill Library'},
-        {cat:'library', label:'LIBRARY · RHYMETIME', title:'Battle Library Rhymetime', price:'Free drop-in', when:'Tue 13 Oct, 10:30 to 11:00', where:'Battle Library, 7 Market Square, Battle TN33 0XB', travel:['transit','Easy train','Bexhill to Battle is about 15 minutes by train, plus a short walk.'], note:'Series confirmed live on Spydus 9 Oct; dated occurrence carried from the 8 Oct check.', verified:true, photoNote:'No real activity/venue photo found'},
-        {cat:'hubs', label:'COMMUNITY · CHECK FIRST', title:'Sidley community pantry', price:'£2 suggested', when:'Wed 14 Oct, 10:00 to 11:00', where:'Behind Sidley Family Hub, 121 Ninfield Road, Bexhill TN39 5BD', travel:['transit','Direct bus','Use the 95, 53 or 98 toward Sidley.'], note:'Carried from the 8 Oct check and not rechecked this run. Confirm before travelling.', verified:false, photoNote:'No real activity/venue photo found'},
-        {cat:'play', label:'SOFT PLAY · CHECK BOOKING', title:'Tots Play Soft Play Social', price:'£3', when:'Wed 14 Oct, 13:00 to 14:30', where:"Totsy’s Treehouse, Victoria Road, Bexhill TN39 3PD", travel:['walk','Walkable','About 25 to 30 minutes on foot or use a local bus.'], note:'For ages 0 to 4. The dated session was verified on Happity; booking status is unclear. Call 07739 362568. Source checked 9 Oct.', verified:false, nap:true, url:'tel:07739362568', action:'Call', photoNote:'No real activity/venue photo found'},
-        {cat:'hubs', label:'FAMILY HUB · STAY & PLAY', title:'Hastings Town 0–2 Stay and Play', price:'Free', when:'Wed 14 Oct, 13:00 to 14:30', where:'Hastings Town Family Hub, Waterworks Road, Hastings TN34 1RT', travel:['transit','Coast bus','Stagecoach 98/99 to Hastings; allow around 25 minutes plus the local leg.'], note:'Term-time free drop-in with infant feeding support. Source: official Family Hubs page, checked 9 Oct.', verified:true, nap:true, photoNote:'No real activity/venue photo found'},
-        {cat:'play', label:'STAY & PLAY · CHECK FIRST', title:"Little Bee’s Stay & Play", price:'Price unpublished', when:'Thu 15 Oct, 10:30 · end time unpublished', where:'Large Hall, Pebsham Community Hub, Seabourne Road, Bexhill TN40 2SN', travel:['transit','Local bus','About 30 to 35 minutes on foot, or around 15 minutes by local bus.'], note:'Term-time session found only through a third-party timetable mirror. Call 07598 917234. Source checked 9 Oct.', verified:false, url:'tel:07598917234', action:'Call', photoNote:'No real activity/venue photo found'},
-        {cat:'hubs', label:'FAMILY HUB · CHECK FIRST', title:'St Leonards 0–5 Stay and Play', price:'Free', when:'Thu 15 Oct, 10:00 to 11:30', where:'St Leonards Family Hub, Clyde Road, St Leonards-on-Sea TN38 0QE', travel:['transit','Coast bus or train','Allow about 35 to 40 minutes.'], note:'Listed on ESCIS but absent from the official What’s On page. Call 01424 724004. Sources checked 9 Oct.', verified:false, url:'tel:01424724004', action:'Call', photoNote:'No real activity/venue photo found'},
+        {cat:'library', label:'LIBRARY · RHYMETIME', title:'Battle Library Rhymetime', price:'Free drop-in', when:'Tue 13 Oct, 10:30 to 11:00', where:'Battle Library, 7 Market Square, Battle TN33 0XB', travel:['transit','Easy train','Bexhill to Battle is about 15 minutes by train, plus a short walk.'], note:'Series confirmed live on Spydus 9 Oct; dated occurrence carried from the 8 Oct check.', verified:true},
+        {cat:'hubs', label:'COMMUNITY · CHECK FIRST', title:'Sidley community pantry', price:'£2 suggested', when:'Wed 14 Oct, 10:00 to 11:00', where:'Behind Sidley Family Hub, 121 Ninfield Road, Bexhill TN39 5BD', travel:['transit','Direct bus','Use the 95, 53 or 98 toward Sidley.'], note:'Carried from the 8 Oct check and not rechecked this run. Confirm before travelling.', verified:false},
+        {cat:'play', label:'SOFT PLAY · CHECK BOOKING', title:'Tots Play Soft Play Social', price:'£3', when:'Wed 14 Oct, 13:00 to 14:30', where:"Totsy’s Treehouse, Victoria Road, Bexhill TN39 3PD", travel:['walk','Walkable','About 25 to 30 minutes on foot or use a local bus.'], note:'For ages 0 to 4. The dated session was verified on Happity; booking status is unclear. Call 07739 362568. Source checked 9 Oct.', verified:false, nap:true, url:'tel:07739362568', action:'Call'},
+        {cat:'hubs', label:'FAMILY HUB · STAY & PLAY', title:'Hastings Town 0–2 Stay and Play', price:'Free', when:'Wed 14 Oct, 13:00 to 14:30', where:'Hastings Town Family Hub, Waterworks Road, Hastings TN34 1RT', travel:['transit','Coast bus','Stagecoach 98/99 to Hastings; allow around 25 minutes plus the local leg.'], note:'Term-time free drop-in with infant feeding support. Source: official Family Hubs page, checked 9 Oct.', verified:true, nap:true},
+        {cat:'play', label:'STAY & PLAY · CHECK FIRST', title:"Little Bee’s Stay & Play", price:'Price unpublished', when:'Thu 15 Oct, 10:30 · end time unpublished', where:'Large Hall, Pebsham Community Hub, Seabourne Road, Bexhill TN40 2SN', travel:['transit','Local bus','About 30 to 35 minutes on foot, or around 15 minutes by local bus.'], note:'Term-time session found only through a third-party timetable mirror. Call 07598 917234. Source checked 9 Oct.', verified:false, url:'tel:07598917234', action:'Call'},
+        {cat:'hubs', label:'FAMILY HUB · CHECK FIRST', title:'St Leonards 0–5 Stay and Play', price:'Free', when:'Thu 15 Oct, 10:00 to 11:30', where:'St Leonards Family Hub, Clyde Road, St Leonards-on-Sea TN38 0QE', travel:['transit','Coast bus or train','Allow about 35 to 40 minutes.'], note:'Listed on ESCIS but absent from the official What’s On page. Call 01424 724004. Sources checked 9 Oct.', verified:false, url:'tel:01424724004', action:'Call'},
         {cat:'library', label:'LIBRARY · STORYTIME', title:'Bexhill Library Storytime', price:'Free drop-in', when:'Thu 15 Oct, 11:15 to 11:45', where:'Bexhill Library, Western Road, Bexhill TN40 1DY', travel:['walk','Walkable','About 15 minutes on foot.'], note:'Series confirmed live on Spydus 9 Oct; dated occurrence carried from the 8 Oct check.', verified:true, image:'images/bexhill-library.webp', alt:'Brick frontage and entrance of Bexhill Library'},
-        {cat:'hubs', label:'FAMILY HUB · FEEDING', title:'Hailsham Baby Feeding Group', price:'Free', when:'Thu 15 Oct, 13:00 to 14:30', where:'Hailsham Family Hub, Vega Close, Hailsham BN27 2JZ', travel:['awkward','Longer bus trip','Check the current bus route before leaving.'], note:'Free drop-in; no booking. Source: official Family Hubs page, verified 8 Oct and carried forward.', verified:true, nap:true, photoNote:'No real activity/venue photo found'},
+        {cat:'hubs', label:'FAMILY HUB · FEEDING', title:'Hailsham Baby Feeding Group', price:'Free', when:'Thu 15 Oct, 13:00 to 14:30', where:'Hailsham Family Hub, Vega Close, Hailsham BN27 2JZ', travel:['awkward','Longer bus trip','Check the current bus route before leaving.'], note:'Free drop-in; no booking. Source: official Family Hubs page, verified 8 Oct and carried forward.', verified:true, nap:true},
         {cat:'play events', label:'PLAY &amp; SENSORY · CHECK PRICE', title:'Glow Baby Play Centre sessions', price:'Prices unverified', when:'Fri 16 Oct: sensory 09:30 / 11:15 / 13:00; special events 09:45 / 13:15', where:'Chestnut Meadow, Ninfield Road, Bexhill TN39 5JG', travel:['transit','Local bus or taxi','North Bexhill; check the local bus connection before leaving.'], note:'The Bookwhen slots are live; prices were not verified. Afternoon sessions overlap nap. Sources: Glow Baby Bookwhen grids, checked 9 Oct.', verified:false, nap:true, url:'https://bookwhen.com/glowbabyevents', action:'Check slots', image:'images/glow-baby.webp', alt:'Colourful soft-play ball pit at Glow Baby Play Centre'}
       ];
 
@@ -1782,7 +1803,7 @@
 
       activities.forEach(function (a) {
         const primaryCategory = a.cat.split(' ')[0];
-        const card = document.createElement('article'); card.className = 'card'; card.dataset.category = a.cat;
+        const card = document.createElement('article'); card.className = 'card'; card.dataset.category = primaryCategory;
         if (a.image) { const img=document.createElement('img'); img.className='card-photo'; img.loading='lazy'; img.decoding='async'; img.src=a.image; img.alt=a.alt || ''; card.appendChild(img); }
         const top = document.createElement('div'); top.className = 'card-top';
         const heading = document.createElement('div');
@@ -1795,7 +1816,6 @@
         [['When',a.when],['Where',a.where]].forEach(function (pair) { const row=document.createElement('div'); row.className='meta-row'; const label=document.createElement('span'); label.className='meta-label'; label.textContent=pair[0]; const value=document.createElement('span'); value.className='meta-value'; if (pair[0] === 'When') appendSemanticClockText(value, pair[1]); else value.textContent=pair[1]; row.appendChild(label); row.appendChild(value); meta.appendChild(row); });
         const travelRow=document.createElement('div'); travelRow.className='meta-row'; const travelLabel=document.createElement('span'); travelLabel.className='meta-label'; travelLabel.textContent='Travel'; const travelValue=document.createElement('span'); travelValue.className='meta-value'; const pill=document.createElement('span'); pill.className='travel-pill '+a.travel[0]; pill.textContent=a.travel[1]; const detail=document.createElement('span'); detail.className='travel-detail'; detail.textContent=a.travel[2]; travelValue.appendChild(pill); travelValue.appendChild(detail); travelRow.appendChild(travelLabel); travelRow.appendChild(travelValue); meta.appendChild(travelRow); card.appendChild(meta);
         const note=document.createElement('p'); note.className='note' + (a.verified === false ? ' warn' : ''); note.textContent=(a.verified === false ? 'Call to check. ' : '') + a.note; card.appendChild(note);
-        if (!a.image) { const photo=document.createElement('p'); photo.className='photo-note'; photo.textContent=a.photoNote || 'No real activity/venue photo found'; card.appendChild(photo); }
         const actions=document.createElement('div'); actions.className='actions';
         if(a.url){
           const link=document.createElement('a');
@@ -1968,7 +1988,7 @@
         if (filterState.category !== 'all') { const button = document.querySelector('[data-category-filter="' + filterState.category + '"]'); activeNames.push(button.textContent.trim()); }
         if (filterState.travel !== 'all') { const button = document.querySelector('[data-travel-filter="' + filterState.travel + '"]'); activeNames.push(button.textContent.trim()); }
         if (filterState.napSafe) activeNames.push('Nap-safe'); if (filterState.free) activeNames.push('Free'); if (filterState.dropIn) activeNames.push('Drop-in');
-        document.getElementById('activeFilterSummary').textContent = activeNames.length ? '· ' + activeNames.join(', ') : 'All activities';
+        document.getElementById('activeFilterSummary').textContent = activeNames.length ? activeNames.join(', ') : 'All activities';
         document.getElementById('filterStatus').textContent = active ? 'Showing ' + totalVisible + (totalVisible === 1 ? ' matching activity.' : ' matching activities.') : 'Showing all activities.';
         document.getElementById('filterReset').disabled = !active;
       }
@@ -1986,7 +2006,13 @@
         const dayLabel = fullCalendarDate(today);
         let nextText = 'No more sessions today'; if (upcoming) nextText = 'Next: ' + upcoming.activity + ' at ' + upcoming.time.split(/[–-]| to /)[0];
         if (!entries.length) nextText = 'No activities currently listed';
-        document.getElementById('todayGlanceText').innerHTML = '<strong>' + dayLabel + '</strong> <span class="glance-divider">·</span> ' + count + (count === 1 ? ' activity' : ' activities') + ' <span class="glance-divider">·</span> ' + nextText;
+        const glance = document.getElementById('todayGlanceText');
+        glance.textContent = '';
+        const day = document.createElement('strong'); day.textContent = dayLabel; glance.appendChild(day);
+        [count + (count === 1 ? ' activity' : ' activities'), nextText].forEach(function (part) {
+          const divider = document.createElement('span'); divider.className = 'glance-divider'; divider.setAttribute('aria-hidden', 'true'); divider.textContent = ' · ';
+          glance.appendChild(divider); glance.appendChild(document.createTextNode(part));
+        });
       }
       updateTodayGlance();
       document.querySelectorAll('.ahead-list, .later-lines, #todayGlanceText').forEach(semanticizeClockText);
