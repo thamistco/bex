@@ -1,1 +1,16 @@
-{"background_color":"#eef8fc","description":"Baby and toddler activities around Bexhill-on-Sea, updated daily.","display":"standalone","icons":[{"sizes":"192x192","src":"icon-192.png","type":"image/png"},{"sizes":"512x512","src":"icon-512.png","type":"image/png"},{"purpose":"maskable","sizes":"512x512","src":"icon-maskable-512.png","type":"image/png"}],"name":"Family Activities - Bexhill","orientation":"portrait","scope":"/bex/","short_name":"Family Activities","start_url":"/bex/","theme_color":"#0e6e8c"}
+{
+  "name": "Family Activities - Bexhill",
+  "short_name": "Family Activities",
+  "description": "Baby and toddler activities around Bexhill-on-Sea, updated daily.",
+  "lang": "en-GB",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#eef8fc",
+  "theme_color": "#0e6e8c",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
