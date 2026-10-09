@@ -1086,7 +1086,7 @@
         <ul class="fallbacks">
           <li><span class="travel-pill walk">Walkable</span> Seafront promenade from De La Warr Pavilion</li>
           <li><span class="travel-pill walk">Walkable</span> Egerton Park playground</li>
-          <li><span class="travel-pill walk">Walkable</span> Bexhill Museum plus Egerton Park (museum entry £4 adult, under-5 free)</li>
+          <li><span class="travel-pill walk">Walkable</span> Bexhill Museum plus Egerton Park (museum: <span data-price-of="Bexhill Museum">Adult £4 · under-5 free</span>)</li>
         </ul>
       </div>
     </section>
@@ -1867,6 +1867,14 @@
           list.appendChild(row);
         });
       }
+
+      // A price shown outside its card is read from the card's record, so the two cannot differ.
+      // The text written in the page stays if no activity has that title, and the console says so.
+      document.querySelectorAll('[data-price-of]').forEach(function (el) {
+        const a = activities.find(function (item) { return item.title === el.dataset.priceOf; });
+        if (a && a.price) el.textContent = a.price;
+        else console.warn('No activity titled "' + el.dataset.priceOf + '" for a price');
+      });
 
       const cards = Array.from(document.querySelectorAll('.card'));
       document.getElementById('resultCount').textContent = cards.length + ' options in ' + categoryOrder.length + ' categories';
