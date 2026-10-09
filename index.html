@@ -2054,6 +2054,39 @@
       updateTodayGlance();
       document.querySelectorAll('.ahead-list, .later-lines, #todayGlanceText').forEach(semanticizeClockText);
 
+      // Phone numbers written in the text become tappable, so "call 01424 212545" can be called.
+      // Only UK numbers in their usual written forms (01424 212545, 0345 6080196) match;
+      // links, buttons and anything already linked are left alone.
+      function linkifyPhones(root) {
+        const pattern = /(^|[^\d\/])(0\d{3,4} \d{6,7})(?!\d)/g;
+        const nodes = [];
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+          acceptNode: function (node) {
+            if (!/0\d{3,4} \d{6,7}/.test(node.nodeValue)) return NodeFilter.FILTER_REJECT;
+            return node.parentElement.closest('a, button, script, style') ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
+          }
+        });
+        while (walker.nextNode()) nodes.push(walker.currentNode);
+        nodes.forEach(function (node) {
+          const text = node.nodeValue; const fragment = document.createDocumentFragment();
+          let last = 0; let match;
+          pattern.lastIndex = 0;
+          while ((match = pattern.exec(text))) {
+            const number = match[2]; const digits = number.replace(/ /g, '');
+            if (digits.length !== 11) continue;
+            const at = match.index + match[1].length;
+            fragment.appendChild(document.createTextNode(text.slice(last, at)));
+            const link = document.createElement('a'); link.className = 'phone-link'; link.href = 'tel:' + digits; link.textContent = number;
+            fragment.appendChild(link);
+            last = at + number.length;
+          }
+          if (!last) return;
+          fragment.appendChild(document.createTextNode(text.slice(last)));
+          node.parentNode.replaceChild(fragment, node);
+        });
+      }
+      linkifyPhones(document.getElementById('activities'));
+
       const backToTop = document.getElementById('backToTop');
       window.addEventListener('scroll', function () { backToTop.hidden = window.scrollY < 650; }, {passive:true});
       backToTop.addEventListener('click', function () { window.scrollTo({top:0, behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'}); });
