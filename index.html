@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -49,44 +49,6 @@
     }
 
     :root[data-theme="light"] { color-scheme: light; }
-
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme="light"]) {
-        color-scheme: dark;
-        --bg: #071923;
-        --surface: #0d2532;
-        --surface-soft: #143444;
-        --text: #edfaff;
-        --muted: #b9d3df;
-        --line: #315365;
-        --accent: #78c8e8;
-        --accent-strong: #a9e0f5;
-        --accent-soft: #173f53;
-        --on-accent: #06202b;
-        --coral: #e8b684;
-        --coral-soft: #473323;
-        --gold: #ffd665;
-        --gold-soft: #40381b;
-        --nap: #163845;
-        --walk: #8bd9ae;
-        --walk-soft: #173c2d;
-        --transit: #f6cf64;
-        --transit-soft: #3b3217;
-        --awkward: #efb280;
-        --awkward-soft: #462d1f;
-        --drive: #f2a0b3;
-        --drive-soft: #432530;
-        --cat-sports: #78c8e8;
-        --cat-hubs: #9ecbf1;
-        --cat-music: #f0ad8f;
-        --cat-play: #f6cf64;
-        --cat-library: #b5d69e;
-        --cat-events: #f1a5b5;
-        --cat-cafes: #e1b995;
-        --sunny: #ffd665;
-        --shadow: 0 16px 36px rgba(0, 0, 0, .32);
-      }
-    }
 
     :root[data-theme="dark"] {
       color-scheme: dark;
@@ -630,28 +592,53 @@
     }
     .note.warn { background: var(--gold-soft); color: var(--text); }
     .photo-note { font-size: 14px; color: var(--muted); margin: -4px 0 0; }
-    .actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      align-self: end;
+      padding-top: 2px;
+    }
     .action {
+      flex: 1 1 150px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 38px;
-      padding: 8px 12px;
-      border-radius: 10px;
-      text-decoration: none;
+      min-height: 44px;
+      padding: 10px 16px;
       border: 1px solid var(--accent);
+      border-radius: 10px;
       background: var(--accent);
       color: var(--on-accent);
-      font-size: 16px;
+      box-shadow: 0 3px 10px rgba(15, 71, 96, .12);
+      cursor: pointer;
+      font-size: 15px;
       font-weight: 700;
+      line-height: 1.25;
+      text-align: center;
+      text-decoration: none;
     }
+    .action:hover { background: var(--accent-strong); border-color: var(--accent-strong); }
     .action.secondary {
-      background: transparent;
+      background: var(--surface);
       color: var(--accent-strong);
       border-color: var(--line);
-      cursor: pointer;
+      box-shadow: none;
     }
-    .action.secondary:hover { border-color: var(--accent); }
+    .action.secondary:hover { background: var(--accent-soft); border-color: var(--accent); }
+    .action.calendar-action {
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+      border-color: transparent;
+      box-shadow: none;
+    }
+    .action.calendar-action:hover { border-color: var(--accent); background: var(--surface-soft); }
+    .action.copy-btn { color: var(--muted); }
+    .card .action:focus-visible {
+      outline: 3px solid var(--accent-strong);
+      outline-offset: 3px;
+    }
     .callout-grid {
       display: grid;
       grid-template-columns: 1.15fr .85fr;
@@ -1052,6 +1039,7 @@
       .later-lines .later-item > time { grid-row: auto; grid-column: 1 / -1; }
       .later-main-link, .later-copy { grid-column: 1; }
       .later-item .calendar-link { grid-column: 2; grid-row: 2 / 4; }
+      .actions .action { flex-basis: 100%; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1217,9 +1205,7 @@
     (function () {
       const themeToggle = document.getElementById('themeToggle');
       const themeToggleLabel = document.getElementById('themeToggleLabel');
-      const systemDark = window.matchMedia('(prefers-color-scheme: dark)');
-      let activeTheme = systemDark.matches ? 'dark' : 'light';
-      let manuallyChosenTheme = false;
+      let activeTheme = 'light';
 
       function applyTheme(theme) {
         activeTheme = theme;
@@ -1232,11 +1218,7 @@
 
       applyTheme(activeTheme);
       themeToggle.addEventListener('click', function () {
-        manuallyChosenTheme = true;
         applyTheme(activeTheme === 'dark' ? 'light' : 'dark');
-      });
-      systemDark.addEventListener('change', function (event) {
-        if (!manuallyChosenTheme) applyTheme(event.matches ? 'dark' : 'light');
       });
 
       const calendarConfig = { startDate: '2026-10-09', dayCount: 31, weekDays: 7 };
@@ -1728,9 +1710,36 @@
         const travelRow=document.createElement('div'); travelRow.className='meta-row'; const travelLabel=document.createElement('span'); travelLabel.className='meta-label'; travelLabel.textContent='Travel'; const travelValue=document.createElement('span'); travelValue.className='meta-value'; const pill=document.createElement('span'); pill.className='travel-pill '+a.travel[0]; pill.textContent=a.travel[1]; const detail=document.createElement('span'); detail.className='travel-detail'; detail.textContent=a.travel[2]; travelValue.appendChild(pill); travelValue.appendChild(detail); travelRow.appendChild(travelLabel); travelRow.appendChild(travelValue); meta.appendChild(travelRow); card.appendChild(meta);
         const note=document.createElement('p'); note.className='note' + (a.verified === false ? ' warn' : ''); note.textContent=(a.verified === false ? 'Call to check. ' : '') + a.note; card.appendChild(note);
         if (!a.image) { const photo=document.createElement('p'); photo.className='photo-note'; photo.textContent=a.photoNote || 'No real activity/venue photo found'; card.appendChild(photo); }
-        const actions=document.createElement('div'); actions.className='actions'; if(a.url){ const link=document.createElement('a'); link.className='action'; link.href=a.url; link.textContent=a.action; if(a.url.indexOf('http')===0){link.target='_blank';link.rel='noopener';} actions.appendChild(link); } const copy=document.createElement('button'); copy.className='action secondary copy-btn'; copy.textContent='Copy details'; actions.appendChild(copy); card.appendChild(actions);
+        const actions=document.createElement('div'); actions.className='actions';
+        if(a.url){
+          const link=document.createElement('a');
+          const isPrimaryAction = a.action === 'Book' || a.action === 'Check slots' || a.action === 'Event page';
+          link.className='action' + (isPrimaryAction ? '' : ' secondary');
+          link.href=a.url;
+          link.textContent=a.action;
+          link.setAttribute('aria-label', a.action + ' ' + a.title);
+          if(a.url.indexOf('http')===0){link.target='_blank';link.rel='noopener';}
+          actions.appendChild(link);
+        }
         const cardCalendarKeys = Object.keys(calendarEvents).filter(function (eventKey) { const event = calendarEvents[eventKey]; return event.title.replace(', day 2','') === a.title || (a.title === 'PYO Pumpkins at Sharnfold Farm' && event.title === a.title); });
-        if (cardCalendarKeys.length) { const calendarLinks = document.createElement('div'); calendarLinks.className = 'card-calendar-links'; cardCalendarKeys.forEach(function (eventKey) { const event = calendarEvents[eventKey]; const cal = document.createElement('a'); cal.className = 'calendar-link'; cal.href = googleCalendarUrl(event); cal.target = '_blank'; cal.rel = 'noopener'; cal.textContent = 'Add ' + eventKey.slice(8,10) + ' Oct to calendar'; calendarLinks.appendChild(cal); }); card.appendChild(calendarLinks); }
+        cardCalendarKeys.forEach(function (eventKey) {
+          const event = calendarEvents[eventKey];
+          const cal = document.createElement('a');
+          cal.className = 'action secondary calendar-action';
+          cal.href = googleCalendarUrl(event);
+          cal.target = '_blank';
+          cal.rel = 'noopener';
+          cal.textContent = 'Add ' + eventKey.slice(8,10) + ' Oct to calendar';
+          cal.setAttribute('aria-label', 'Add ' + a.title + ' on ' + eventKey.slice(8,10) + ' October to calendar');
+          actions.appendChild(cal);
+        });
+        const copy=document.createElement('button');
+        copy.className='action secondary copy-btn';
+        copy.type='button';
+        copy.textContent='Copy details';
+        copy.setAttribute('aria-label', 'Copy details for ' + a.title);
+        actions.appendChild(copy);
+        card.appendChild(actions);
         sectionGrids[primaryCategory].appendChild(card);
       });
 
