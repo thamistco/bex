@@ -53,6 +53,20 @@ from those, so they cannot disagree with the cards:
   An activity with no sessions left drops out by itself. Do not write items into
   the Book ahead panel by hand; a hand-written copy had already lost a Saturday
   class that the card and the week both showed.
+- **Add to calendar** on the week and the cards: give the activity
+  `calendar:true`. Each session still to come whose time is a single range
+  (`10:00–17:00`) gets a link, with the times from `calendarData` and the place
+  from the activity's `where`.
+- **Add to calendar** in "Later this month": put the end time and the place on
+  the link, `data-calendar-end="14:00" data-calendar-where="…"` (and
+  `data-calendar-details="…"` if needed). The start is the item's own
+  `<time datetime="2026-10-18T11:00">`. A link without them is removed.
+- **Title links** come from each activity's `source:'…'`.
+- **A price shown elsewhere** reads from its card:
+  `<span data-price-of="Bexhill Museum">…</span>`. Keep the title exact; if it
+  stops matching, the written text stays and the browser console says so.
+- **Phone numbers** written in the usual form (`01424 212545`, `0345 6080196`)
+  become tappable links by themselves; write them as text, not as links.
 
 ## If the installed app shows a 404
 
