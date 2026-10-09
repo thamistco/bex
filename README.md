@@ -40,6 +40,20 @@ anyone with the address can open it, and this repository is public.
 6. Photos go in `images/` as files, not base64 inside the page. Inline, every
    photo downloaded on every launch.
 
+## The activity data
+
+Each activity is written once, in the `activities` list in `index.html`, and
+each dated session once, in `calendarData`. Other parts of the page are built
+from those, so they cannot disagree with the cards:
+
+- **Book ahead** lists every activity that has a `bookAhead` sentence, such as
+  `bookAhead:'Booking required; no drop-ins.'`. Write only the reason to book
+  there. The page adds the days still to come (from `calendarData`), the price,
+  and the booking link or a tappable phone number (from the activity's `url`).
+  An activity with no sessions left drops out by itself. Do not write items into
+  the Book ahead panel by hand; a hand-written copy had already lost a Saturday
+  class that the card and the week both showed.
+
 ## If the installed app shows a 404
 
 A home-screen icon created before the repository was renamed still points at
