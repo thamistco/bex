@@ -594,14 +594,16 @@
     .photo-note { font-size: 14px; color: var(--muted); margin: -4px 0 0; }
     .actions {
       display: flex;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       gap: 10px;
-      align-items: center;
+      align-items: stretch;
       align-self: end;
       padding-top: 2px;
     }
+    .actions.actions-many { flex-wrap: wrap; }
     .action {
-      flex: 1 1 150px;
+      flex: 1 1 0;
+      min-width: 0;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -627,14 +629,9 @@
       box-shadow: none;
     }
     .action.secondary:hover { background: var(--accent-soft); border-color: var(--accent); }
-    .action.calendar-action {
-      background: var(--accent-soft);
-      color: var(--accent-strong);
-      border-color: transparent;
-      box-shadow: none;
-    }
-    .action.calendar-action:hover { border-color: var(--accent); background: var(--surface-soft); }
+    .action.calendar-action { color: var(--accent-strong); }
     .action.copy-btn { color: var(--muted); }
+    .actions.actions-many .action { flex-basis: calc(50% - 5px); }
     .card .action:focus-visible {
       outline: 3px solid var(--accent-strong);
       outline-offset: 3px;
@@ -839,7 +836,20 @@
     .entry-verify.verified { color: var(--walk); background: var(--walk-soft); }
     .entry-verify.check { color: var(--gold); background: var(--gold-soft); }
     .entry-body p { margin: 8px 0 0; color: var(--muted); font-size: 16px; }
-    .entry-link { display: inline-flex; align-items: center; min-height: 44px; margin-top: 5px; color: var(--accent-strong); font-size: 16px; font-weight: 700; }
+    .entry-actions {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 8px;
+      align-items: stretch;
+      margin-top: 10px;
+    }
+    .entry-actions .action {
+      flex: 1 1 0;
+      min-width: 0;
+      padding: 9px 8px;
+      font-size: 14px;
+      box-shadow: none;
+    }
     .calendar-extra { display: grid; }
     .calendar-extra[hidden] { display: none; }
     button.snapshot-more { min-height: 48px; margin: 0; padding: 8px 15px; border-top: 1px solid var(--line); color: var(--accent-strong); font-size: 16px; }
@@ -1039,7 +1049,8 @@
       .later-lines .later-item > time { grid-row: auto; grid-column: 1 / -1; }
       .later-main-link, .later-copy { grid-column: 1; }
       .later-item .calendar-link { grid-column: 2; grid-row: 2 / 4; }
-      .actions .action { flex-basis: 100%; }
+      .actions { gap: 8px; }
+      .actions .action { padding-left: 8px; padding-right: 8px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1522,8 +1533,29 @@
         if (isNewTitle(entry.activity)) { const fresh = document.createElement('span'); fresh.className = 'new-tag'; fresh.textContent = 'New'; fresh.title = 'Added within the last 7 days'; facts.appendChild(fresh); }
         const details = document.createElement('p'); details.textContent = entry.venue + (entry.status ? ' · ' + entry.status : '');
         body.appendChild(title); body.appendChild(facts); body.appendChild(details);
-        if (meta && meta.url) { const link = document.createElement('a'); link.className = 'entry-link'; link.href = meta.url; link.textContent = meta.action || 'Details'; if (meta.url.indexOf('http') === 0) { link.target = '_blank'; link.rel = 'noopener'; } body.appendChild(link); }
-        const calendarEvent = calendarEventFor(key, entry.activity); if (calendarEvent) { const cal = document.createElement('a'); cal.className = 'calendar-link entry-calendar'; cal.href = googleCalendarUrl(calendarEvent); cal.target = '_blank'; cal.rel = 'noopener'; cal.textContent = 'Add to calendar'; body.appendChild(cal); }
+        const entryActions = document.createElement('div'); entryActions.className = 'entry-actions';
+        if (meta && meta.url) {
+          const link = document.createElement('a');
+          const isPrimaryAction = meta.action === 'Book' || meta.action === 'Check slots' || meta.action === 'Event page';
+          link.className = 'action' + (isPrimaryAction ? '' : ' secondary');
+          link.href = meta.url;
+          link.textContent = meta.action || 'Details';
+          link.setAttribute('aria-label', (meta.action || 'Details') + ' for ' + entry.activity);
+          if (meta.url.indexOf('http') === 0) { link.target = '_blank'; link.rel = 'noopener'; }
+          entryActions.appendChild(link);
+        }
+        const calendarEvent = calendarEventFor(key, entry.activity);
+        if (calendarEvent) {
+          const cal = document.createElement('a');
+          cal.className = 'action secondary calendar-action';
+          cal.href = googleCalendarUrl(calendarEvent);
+          cal.target = '_blank';
+          cal.rel = 'noopener';
+          cal.textContent = 'Add to calendar';
+          cal.setAttribute('aria-label', 'Add ' + entry.activity + ' to calendar');
+          entryActions.appendChild(cal);
+        }
+        if (entryActions.childNodes.length) body.appendChild(entryActions);
         line.appendChild(time); line.appendChild(body);
         return line;
       }
@@ -1739,6 +1771,7 @@
         copy.textContent='Copy details';
         copy.setAttribute('aria-label', 'Copy details for ' + a.title);
         actions.appendChild(copy);
+        if (actions.childNodes.length > 3) actions.classList.add('actions-many');
         card.appendChild(actions);
         sectionGrids[primaryCategory].appendChild(card);
       });
