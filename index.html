@@ -407,7 +407,8 @@
       border: 1px solid var(--line);
       border-radius: var(--radius);
       padding: 19px;
-      display: grid;
+      display: flex;
+      flex-direction: column;
       gap: 14px;
       min-width: 0;
       box-shadow: inset 0 4px 0 var(--category-color, var(--accent));
@@ -478,6 +479,7 @@
       border-radius: 10px;
       font-size: 16px;
       color: var(--muted);
+      overflow-wrap: anywhere;
     }
     .note.warn { background: var(--gold-soft); color: var(--text); }
     .actions {
@@ -485,7 +487,7 @@
       flex-wrap: nowrap;
       gap: 10px;
       align-items: stretch;
-      align-self: end;
+      margin-top: auto;
       padding-top: 2px;
     }
     .actions.actions-many { flex-wrap: wrap; }
