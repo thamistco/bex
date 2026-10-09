@@ -343,34 +343,7 @@
     .calendar-overview { margin: 0 0 26px; }
     .calendar-overview .section-head { margin-bottom: 12px; }
     .calendar-intro { max-width: 620px; }
-    .calendar-controls {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 11px;
-    }
-    .view-switch {
-      display: inline-flex;
-      padding: 3px;
-      border: 1px solid var(--line);
-      border-radius: 11px;
-      background: var(--surface);
-    }
-    .view-btn {
-      min-height: 40px;
-      padding: 7px 12px;
-      border: 0;
-      border-radius: 8px;
-      background: transparent;
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-    .view-btn[aria-selected="true"] { background: var(--text); color: var(--bg); }
     .verification-key { display: flex; flex-wrap: wrap; gap: 8px; }
-    .overview-panel[hidden] { display: none; }
     .week-snapshot {
       display: grid;
       grid-template-columns: repeat(7, minmax(0, 1fr));
@@ -391,41 +364,9 @@
       cursor: pointer;
     }
     .snapshot-day:last-child { border-right: 0; }
-    .snapshot-day:hover, .month-day:hover { background: var(--surface-soft); }
-    .calendar-date-button {
-      display: block;
-      width: 100%;
-      padding: 0;
-      border: 0;
-      background: transparent;
-      color: inherit;
-      text-align: left;
-      cursor: pointer;
-    }
-    .calendar-date-button:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 3px;
-      border-radius: 4px;
-    }
     .calendar-day-list { min-width: 0; }
     .snapshot-date { display: block; margin-bottom: 10px; font-size: 12px; color: var(--muted); font-weight: 700; }
-    .snapshot-date strong { display: block; color: var(--text); font-family: "Newsreader", serif; font-size: 24px; line-height: 1; }
     .snapshot-entry { display: block; margin-top: 8px; font-size: 11px; line-height: 1.3; }
-    .snapshot-entry b { display: block; font-size: 11px; }
-    .snapshot-entry small { display: block; margin-top: 2px; color: var(--muted); font-size: 9px; font-style: normal; }
-    .snapshot-entry.check b::after, .month-entry.check::after {
-      content: "Check";
-      display: inline-block;
-      margin-left: 4px;
-      padding: 1px 4px;
-      border-radius: 4px;
-      background: var(--gold-soft);
-      color: var(--gold);
-      font-family: "DM Sans", sans-serif;
-      font-size: 8px;
-      font-weight: 700;
-      vertical-align: 1px;
-    }
     .snapshot-more, .snapshot-empty { display: block; margin-top: 9px; color: var(--muted); font-size: 10px; font-weight: 600; }
     button.snapshot-more {
       width: 100%;
@@ -441,103 +382,6 @@
     button.snapshot-more:hover { text-decoration: underline; }
     button.snapshot-more[hidden] { display: none; }
     .calendar-extra[hidden] { display: none; }
-    .month-label { margin: 0 0 9px; color: var(--muted); font-size: 13px; font-weight: 700; }
-    .month-grid {
-      display: grid;
-      grid-template-columns: repeat(7, minmax(0, 1fr));
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      overflow: hidden;
-      background: var(--surface);
-    }
-    .month-weekday {
-      padding: 8px 7px;
-      border-right: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-      background: var(--surface-soft);
-      color: var(--muted);
-      font-size: 10px;
-      font-weight: 700;
-      text-align: center;
-    }
-    .month-weekday:nth-child(7) { border-right: 0; }
-    .month-blank { min-height: 128px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--surface-soft); opacity: .55; }
-    .month-day {
-      appearance: none;
-      min-width: 0;
-      min-height: 128px;
-      padding: 9px;
-      border: 0;
-      border-right: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-      background: var(--surface);
-      text-align: left;
-      cursor: pointer;
-    }
-    .month-day:nth-child(7n) { border-right: 0; }
-    .month-date { display: block; margin-bottom: 7px; font-size: 11px; color: var(--muted); font-weight: 700; }
-    .month-date strong { color: var(--text); font-size: 16px; }
-    .month-entry { display: block; margin-top: 6px; font-size: 9px; line-height: 1.25; }
-    .month-entry b { display: inline; font-size: 9px; }
-    .month-pending { display: block; color: var(--gold); font-size: 9px; line-height: 1.3; font-weight: 700; }
-
-    .planner {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: 24px 24px 12px 12px;
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      margin-bottom: 38px;
-    }
-    .day-strip {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      border-bottom: 1px solid var(--line);
-    }
-    .day-btn {
-      appearance: none;
-      border: 0;
-      border-right: 1px solid var(--line);
-      background: var(--surface);
-      padding: 15px 8px 13px;
-      cursor: pointer;
-      min-width: 0;
-    }
-    .day-btn:last-child { border-right: 0; }
-    .day-btn:hover { background: var(--surface-soft); }
-    .day-btn[aria-selected="true"] {
-      background: var(--accent);
-      color: var(--on-accent);
-    }
-    .day-name { display: block; font-size: 12px; font-weight: 700; }
-    .day-date { display: block; font-size: 20px; font-weight: 700; line-height: 1.25; }
-    .today-dot { display: block; font-size: 9px; font-weight: 700; min-height: 14px; opacity: .78; }
-    .schedule-panel {
-      padding: 19px 22px 22px;
-      display: grid;
-      grid-template-columns: 150px 1fr;
-      gap: 18px;
-    }
-    .schedule-date h2 {
-      font-family: "Newsreader", serif;
-      font-size: 27px;
-      line-height: 1.05;
-    }
-    .schedule-date p { margin: 6px 0 0; color: var(--muted); font-size: 13px; }
-    .timeline { display: grid; gap: 8px; }
-    .time-row {
-      display: grid;
-      grid-template-columns: minmax(118px, 150px) 1fr;
-      gap: 12px;
-      align-items: start;
-      padding: 10px 12px;
-      border-radius: 10px;
-      background: var(--surface-soft);
-    }
-    .time-row.nap { background: var(--nap); color: var(--muted); }
-    .time { font-weight: 700; font-size: 13px; }
-    .time-title { font-weight: 650; }
-    .time-note { color: var(--muted); font-size: 13px; margin-top: 2px; }
 
     .section-head {
       display: flex;
@@ -552,28 +396,6 @@
       line-height: 1;
     }
     .section-head p { margin: 0; color: var(--muted); font-size: 14px; }
-    .filters {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 20px;
-    }
-    .filter {
-      border: 1px solid var(--line);
-      background: var(--surface);
-      padding: 9px 13px;
-      border-radius: 999px;
-      cursor: pointer;
-      font-weight: 650;
-      font-size: 13px;
-    }
-    .filter:hover { border-color: var(--accent); }
-    .filter[aria-pressed="true"] {
-      background: var(--text);
-      border-color: var(--text);
-      color: var(--bg);
-    }
-    .filter[aria-pressed="true"]::before { background: currentColor; }
     .activity-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -589,7 +411,6 @@
       min-width: 0;
       box-shadow: inset 0 4px 0 var(--category-color, var(--accent));
     }
-    .card.hidden { display: none; }
     .card-top {
       display: flex;
       gap: 12px;
@@ -620,23 +441,6 @@
     .card[data-category~="library"] { --category-color: var(--cat-library); }
     .card[data-category~="events"] { --category-color: var(--cat-events); }
     .card[data-category~="cafes"] { --category-color: var(--cat-cafes); }
-    .filter:not([data-filter="all"])::before {
-      content: "";
-      display: inline-block;
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      margin-right: 6px;
-      background: var(--filter-color, var(--accent));
-    }
-    .filter[data-filter="sports"] { --filter-color: var(--cat-sports); }
-    .filter[data-filter="hubs"] { --filter-color: var(--cat-hubs); }
-    .filter[data-filter="music"] { --filter-color: var(--cat-music); }
-    .filter[data-filter="play"] { --filter-color: var(--cat-play); }
-    .filter[data-filter="library"] { --filter-color: var(--cat-library); }
-    .filter[data-filter="events"] { --filter-color: var(--cat-events); }
-    .filter[data-filter="cafes"] { --filter-color: var(--cat-cafes); }
-    .card h3 { font-size: 19px; line-height: 1.25; }
     .card-photo {
       width: 100%;
       aspect-ratio: 16 / 9;
@@ -791,15 +595,6 @@
       font-weight: 700;
     }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-    .empty {
-      grid-column: 1 / -1;
-      background: var(--surface);
-      border: 1px solid var(--line);
-      padding: 22px;
-      border-radius: var(--radius);
-      color: var(--muted);
-      display: none;
-    }
 
     @media (max-width: 760px) {
       .page { padding-top: 22px; padding-bottom: 48px; }
@@ -810,32 +605,12 @@
       .theme-toggle { margin-left: 0; }
       .freshness { text-align: left; }
       .travel-key { grid-template-columns: 1fr; gap: 10px; }
-      .calendar-controls { align-items: flex-start; flex-direction: column; }
-      .view-switch { width: 100%; }
-      .view-btn { flex: 1; }
       .week-snapshot { grid-template-columns: 1fr; }
       .snapshot-day { min-height: 0; border-right: 0; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: 62px minmax(0, 1fr); gap: 8px 11px; }
       .snapshot-day:last-child { border-bottom: 0; }
       .snapshot-date { margin: 0; }
       .snapshot-entry, .snapshot-more, .snapshot-empty { margin-top: 0; }
-      .month-grid { grid-template-columns: 1fr; }
-      .month-weekday, .month-blank { display: none; }
-      .month-day, .month-day:nth-child(7n) { min-height: 0; padding: 11px 13px; border-right: 0; display: grid; grid-template-columns: 68px minmax(0, 1fr); gap: 6px 11px; }
-      .month-day:last-child { border-bottom: 0; }
-      .month-date { margin: 0; }
-      .month-entry, .month-pending { margin-top: 0; font-size: 10px; }
-      .month-entry b { font-size: 10px; }
       button.snapshot-more { min-height: 44px; margin-bottom: -11px; }
-      .day-strip { grid-template-columns: repeat(7, minmax(0, 1fr)); }
-      .day-btn { padding: 11px 2px 10px; }
-      .day-name { font-size: 10px; }
-      .day-date { font-size: 17px; }
-      .today-dot { font-size: 0; }
-      .today-dot::after { content: "•"; font-size: 16px; line-height: 10px; }
-      .schedule-panel { grid-template-columns: 1fr; padding: 17px; }
-      .schedule-date { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
-      .schedule-date p { margin: 0; text-align: right; }
-      .time-row { grid-template-columns: minmax(105px, 125px) 1fr; }
       .section-head { align-items: start; flex-direction: column; gap: 6px; }
       .activity-grid, .callout-grid { grid-template-columns: 1fr; }
       .card { padding: 17px; }
@@ -904,7 +679,6 @@
     .snapshot-day:last-child { border-right: 1px solid var(--line); }
     .snapshot-date { min-height: 64px; margin: 0; padding: 12px 15px; display: grid; grid-template-columns: 1fr auto; align-items: center; border-bottom: 1px solid var(--line); background: var(--surface-soft); }
     .snapshot-date span { grid-row: 1 / 3; font-size: 14px; color: var(--accent-strong); }
-    .snapshot-date strong { font-family: "Newsreader", serif; font-size: 25px; line-height: 1; }
     .snapshot-date small { font-size: 11px; color: var(--muted); text-align: right; }
     .nap-band { min-height: 50px; padding: 10px 15px; display: flex; align-items: center; gap: 12px; background: var(--nap); color: var(--muted); border-bottom: 1px solid var(--line); }
     .nap-band strong { color: var(--text); font-size: 14px; }
@@ -913,7 +687,6 @@
     .snapshot-entry { margin: 0; padding: 14px 15px; display: grid; grid-template-columns: 96px minmax(0,1fr); gap: 13px; border-top: 1px solid var(--line); font-size: 14px; line-height: 1.35; }
     .calendar-day-list > .snapshot-entry:first-child { border-top: 0; }
     .entry-time { color: var(--text); font-weight: 700; }
-    .entry-body h3 { margin: 0 0 7px; font-size: 17px; line-height: 1.25; }
     .entry-facts { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
     .entry-price, .entry-verify { display: inline-flex; align-items: center; min-height: 26px; padding: 3px 8px; border-radius: 7px; font-size: 12px; font-weight: 700; }
     .entry-price { color: var(--accent-strong); background: var(--accent-soft); }
@@ -940,11 +713,6 @@
     .snapshot-empty { margin: 0; padding: 18px 15px; font-size: 14px; }
     .category-sections { display: grid; gap: 12px; }
     .category-section { border: 1px solid var(--line); border-radius: 14px; background: var(--surface); overflow: hidden; }
-    .category-section summary { min-height: 56px; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; cursor: pointer; font-size: 18px; font-weight: 700; list-style: none; }
-    .category-section summary::-webkit-details-marker { display: none; }
-    .category-section summary::after { content: "+"; width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; background: var(--surface-soft); color: var(--accent-strong); }
-    .category-section[open] summary::after { content: "−"; }
-    .category-section summary small { margin-left: auto; color: var(--muted); font-size: 12px; font-weight: 600; }
     .category-section .activity-grid { padding: 0 14px 14px; grid-template-columns: 1fr; }
     .action { min-height: 44px; }
     .later-strip { margin: 40px 0 24px; }
@@ -1110,7 +878,6 @@
       font-size: 14px;
       font-weight: 700;
     }
-    .entry-calendar { margin-top: 2px; }
 
     .category-heading { margin: 0; }
     .category-toggle {
@@ -1135,7 +902,6 @@
     .category-content[hidden] { display: none; }
     .card h4 { margin: 0; font-size: 19px; line-height: 1.25; }
     .title-tags { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; margin-top: 4px; }
-    .card-calendar-links { display: flex; flex-wrap: wrap; gap: 8px 12px; }
 
     .later-lines .later-item { min-height: 70px; padding: 10px 2px; display: grid; grid-template-columns: 100px 1fr auto; gap: 2px 12px; align-items: center; border-bottom: 1px solid var(--line); }
     .later-lines .later-item > time { grid-row: 1 / 3; color: var(--accent-strong); font-size: 13px; font-weight: 700; }
@@ -1458,7 +1224,7 @@
         installHint.hidden = true;
       });
 
-      const calendarConfig = { startDate: '2026-10-09', dayCount: 31, weekDays: 7 };
+      const calendarConfig = { weekDays: 7 };
 
       // Dated snapshot shared by the coming-week and rolling-month views.
       function e(time, activity, venue, price, verified, napOverlap, status) {
@@ -1615,27 +1381,10 @@
         calendarData[key].sort(function (a, b) { return startMinutes(a.time) - startMinutes(b.time); });
       });
 
-      const schedule = {};
-
       const calendarMonths = ['January','February','March','April','May','June','July','August','September','October','November','December'];
       const calendarDays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-      const detailDayByDate = {
-        '2026-10-09':'fri', '2026-10-10':'sat', '2026-10-11':'sun',
-        '2026-10-12':'mon', '2026-10-13':'tue', '2026-10-14':'wed', '2026-10-15':'thu'
-      };
 
       function dateFromKey(key) { return new Date(key + 'T12:00:00'); }
-      function keyFromDate(date) {
-        const y = date.getFullYear();
-        const m = String(date.getMonth() + 1).padStart(2, '0');
-        const d = String(date.getDate()).padStart(2, '0');
-        return y + '-' + m + '-' + d;
-      }
-      function addCalendarDays(key, amount) {
-        const date = dateFromKey(key);
-        date.setDate(date.getDate() + amount);
-        return keyFromDate(date);
-      }
       function fullCalendarDate(key) {
         const date = dateFromKey(key);
         return calendarDays[date.getDay()] + ' ' + date.getDate() + ' ' + calendarMonths[date.getMonth()];
@@ -1647,47 +1396,6 @@
       function entryStatusClass(entry) { return entry.verified ? '' : ' check'; }
       function activityOptionCount(entries) {
         return entries.filter(Boolean).length;
-      }
-
-      function openCalendarDate(key) {
-        const detailDay = detailDayByDate[key];
-        if (detailDay) {
-          const detailButton = document.querySelector('.day-btn[data-day="' + detailDay + '"]');
-          if (detailButton) detailButton.click();
-        } else {
-          document.querySelectorAll('.day-btn').forEach(function (button) { button.setAttribute('aria-selected', 'false'); });
-          renderCalendarDetail(key);
-        }
-        const planner = document.getElementById('dailyPlanner');
-        planner.scrollIntoView({behavior:'smooth', block:'start'});
-        planner.focus({preventScroll:true});
-      }
-
-      function renderCalendarDetail(key) {
-        const entries = calendarData[key] || [];
-        document.getElementById('scheduleTitle').textContent = fullCalendarDate(key);
-        document.getElementById('scheduleCount').textContent = entries.length ? entries.length + (entries.length === 1 ? ' activity in the latest research' : ' activities in the latest research') : 'Nightly research not yet added';
-        const detailTimeline = document.getElementById('timeline');
-        detailTimeline.innerHTML = '';
-        if (!entries.length) {
-          const pendingRow = document.createElement('div');
-          pendingRow.className = 'time-row';
-          pendingRow.innerHTML = '<div class="time">To be checked</div><div><div class="time-title">No verified activities yet</div><div class="time-note">This date is waiting for the next nightly research pass.</div></div>';
-          detailTimeline.appendChild(pendingRow);
-        } else {
-          entries.forEach(function (entry) {
-            const row = document.createElement('div'); row.className = 'time-row';
-            const time = document.createElement('span'); time.className = 'time'; appendSemanticClockText(time, entry.time, key);
-            if (!time.querySelector('time')) { const datedLabel = document.createElement('time'); datedLabel.dateTime = key; datedLabel.textContent = entry.time; time.textContent = ''; time.appendChild(datedLabel); }
-            const content = document.createElement('div');
-            const title = document.createElement('div'); title.className = 'time-title'; title.textContent = entry.activity + (entry.verified ? '' : ' · check first');
-            const note = document.createElement('div'); note.className = 'time-note'; note.textContent = entry.venue + ' · ' + entry.price + (entry.status ? ' · ' + entry.status : '');
-            content.appendChild(title); content.appendChild(note); row.appendChild(time); row.appendChild(content); detailTimeline.appendChild(row);
-          });
-        }
-        const napRow = document.createElement('div'); napRow.className = 'time-row nap';
-        napRow.innerHTML = '<span class="time"><time datetime="' + key + 'T12:00">12:00</time> to <time datetime="' + key + 'T14:00">14:00</time></span><div><div class="time-title">Usual nap window</div><div class="time-note">Timing may shift; overlapping activities are still shown.</div></div>';
-        detailTimeline.appendChild(napRow);
       }
 
       function activityMetaFor(entry) {
@@ -1850,7 +1558,7 @@
         return line;
       }
 
-      function appendCalendarEntries(list, entries, visibleCount, compact, key, viewName) {
+      function appendCalendarEntries(list, entries, visibleCount, key, viewName) {
         entries.slice(0, visibleCount).forEach(function (entry) { list.appendChild(buildSnapshotEntry(entry, key)); });
         if (entries.length <= visibleCount) return;
 
@@ -1895,7 +1603,7 @@
           const date = document.createElement('header'); date.className = 'snapshot-date';
           const nap = document.createElement('div'); nap.className = 'nap-band'; nap.innerHTML = '<strong><time datetime="' + key + 'T12:00">12:00</time>–<time datetime="' + key + 'T14:00">14:00</time></strong><span>Usual nap window · timing may shift</span>';
           const list = document.createElement('div'); list.className = 'calendar-day-list';
-          if (entries.length) appendCalendarEntries(list, entries, 3, false, key, 'week');
+          if (entries.length) appendCalendarEntries(list, entries, 3, key, 'week');
           else { const empty = document.createElement('span'); empty.className = 'snapshot-empty'; empty.textContent = 'No researched activities for this day.'; list.appendChild(empty); }
           cell._allEntries = Array.from(list.querySelectorAll('.snapshot-entry'));
           const optionCount = cell._allEntries.length;
@@ -1938,34 +1646,6 @@
         }
         document.getElementById('visibleWeekRange').textContent = range;
         document.getElementById('rollingWeekRange').textContent = 'Rolling week: ' + range + '.';
-      }
-
-      function renderMonthSnapshot() {
-        const grid = document.getElementById('monthGrid');
-        grid.innerHTML = '';
-        ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].forEach(function (day) { const heading = document.createElement('div'); heading.className = 'month-weekday'; heading.textContent = day; grid.appendChild(heading); });
-        const start = dateFromKey(calendarConfig.startDate);
-        const blankCount = (start.getDay() + 6) % 7;
-        for (let blank = 0; blank < blankCount; blank += 1) { const spacer = document.createElement('div'); spacer.className = 'month-blank'; spacer.setAttribute('aria-hidden', 'true'); grid.appendChild(spacer); }
-        for (let index = 0; index < calendarConfig.dayCount; index += 1) {
-          const key = addCalendarDays(calendarConfig.startDate, index);
-          const entries = calendarData[key] || [];
-          const parts = shortCalendarDate(key);
-          const cell = document.createElement('div'); cell.className = 'month-day';
-          const dateButton = document.createElement('button'); dateButton.className = 'calendar-date-button'; dateButton.type = 'button';
-          dateButton.setAttribute('aria-label', 'Open details for ' + fullCalendarDate(key) + '. ' + (entries.length ? entries.length + ' activities' : 'research pending'));
-          const date = document.createElement('time'); date.className = 'month-date'; date.dateTime = key; date.innerHTML = '<strong>' + parts.date + '</strong> ' + parts.month;
-          dateButton.appendChild(date);
-          const list = document.createElement('div'); list.className = 'calendar-day-list';
-          appendCalendarEntries(list, entries, 2, true, key, 'month');
-          if (!entries.length) { const pending = document.createElement('span'); pending.className = 'month-pending'; pending.textContent = 'Nightly research pending'; list.appendChild(pending); }
-          cell.appendChild(dateButton); cell.appendChild(list);
-          cell.addEventListener('click', function (event) { if (!event.target.closest('.snapshot-more')) openCalendarDate(key); });
-          grid.appendChild(cell);
-        }
-        const endKey = addCalendarDays(calendarConfig.startDate, calendarConfig.dayCount - 1);
-        const end = dateFromKey(endKey);
-        document.getElementById('monthRange').textContent = start.getDate() + ' ' + calendarMonths[start.getMonth()] + ' – ' + end.getDate() + ' ' + calendarMonths[end.getMonth()] + ' ' + end.getFullYear();
       }
 
       const activities = [
@@ -2236,7 +1916,6 @@
 
       // Calendar links in the later-this-month strip.
       document.querySelectorAll('[data-calendar-key]').forEach(function (link) { const event = calendarEvents[link.dataset.calendarKey]; if (event) link.href = googleCalendarUrl(event); });
-      document.querySelectorAll('[data-new-title]').forEach(function (tag) { if (!isNewTitle(tag.dataset.newTitle)) tag.hidden = true; });
 
       // Compact, instant filters for every activity in the seven-day view, including overflow entries.
       const filterState = {category:'all', travel:'all', napSafe:false, free:false, dropIn:false};
