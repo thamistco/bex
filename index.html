@@ -1809,11 +1809,22 @@
         ['sports','Sports'], ['hubs','Family hubs'], ['music','Music & movement'],
         ['play','Drop-in play'], ['library','Library'], ['events','Events']
       ];
+      // A category missing from the list above goes under "Other". Without this one mistyped
+      // record stops the script and every activity disappears, as on 10 Oct.
+      const knownCategories = categoryOrder.map(function (category) { return category[0]; });
+      function sectionFor(a) {
+        const category = String(a.cat || '').split(' ')[0];
+        if (knownCategories.indexOf(category) !== -1) return category;
+        console.error('Unknown category "' + a.cat + '" on ' + a.title + '; shown under Other.');
+        return 'other';
+      }
+      const activitySections = activities.map(sectionFor);
+      if (activitySections.indexOf('other') !== -1) categoryOrder.push(['other', 'Other']);
       const sectionGrids = {};
       categoryOrder.forEach(function (category) {
         const section = document.createElement('section');
         section.className = 'category-section'; section.dataset.category = category[0];
-        const count = activities.filter(function (a) { return a.cat.split(' ')[0] === category[0]; }).length;
+        const count = activitySections.filter(function (section) { return section === category[0]; }).length;
         const heading = document.createElement('h3'); heading.className = 'category-heading';
         const toggle = document.createElement('button'); toggle.className = 'category-toggle'; toggle.type = 'button';
         const contentId = 'category-content-' + category[0]; toggle.setAttribute('aria-controls', contentId);
@@ -1824,8 +1835,8 @@
         heading.appendChild(toggle); section.appendChild(heading); section.appendChild(inner); grid.appendChild(section); sectionGrids[category[0]] = inner;
       });
 
-      activities.forEach(function (a) {
-        const primaryCategory = a.cat.split(' ')[0];
+      activities.forEach(function (a, index) {
+        const primaryCategory = activitySections[index];
         const card = document.createElement('article'); card.className = 'card'; card.dataset.category = primaryCategory;
         if (a.image) { const img=document.createElement('img'); img.className='card-photo'; img.loading='lazy'; img.decoding='async'; img.src=a.image; img.alt=a.alt || ''; card.appendChild(img); }
         const top = document.createElement('div'); top.className = 'card-top';

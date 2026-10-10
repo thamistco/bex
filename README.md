@@ -67,6 +67,10 @@ from those, so they cannot disagree with the cards:
   stops matching, the written text stays and the browser console says so.
 - **Phone numbers** written in the usual form (`01424 212545`, `0345 6080196`)
   become tappable links by themselves; write them as text, not as links.
+- **`cat`** is one of `sports`, `hubs`, `music`, `play`, `library`, `events`
+  (a second word, as in `'sports play'`, is allowed). Anything else lands in an
+  "Other" section and the browser console names it. Before that fallback, one
+  `cat:'community'` on 10 Oct blanked the whole page for everyone.
 
 ## If the installed app shows a 404
 
