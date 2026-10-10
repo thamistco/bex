@@ -71,6 +71,10 @@ from those, so they cannot disagree with the cards:
   (a second word, as in `'sports play'`, is allowed). Anything else lands in an
   "Other" section and the browser console names it. Before that fallback, one
   `cat:'community'` on 10 Oct blanked the whole page for everyone.
+- **Week sessions find their card by name.** A `calendarData` entry's activity
+  must be the card's exact `title`, or be listed in the `aliases` inside
+  `activityMetaFor`. One that matches no card still shows in the week, but has
+  no travel line or title link and the filters can miss it.
 
 ## If the installed app shows a 404
 
