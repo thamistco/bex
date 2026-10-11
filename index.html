@@ -1414,7 +1414,7 @@
           e('10:00–18:00','Leo’s Play Den','1–3 Pevensey Road, Eastbourne BN21 3HJ','Price unverified · call 01323 749022',false,true,'Hours and weekend price unverified · aggregator lists 1–5s £3.50 · cleanliness complaints on TripAdvisor'),
           e('17–18 & 20–31 Oct','Tibbs Farm Pumpkin Fest','Tibbs Farm, Udimore Road, Udimore, Rye TN31 6AR','Under-3s free · other prices unconfirmed',false,true,'Dates verified on Beyonk booking page · tickets via Beyonk · call 07596 741680'),
           e('17 Oct–1 Nov','Scotney Castle Monsters around the Moat','Scotney Castle, Lamberhurst, Tunbridge Wells TN3 8JN','Trail fee unverified',false,true,'Date conflict: 17 Oct–1 Nov vs 1 Oct–1 Nov; trail fee unverified · call 01892 893820er trail · call 01892 893820'),
-          e('Trail from Sat 17 · museum 10:00–17:00','Hastings Museum Bayeux short-films trail','Hastings Museum & Art Gallery, John’s Place, Bohemia Road, Hastings TN34 1ET','Free',true,false,'Year of the Normans short-films trail launch · free entry · drop-in · free onsite parking · verified 11 Oct'),,
+          e('Trail from Sat 17 · museum 10:00–17:00','Hastings Museum Bayeux short-films trail','Hastings Museum & Art Gallery, John’s Place, Bohemia Road, Hastings TN34 1ET','Free',true,false,'Year of the Normans short-films trail launch · free entry · drop-in · free onsite parking · verified 11 Oct'),
         ],
         '2026-10-18': [
           e('09:00–12:30 block','Little Kickers Little Kicks 18m–2½y','Bexhill Community Centre, Station Road, Bexhill TN40 1RE','£35/month',false,false,'Sunday sessions 9:00–12:30; exact class time unpublished · call 07802 864719 · nap-safe morning'),
@@ -1506,11 +1506,9 @@
         return values.year + '-' + values.month + '-' + values.day;
       }
       const pageTodayKey = londonTodayKey();
-      // This build embeds today through today + 7 so the rolling seven-day view stays full after midnight.
-      const embeddedWeekDates = [
-        '2026-10-10', '2026-10-11', '2026-10-12', '2026-10-13',
-        '2026-10-14', '2026-10-15', '2026-10-16', '2026-10-17'
-      ];
+      // The researched days are the days calendarData has. A separate hand-typed list fell a day
+      // behind on 11 Oct and hid every session on Sunday 18.
+      const embeddedWeekDates = Object.keys(calendarData).sort();
       const visibleWindowDates = embeddedWeekDates.filter(function (key) { return key >= pageTodayKey; }).slice(0, calendarConfig.weekDays);
       function isNewTitle(title) {
         const added = newlyAddedOn[title]; if (!added) return false;
