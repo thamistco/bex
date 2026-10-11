@@ -87,3 +87,7 @@ again from <https://thamistco.github.io/bex/>.
 The update must start from the current `index.html` in this repository. If it
 rebuilds the page from an older copy of its own, it will put back the `data:`
 manifest and the base64 photos and break installing again.
+
+Each night, change the "Checked … October 2026" date at the top of the page to
+the day the research was done; it is the one date on the page written by hand.
+The days the week shows come from `calendarData` by themselves.
