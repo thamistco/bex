@@ -321,11 +321,15 @@ body {
 .free-row { display: flex; gap: 0.75rem; overflow-x: auto; padding-bottom: 0.5rem; margin: 0 -1rem; padding-left: 1rem; padding-right: 1rem; }
 .free-card {
   flex: 0 0 10rem;
-  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+  border: 1.5px solid var(--accent); border-radius: var(--radius);
   padding: 0.75rem; font-size: 0.8125rem;
   cursor: pointer; font: inherit; color: inherit; text-align: left;
 }
-.free-card strong { display: block; font-size: 0.9375rem; margin-bottom: 0.25rem; }
+.free-card strong { display: block; font-size: 0.9375rem; margin-bottom: 0.25rem; color: var(--accent); }
+.free-card .free-detail { display: none; font-size: 0.8125rem; margin-top: 0.5rem; color: var(--ink); }
+.free-card.expanded .free-detail { display: block; }
+.free-card.expanded { flex-basis: 14rem; }
 
 /* Filter chips */
 .chip-row {
@@ -1053,12 +1057,16 @@ function renderToday() {
 
   // Free and easy
   const freebies = [
-    { t: 'Seafront promenade', m: ICONS.walk + ' Walkable · Free' },
-    { t: 'Egerton Park', m: ICONS.walk + ' Walkable · Free' },
-    { t: 'Bexhill Museum', m: ICONS.walk + ' Walkable · £4 adult' },
+    { t: 'Seafront promenade', m: ICONS.walk + ' Walkable · Free', d: 'Flat paved promenade from the Marina to the town centre. Good for prams, scooters and toddlers. Free.' },
+    { t: 'Egerton Park', m: ICONS.walk + ' Walkable · Free', d: 'Large park with playground, tennis courts and a cafe. About 15 minutes walk from the seafront. Free entry.' },
+    { t: 'Bexhill Museum', m: ICONS.walk + ' Walkable · £4 adult', d: 'Egerton Road, Bexhill. Adult £4, children (5-16) £2, under-5s free. Open Tue-Sun. Check opening hours before going.' },
   ];
-  document.getElementById('freeEasy').innerHTML = freebies.map(f =>
-    `<button class="free-card" data-free="1"><strong>${esc(f.t)}</strong><span>${f.m}</span></button>`).join('');
+  document.getElementById('freeEasy').innerHTML = freebies.map((f, i) =>
+    `<button class="free-card" data-free="${i}" aria-expanded="false"><strong>${esc(f.t)}</strong><span>${f.m}</span><span class="free-detail">${esc(f.d)}</span></button>`).join('');
+  document.querySelectorAll('.free-card').forEach(c => c.addEventListener('click', () => {
+    const exp = c.classList.toggle('expanded');
+    c.setAttribute('aria-expanded', exp);
+  }));
 }
 
 /* ============ WEEK TAB ============ */
