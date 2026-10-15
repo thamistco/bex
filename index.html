@@ -1,0 +1,2269 @@
+<!doctype html>
+<html lang="en-GB" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <!-- This page is intentionally unlisted. -->
+  <meta name="robots" content="noindex, nofollow">
+  <!-- Keep the manifest a real file beside this page. Chrome resolves the
+       manifest's start_url, scope and icons against the manifest's own address,
+       so a data: URL manifest loses all of them and Chrome will not install the
+       app. Paths inside manifest.json stay relative ("./"), so the manifest is
+       right wherever the site is served. That does not make renaming the
+       repository safe: every installed copy keeps the address it was installed
+       from, and a rename turns that address into a 404 on every phone. -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0e6e8c">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="color-scheme" content="light dark" />
+  <link rel="icon" href="icon-192.png" type="image/png" sizes="192x192">
+  <title>Family Activities</title>
+  <script>try { if (localStorage.getItem('fa-theme') === 'dark') document.documentElement.dataset.theme = 'dark'; } catch (e) {}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,600;6..72,700&display=swap">
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #eef8fc;
+      --surface: #ffffff;
+      --surface-soft: #e2f1f7;
+      --text: #153244;
+      --muted: #4b6574;
+      --line: #bfd8e4;
+      --accent: #056b91;
+      --accent-strong: #035475;
+      --accent-soft: #d8eef7;
+      --on-accent: #ffffff;
+      --coral: #7d421e;
+      --coral-soft: #f4e2cf;
+      --gold: #765300;
+      --gold-soft: #fff0b8;
+      --nap: #d7eaf2;
+      --walk: #176142;
+      --walk-soft: #d9f0e3;
+      --transit: #705100;
+      --transit-soft: #ffefb3;
+      --awkward: #884619;
+      --awkward-soft: #f7dfcc;
+      --drive: #873449;
+      --drive-soft: #f4dbe2;
+      --cat-sports: #056b91;
+      --cat-hubs: #275f8e;
+      --cat-music: #9b4f31;
+      --cat-play: #765300;
+      --cat-library: #476b38;
+      --cat-events: #8b3b4d;
+      --cat-cafes: #73533b;
+      --sunny: #f2bd36;
+      --shadow: 0 12px 30px rgba(15, 71, 96, .11);
+      --radius: 18px;
+    }
+
+    :root[data-theme="light"] { color-scheme: light; }
+
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #071923;
+      --surface: #0d2532;
+      --surface-soft: #143444;
+      --text: #edfaff;
+      --muted: #b9d3df;
+      --line: #315365;
+      --accent: #78c8e8;
+      --accent-strong: #a9e0f5;
+      --accent-soft: #173f53;
+      --on-accent: #06202b;
+      --coral: #e8b684;
+      --coral-soft: #473323;
+      --gold: #ffd665;
+      --gold-soft: #40381b;
+      --nap: #163845;
+      --walk: #8bd9ae;
+      --walk-soft: #173c2d;
+      --transit: #f6cf64;
+      --transit-soft: #3b3217;
+      --awkward: #efb280;
+      --awkward-soft: #462d1f;
+      --drive: #f2a0b3;
+      --drive-soft: #432530;
+      --cat-sports: #78c8e8;
+      --cat-hubs: #9ecbf1;
+      --cat-music: #f0ad8f;
+      --cat-play: #f6cf64;
+      --cat-library: #b5d69e;
+      --cat-events: #f1a5b5;
+      --cat-cafes: #e1b995;
+      --sunny: #ffd665;
+      --shadow: 0 16px 36px rgba(0, 0, 0, .32);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 124px; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "DM Sans", sans-serif;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    button, a { font: inherit; }
+    a { color: inherit; }
+    button { color: inherit; }
+    .skip-link {
+      position: fixed;
+      left: 16px;
+      top: 12px;
+      z-index: 20;
+      padding: 10px 14px;
+      border-radius: 8px;
+      background: var(--text);
+      color: var(--bg);
+      font-weight: 700;
+      text-decoration: none;
+      transform: translateY(-160%);
+    }
+    .skip-link:focus { transform: translateY(0); }
+    .page {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+      padding: 30px clamp(16px, 4vw, 46px) 72px;
+    }
+    .masthead {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 20px;
+      align-items: end;
+      margin-bottom: 24px;
+    }
+    h1, h2, h3 { margin: 0; }
+    h1 {
+      flex: 1 1 auto;
+      font-family: "Newsreader", serif;
+      font-size: clamp(38px, 6vw, 68px);
+      line-height: .98;
+      letter-spacing: -.035em;
+    }
+    .brand-heading {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+    .site-logo {
+      width: 52px;
+      height: 52px;
+      flex: 0 0 52px;
+      border-radius: 12px;
+      object-fit: cover;
+      box-shadow: 0 0 0 2px var(--surface), 0 0 0 3px var(--line);
+    }
+    .header-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+    .theme-toggle {
+      flex: 0 0 auto;
+      min-height: 44px;
+      margin-left: 5px;
+      padding: 8px 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--surface);
+      color: var(--accent-strong);
+      box-shadow: 0 4px 14px rgba(15, 71, 96, .08);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .theme-toggle:hover { border-color: var(--accent); background: var(--surface-soft); }
+    .theme-toggle[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
+    .theme-toggle-mark {
+      width: 17px;
+      height: 17px;
+      display: inline-block;
+      border: 2px solid currentColor;
+      border-radius: 50%;
+      background: var(--sunny);
+      box-shadow: inset 6px -3px 0 var(--surface);
+    }
+    .theme-toggle[aria-pressed="true"] .theme-toggle-mark {
+      background: var(--sunny);
+      box-shadow: none;
+    }
+    .install-button {
+      min-height: 44px;
+      padding: 8px 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--accent);
+      border-radius: 999px;
+      background: var(--accent);
+      color: var(--on-accent);
+      box-shadow: 0 4px 14px rgba(15, 71, 96, .1);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .install-button:hover { background: var(--accent-strong); border-color: var(--accent-strong); }
+    .install-button:focus-visible,
+    .theme-toggle:focus-visible {
+      outline: 3px solid var(--sunny);
+      outline-offset: 3px;
+    }
+    .install-button[hidden], .install-hint[hidden] { display: none; }
+    .install-hint {
+      flex-basis: 100%;
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .install-prompt {
+      margin: -2px 0 20px;
+      padding: 16px;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 13px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+    .install-prompt[hidden] { display: none; }
+    .install-prompt-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      object-fit: cover;
+      box-shadow: 0 0 0 1px var(--line);
+    }
+    .install-prompt h2 { margin: 0 0 2px; font-family: "Newsreader", serif; font-size: 23px; line-height: 1.05; }
+    .install-prompt p { margin: 0; color: var(--muted); font-size: 14px; }
+    .install-prompt-actions { display: flex; gap: 8px; }
+    .install-prompt-actions button {
+      min-height: 44px;
+      padding: 9px 13px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--surface);
+      color: var(--accent-strong);
+      cursor: pointer;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .install-prompt-actions .primary { border-color: var(--accent); background: var(--accent); color: var(--on-accent); }
+    .install-prompt-actions .primary:hover { background: var(--accent-strong); border-color: var(--accent-strong); }
+    @media (max-width: 620px) {
+      .install-prompt { grid-template-columns: auto minmax(0, 1fr); align-items: start; }
+      .install-prompt-actions { grid-column: 1 / -1; }
+      .install-prompt-actions button { flex: 1; }
+    }
+    .week {
+      margin: 9px 0 0;
+      color: var(--muted);
+      font-size: 17px;
+      font-weight: 600;
+    }
+    .freshness {
+      text-align: right;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .freshness strong {
+      display: block;
+      color: var(--accent-strong);
+      font-size: 14px;
+    }
+
+    .travel-key {
+      display: grid;
+      grid-template-columns: minmax(220px, .8fr) 1.2fr;
+      gap: 18px;
+      align-items: center;
+      margin: 0 0 18px;
+      padding: 15px 17px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+    }
+    .travel-key-copy { grid-column: 1 / -1; }
+    .travel-key-copy strong { display: block; font-size: 14px; }
+    .travel-key-copy span { display: block; margin-top: 2px; color: var(--muted); font-size: 12px; }
+    .legend-group strong { display: block; margin-bottom: 7px; font-size: 12px; color: var(--muted); }
+    .travel-key-items, .category-key { display: flex; flex-wrap: wrap; gap: 7px; }
+    .category-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--category-color);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .category-chip::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+    .category-chip.sports { --category-color: var(--cat-sports); }
+    .category-chip.hubs { --category-color: var(--cat-hubs); }
+    .category-chip.music { --category-color: var(--cat-music); }
+    .category-chip.play { --category-color: var(--cat-play); }
+    .category-chip.library { --category-color: var(--cat-library); }
+    .category-chip.events { --category-color: var(--cat-events); }
+    .category-chip.cafes { --category-color: var(--cat-cafes); }
+    .travel-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      width: fit-content;
+      padding: 4px 8px;
+      border-radius: 7px;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+    .travel-pill::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+      flex: 0 0 auto;
+    }
+    .travel-pill.walk { color: var(--walk); background: var(--walk-soft); }
+    .travel-pill.transit { color: var(--transit); background: var(--transit-soft); }
+    .travel-pill.awkward { color: var(--awkward); background: var(--awkward-soft); }
+    .travel-pill.drive { color: var(--drive); background: var(--drive-soft); }
+
+    .calendar-overview { margin: 0 0 26px; }
+    .calendar-overview .section-head { margin-bottom: 12px; }
+    .calendar-intro { max-width: 620px; }
+    .verification-key { display: flex; flex-wrap: wrap; gap: 8px; }
+    .week-snapshot {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--surface);
+    }
+    .snapshot-day {
+      appearance: none;
+      min-width: 0;
+      min-height: 178px;
+      padding: 13px 11px;
+      border: 0;
+      border-right: 1px solid var(--line);
+      background: var(--surface);
+      text-align: left;
+      cursor: pointer;
+    }
+    .snapshot-day:last-child { border-right: 0; }
+    .calendar-day-list { min-width: 0; }
+    .snapshot-date { display: block; margin-bottom: 10px; font-size: 12px; color: var(--muted); font-weight: 700; }
+    .snapshot-more, .snapshot-empty { display: block; margin-top: 9px; color: var(--muted); font-weight: 600; }
+    button.snapshot-more {
+      width: 100%;
+      min-height: 32px;
+      margin-bottom: -7px;
+      padding: 5px 0;
+      border: 0;
+      background: transparent;
+      color: var(--accent-strong);
+      text-align: left;
+      cursor: pointer;
+    }
+    button.snapshot-more:hover { text-decoration: underline; }
+    button.snapshot-more[hidden] { display: none; }
+    .calendar-extra[hidden] { display: none; }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 20px;
+      margin: 0 0 15px;
+    }
+    .section-head h2 {
+      font-family: "Newsreader", serif;
+      font-size: clamp(29px, 4vw, 40px);
+      line-height: 1;
+    }
+    .section-head p { margin: 0; color: var(--muted); font-size: 14px; }
+    .activity-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 19px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      min-width: 0;
+      box-shadow: inset 0 4px 0 var(--category-color, var(--accent));
+    }
+    .card-top {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 12px;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+    .card-top > :first-child { flex: 1 1 14em; min-width: 0; }
+    .category {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--category-color, var(--accent-strong));
+      margin-bottom: 5px;
+    }
+    .category::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+      flex: 0 0 auto;
+    }
+    .card[data-category="sports"] { --category-color: var(--cat-sports); }
+    .card[data-category="hubs"] { --category-color: var(--cat-hubs); }
+    .card[data-category="music"] { --category-color: var(--cat-music); }
+    .card[data-category="play"] { --category-color: var(--cat-play); }
+    .card[data-category="library"] { --category-color: var(--cat-library); }
+    .card[data-category="events"] { --category-color: var(--cat-events); }
+    .card[data-category="cafes"] { --category-color: var(--cat-cafes); }
+    .card-photo {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      border-radius: 11px;
+      background: var(--surface-soft);
+    }
+    .price {
+      flex: 0 0 auto;
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+      padding: 5px 8px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      max-width: 100%;
+    }
+    .meta { display: grid; gap: 8px; }
+    .meta-row {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 8px;
+      font-size: 16px;
+    }
+    .meta-label { color: var(--muted); font-weight: 600; }
+    .meta-value { min-width: 0; overflow-wrap: anywhere; }
+    .travel-detail { display: block; margin-top: 4px; color: var(--muted); line-height: 1.4; }
+    .note {
+      margin: 0;
+      padding: 10px 12px;
+      background: var(--surface-soft);
+      border-radius: 10px;
+      font-size: 16px;
+      color: var(--muted);
+      overflow-wrap: anywhere;
+    }
+    .note.warn { background: var(--gold-soft); color: var(--text); }
+    .actions {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 10px;
+      align-items: stretch;
+      margin-top: auto;
+      padding-top: 2px;
+    }
+    .actions.actions-many { flex-wrap: wrap; }
+    .action {
+      flex: 1 1 0;
+      min-width: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 10px 16px;
+      border: 1px solid var(--accent);
+      border-radius: 10px;
+      background: var(--accent);
+      color: var(--on-accent);
+      box-shadow: 0 3px 10px rgba(15, 71, 96, .12);
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.25;
+      text-align: center;
+      text-decoration: none;
+    }
+    .action:hover { background: var(--accent-strong); border-color: var(--accent-strong); }
+    .action.secondary {
+      background: var(--surface);
+      color: var(--accent-strong);
+      border-color: var(--line);
+      box-shadow: none;
+    }
+    .action.secondary:hover { background: var(--accent-soft); border-color: var(--accent); }
+    .action.calendar-action { color: var(--accent-strong); }
+    .action.copy-btn { color: var(--muted); }
+    .actions.actions-many .action { flex-basis: calc(50% - 5px); }
+    .card .action:focus-visible {
+      outline: 3px solid var(--accent-strong);
+      outline-offset: 3px;
+    }
+    .callout-grid {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 14px;
+      margin: 38px 0 18px;
+    }
+    .panel {
+      border-radius: 22px;
+      padding: 24px;
+      background: var(--text);
+      color: var(--bg);
+    }
+    .panel.alt {
+      background: var(--coral-soft);
+      color: var(--text);
+      content-visibility: visible;
+      contain: none;
+    }
+    .panel h2 {
+      font-family: "Newsreader", serif;
+      font-size: 31px;
+      line-height: 1;
+      margin-bottom: 14px;
+    }
+    .ahead-list { display: grid; gap: 11px; }
+    .ahead-item {
+      padding-top: 11px;
+      border-top: 1px solid color-mix(in srgb, currentColor 22%, transparent);
+    }
+    .ahead-item:first-child { border-top: 0; padding-top: 0; }
+    .ahead-item strong { display: block; }
+    .ahead-item strong .travel-pill { margin-left: 6px; vertical-align: middle; }
+    .ahead-item span { font-size: 16px; opacity: .9; }
+    .ahead-item a { padding-block: 10px; }
+    .ahead-item .ahead-when { display: block; font-weight: 600; }
+    .ahead-when time, .ahead-item a { white-space: nowrap; }
+    .ahead-empty { margin: 0; opacity: .9; }
+    .ahead-item .travel-pill { opacity: 1; }
+    .fallbacks .travel-pill { margin-right: 5px; }
+    .fallbacks { margin: 0; padding-left: 18px; }
+    .fallbacks li { margin: 8px 0; }
+    .source-line {
+      color: var(--muted);
+      font-size: 12px;
+      margin: 18px 2px 0;
+    }
+    .source-line a { color: var(--accent-strong); }
+    .footer {
+      margin-top: 42px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: max(20px, env(safe-area-inset-bottom));
+      transform: translateX(-50%) translateY(20px);
+      background: var(--text);
+      color: var(--bg);
+      padding: 10px 15px;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s, transform .2s;
+      z-index: 10;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    @media (max-width: 760px) {
+      .page { padding-top: 22px; padding-bottom: 48px; }
+      .masthead { grid-template-columns: 1fr; gap: 8px; }
+      .brand-heading { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px 10px; }
+      .site-logo { width: 48px; height: 48px; flex-basis: 48px; border-radius: 11px; }
+      .header-actions { grid-column: 2; justify-self: start; }
+      .theme-toggle { margin-left: 0; }
+      .freshness { text-align: left; }
+      .travel-key { grid-template-columns: 1fr; gap: 10px; }
+      .week-snapshot { grid-template-columns: 1fr; }
+      .snapshot-day { min-height: 0; border-right: 0; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: 62px minmax(0, 1fr); gap: 8px 11px; }
+      .snapshot-day:last-child { border-bottom: 0; }
+      .snapshot-date { margin: 0; }
+      .snapshot-entry, .snapshot-more, .snapshot-empty { margin-top: 0; }
+      button.snapshot-more { min-height: 44px; margin-bottom: -11px; }
+      .section-head { align-items: start; flex-direction: column; gap: 6px; }
+      .activity-grid, .callout-grid { grid-template-columns: 1fr; }
+      .card { padding: 17px; }
+      .footer { flex-direction: column; }
+    }
+
+    @media (max-width: 390px) {
+      .meta-row { grid-template-columns: 64px 1fr; }
+    }
+
+    /* Mobile-first rolling week */
+    body { font-size: 16px; }
+    .page { width: min(920px, 100%); padding: 22px clamp(14px, 4vw, 36px) 56px; }
+    .masthead { margin-bottom: 18px; }
+    h1 { font-size: clamp(38px, 10vw, 58px); }
+    .sticky-days {
+      position: sticky;
+      top: 0;
+      z-index: 8;
+      display: grid;
+      grid-template-columns: repeat(var(--visible-days, 7), minmax(0, 1fr));
+      margin: 0 calc(clamp(14px, 4vw, 36px) * -1) 26px;
+      padding: 8px clamp(8px, 2vw, 18px);
+      background: color-mix(in srgb, var(--bg) 94%, transparent);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(12px);
+    }
+    .sticky-days button {
+      position: relative;
+      min-width: 0;
+      min-height: 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border: 0;
+      border-radius: 9px;
+      background: transparent;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .sticky-days button:hover { background: var(--surface-soft); color: var(--text); }
+    .sticky-days button[aria-current="true"] {
+      background: var(--text);
+      color: var(--bg);
+      box-shadow: inset 0 0 0 2px currentColor;
+    }
+    .sticky-days button[aria-current="true"]::after {
+      content: "✓";
+      content: "✓" / "";
+      position: absolute;
+      top: 2px;
+      right: 5px;
+      font-size: 10px;
+      line-height: 1;
+      font-weight: 800;
+    }
+    .sticky-days button span { color: inherit; font-size: 17px; line-height: 1.1; }
+    .week-heading { align-items: flex-start; }
+    .calendar-overview { margin-bottom: 38px; }
+    .week-snapshot { display: grid; grid-template-columns: 1fr; gap: 16px; overflow: visible; border: 0; background: transparent; }
+    .snapshot-day { min-height: 0; padding: 0; display: block; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: var(--surface); cursor: default; scroll-margin-top: 124px; }
+    .snapshot-day[aria-current="date"] { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
+    .snapshot-day:last-child { border-right: 1px solid var(--line); }
+    .snapshot-date { min-height: 64px; margin: 0; padding: 12px 15px; display: grid; grid-template-columns: 1fr auto; align-items: center; border-bottom: 1px solid var(--line); background: var(--surface-soft); }
+    .snapshot-date span { grid-row: 1 / 3; font-size: 14px; color: var(--accent-strong); }
+    .snapshot-date small { font-size: 12px; color: var(--muted); text-align: right; }
+    .nap-band { min-height: 50px; padding: 10px 15px; display: flex; align-items: center; gap: 12px; background: var(--nap); color: var(--muted); border-bottom: 1px solid var(--line); }
+    .nap-band strong { color: var(--text); font-size: 14px; }
+    .nap-band span { font-size: 13px; }
+    .calendar-day-list { display: grid; }
+    .snapshot-entry { margin: 0; padding: 14px 15px; display: grid; grid-template-columns: 96px minmax(0,1fr); gap: 13px; border-top: 1px solid var(--line); font-size: 14px; line-height: 1.35; }
+    .calendar-day-list > .snapshot-entry:first-child { border-top: 0; }
+    .entry-time { color: var(--text); font-weight: 700; }
+    .entry-facts { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+    .entry-price, .entry-verify { display: inline-flex; align-items: center; min-height: 26px; padding: 3px 8px; border-radius: 7px; font-size: 12px; font-weight: 700; }
+    .entry-price { color: var(--accent-strong); background: var(--accent-soft); }
+    .entry-verify.verified { color: var(--walk); background: var(--walk-soft); }
+    .entry-verify.check { color: var(--gold); background: var(--gold-soft); }
+    .entry-body p { margin: 8px 0 0; color: var(--muted); font-size: 16px; }
+    .entry-actions {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 8px;
+      align-items: stretch;
+      margin-top: 10px;
+    }
+    .entry-actions .action {
+      flex: 1 1 0;
+      min-width: 0;
+      padding: 9px 8px;
+      font-size: 14px;
+      box-shadow: none;
+    }
+    .calendar-extra { display: grid; }
+    .calendar-extra[hidden] { display: none; }
+    button.snapshot-more { min-height: 48px; margin: 0; padding: 8px 15px; border-top: 1px solid var(--line); color: var(--accent-strong); font-size: 16px; }
+    .snapshot-empty { margin: 0; padding: 18px 15px; font-size: 14px; }
+    .stale-note { border: 1px solid var(--line); border-radius: 16px; background: var(--surface); font-size: 16px; }
+    .category-sections { display: grid; gap: 12px; }
+    .category-section { border: 1px solid var(--line); border-radius: 14px; background: var(--surface); overflow: hidden; }
+    .category-section .activity-grid { padding: 0 14px 14px; grid-template-columns: 1fr; }
+    .action { min-height: 44px; }
+    .later-strip { margin: 40px 0 24px; }
+    .later-lines { border-top: 1px solid var(--line); }
+    .later-lines a { min-height: 62px; padding: 10px 2px; display: grid; grid-template-columns: 100px 1fr; gap: 2px 12px; align-items: center; border-bottom: 1px solid var(--line); text-decoration: none; }
+    .later-lines time { grid-row: 1 / 3; color: var(--accent-strong); font-size: 13px; font-weight: 700; }
+    .later-lines strong { font-size: 15px; }
+    .later-lines span { color: var(--muted); font-size: 16px; }
+
+    @media (min-width: 761px) {
+      .activity-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .category-section .activity-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    }
+
+    @media (max-width: 760px) {
+      .travel-key { padding: 13px; }
+      .travel-key .legend-group { display: block; }
+      .travel-key .legend-group strong { margin-bottom: 5px; }
+      .travel-key-items, .category-key { gap: 5px; }
+      .travel-key .travel-pill { padding: 3px 6px; font-size: 12px; }
+      .section-head h2 { font-size: 31px; }
+      .callout-grid { margin-top: 30px; }
+      .panel { padding: 19px; }
+    }
+
+    @media (max-width: 460px) {
+      .snapshot-entry { grid-template-columns: 1fr; gap: 5px; }
+      .entry-time { color: var(--accent-strong); font-size: 13px; }
+      .later-lines a { grid-template-columns: 1fr; gap: 3px; }
+      .later-lines time { grid-row: auto; }
+      .sticky-days { padding-left: 4px; padding-right: 4px; }
+      .sticky-days button { font-size: 12px; }
+    }
+
+    /* Usability and accessibility enhancements */
+    :where(a, button, summary, [tabindex]):focus-visible {
+      outline: 3px solid var(--accent-strong);
+      outline-offset: 3px;
+      border-radius: 6px;
+    }
+    .today-glance {
+      min-height: 52px;
+      margin: 0 0 14px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--accent-soft);
+      color: var(--text);
+    }
+    .today-glance h2 { flex: 0 0 auto; font-family: "Newsreader", serif; font-size: 18px; line-height: 1; }
+    .today-glance p { margin: 0; font-size: 14px; }
+    .today-glance .glance-divider { color: var(--muted); }
+
+    .filter-dock {
+      position: sticky;
+      top: 64px;
+      z-index: 7;
+      margin: 0 0 16px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: color-mix(in srgb, var(--surface) 96%, transparent);
+      box-shadow: 0 6px 18px rgba(15,71,96,.10);
+      backdrop-filter: blur(12px);
+    }
+    .filter-dock-head { display: flex; align-items: center; gap: 8px; padding: 4px; }
+    .filter-toggle, .filter-reset {
+      min-height: 44px;
+      border: 0;
+      border-radius: 9px;
+      background: transparent;
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .filter-toggle { flex: 1; padding: 8px 10px; text-align: left; }
+    #activeFilterSummary { color: var(--muted); font-weight: 600; }
+    #activeFilterSummary::before { content: " · "; content: " · " / ""; }
+    .filter-toggle::after { content: "+"; content: "+" / ""; float: right; color: var(--accent-strong); font-size: 19px; }
+    .filter-toggle[aria-expanded="true"]::after { content: "−"; content: "−" / ""; }
+    .filter-reset { padding: 8px 12px; color: var(--accent-strong); }
+    .filter-reset:disabled { color: var(--muted); opacity: .55; cursor: default; }
+    .filter-panel { padding: 7px 8px 10px; border-top: 1px solid var(--line); }
+    .filter-panel[hidden] { display: none; }
+    .filter-group { display: block; }
+    .filter-group + .filter-group { margin-top: 4px; padding-top: 4px; border-top: 1px solid var(--line); }
+    .filter-group-head { display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 4px 2px; cursor: pointer; list-style: none; }
+    .filter-group-head::-webkit-details-marker { display: none; }
+    .filter-group-head::after { content: "+"; content: "+" / ""; margin-left: 2px; color: var(--accent-strong); font-size: 19px; font-weight: 700; }
+    .filter-group[open] > .filter-group-head::after { content: "\2212"; content: "\2212" / ""; }
+    .filter-group-label { font-weight: 700; font-size: 13px; }
+    .filter-group-current { margin-left: auto; color: var(--muted); font-weight: 600; font-size: 12px; text-align: right; }
+    .filter-group[open] .filter-group-current { color: var(--accent-strong); }
+    .filter-group-options { display: flex; flex-wrap: wrap; gap: 7px; padding: 6px 0 10px; }
+    .week-filter {
+      min-height: 44px;
+      padding: 7px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    .week-filter:hover { border-color: var(--accent); }
+    .week-filter:focus-visible, .filter-toggle:focus-visible, .filter-reset:focus-visible {
+      outline: 3px solid var(--sunny);
+      outline-offset: 2px;
+    }
+    .week-filter[aria-pressed="true"] { border-color: var(--text); background: var(--text); color: var(--bg); }
+    .week-filter[data-travel-filter]:not([data-travel-filter="all"])::before {
+      content: "";
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      margin-right: 6px;
+      border-radius: 50%;
+      background: var(--travel-filter-color);
+    }
+    .week-filter[data-travel-filter="walk"] { --travel-filter-color: var(--walk); }
+    .week-filter[data-travel-filter="transit"] { --travel-filter-color: var(--transit); }
+    .week-filter[data-travel-filter="awkward"] { --travel-filter-color: var(--awkward); }
+    .week-filter[data-travel-filter="drive"] { --travel-filter-color: var(--drive); }
+    .week-filter[data-travel-filter][aria-pressed="true"]::before { background: currentColor; }
+    .filter-status { margin: 7px 3px 0; color: var(--muted); font-size: 12px; }
+    .entry-filtered-out { display: none !important; }
+    .filter-empty { padding: 16px 15px; color: var(--muted); font-size: 14px; }
+    .filter-done { display: none; }
+    @media (max-width: 760px) {
+      /* On a phone the open panel covers much of the screen; close it from the bottom. */
+      .filter-done {
+        display: block;
+        width: 100%;
+        min-height: 44px;
+        margin-top: 8px;
+        border: 1px solid var(--accent);
+        border-radius: 999px;
+        background: var(--accent);
+        color: var(--on-accent);
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .filter-done:focus-visible { outline: 3px solid var(--sunny); outline-offset: 2px; }
+    }
+
+    .snapshot-date h3 { margin: 0; font-family: "Newsreader", serif; font-size: 25px; line-height: 1; }
+    .entry-body h4 { margin: 0 0 7px; font-size: 17px; line-height: 1.25; }
+    .source-title-link {
+      padding-block: 8px;
+      color: inherit;
+      text-decoration-line: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+      text-decoration-color: color-mix(in srgb, var(--accent) 55%, transparent);
+    }
+    .source-title-link .title-tail { white-space: nowrap; }
+    .source-title-link .title-tail::after {
+      content: "↗";
+      content: "↗" / "";
+      display: inline-block;
+      margin-left: .3em;
+      color: var(--accent-strong);
+      font-family: "DM Sans", sans-serif;
+      font-size: .78em;
+      font-weight: 700;
+      line-height: 1;
+      text-decoration: none;
+    }
+    .source-title-link:hover { color: var(--accent-strong); text-decoration-color: currentColor; }
+    .entry-travel { color: var(--muted); font-size: 12px; font-weight: 650; }
+    .new-tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 2px 7px;
+      border-radius: 7px;
+      background: var(--coral-soft);
+      color: var(--coral);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .calendar-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      color: var(--accent-strong);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .category-heading { margin: 0; }
+    .category-toggle {
+      width: 100%;
+      min-height: 56px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: 0;
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+      text-align: left;
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .category-toggle::after { content: "+"; content: "+" / ""; width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; background: var(--surface-soft); color: var(--accent-strong); }
+    .category-toggle[aria-expanded="true"]::after { content: "−"; content: "−" / ""; }
+    .category-toggle small { margin-left: auto; color: var(--muted); font-size: 12px; font-weight: 600; }
+    .category-content[hidden] { display: none; }
+    .card h4 { margin: 0; font-size: 19px; line-height: 1.25; }
+    .title-tags { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; margin-top: 4px; }
+
+    .later-lines .later-item { min-height: 70px; padding: 10px 2px; display: grid; grid-template-columns: 100px minmax(0, 1fr) auto; gap: 2px 12px; align-items: center; border-bottom: 1px solid var(--line); }
+    .later-lines .later-item > time { grid-row: 1 / 3; color: var(--accent-strong); font-size: 13px; font-weight: 700; }
+    .later-lines .later-item a { min-height: 44px; padding: 0; display: inline-flex; align-items: center; border: 0; }
+    .later-main-link { grid-column: 2; grid-row: 1; align-self: end; font-size: 15px; font-weight: 700; text-decoration: none; }
+    .later-copy { grid-column: 2; grid-row: 2; align-self: start; color: var(--muted); font-size: 14px; overflow-wrap: anywhere; }
+    .later-item .calendar-link { grid-column: 3; grid-row: 1 / 3; white-space: nowrap; }
+    .later-main-link:hover, .calendar-link:hover { text-decoration: underline; }
+
+    .back-to-top {
+      position: fixed;
+      right: max(14px, env(safe-area-inset-right));
+      bottom: max(16px, env(safe-area-inset-bottom));
+      z-index: 9;
+      min-width: 44px;
+      min-height: 44px;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--text);
+      color: var(--bg);
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      font-weight: 800;
+    }
+    .back-to-top[hidden] { display: none; }
+
+    @media (max-width: 460px) {
+      .today-glance { align-items: flex-start; flex-direction: column; gap: 4px; }
+      .filter-dock { top: 62px; }
+      .filter-panel { max-height: min(56vh, 390px); overflow-y: auto; }
+      .week-filter { flex: 1 1 calc(50% - 7px); }
+      .later-lines .later-item { grid-template-columns: minmax(0, 1fr) auto; gap: 3px 10px; }
+      .later-lines .later-item > time { grid-row: auto; grid-column: 1 / -1; }
+      .later-main-link, .later-copy { grid-column: 1; }
+      .later-item .calendar-link { grid-column: 2; grid-row: 2 / 4; }
+      .actions { gap: 8px; }
+      .actions .action { padding-left: 8px; padding-right: 8px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+      .toast { transition: none; }
+    }
+  </style>
+</head>
+<body>
+<noscript><p style="padding:1rem;font-family:system-ui">This guide needs JavaScript to show the week view. The listings are updated daily at https://thamistco.github.io/bex/</p></noscript>
+  <a class="skip-link" href="#activities">Skip to activities</a>
+  <div class="page">
+    <header class="masthead">
+      <div>
+        <div class="brand-heading">
+          <img class="site-logo" src="images/logo-156.webp" alt="" width="52" height="52">
+          <h1>Family activities</h1>
+          <div class="header-actions">
+            <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false">
+              <span class="theme-toggle-mark" aria-hidden="true"></span>
+              <span>Dark mode</span>
+            </button>
+            <button class="install-button" id="installApp" type="button" hidden>Install app</button>
+            <p class="install-hint" id="installHint" role="status" hidden></p>
+          </div>
+        </div>
+        <p class="week" id="visibleWeekRange">Thu 15 – Wed 21 Oct 2026</p>
+      </div>
+      <div class="freshness"><strong>Checked 15 October 2026</strong>For a child under 2 · usual nap 12:00 to 14:00</div>
+    </header>
+
+    <section class="install-prompt" id="installPrompt" aria-labelledby="installPromptTitle" hidden>
+      <img class="install-prompt-icon" src="images/logo-156.webp" alt="" width="52" height="52">
+      <div>
+        <h2 id="installPromptTitle">Add to your phone</h2>
+        <p id="installPromptText">Open Family Activities from your home screen. It opens the latest version, or the last one you saw when there is little or no signal.</p>
+      </div>
+      <div class="install-prompt-actions">
+        <button type="button" id="installPromptClose">Not now</button>
+        <button class="primary" type="button" id="installPromptAction">Install app</button>
+      </div>
+    </section>
+
+    <main id="activities" tabindex="-1">
+    <section class="today-glance" aria-labelledby="todayGlanceTitle">
+      <h2 id="todayGlanceTitle">Today at a glance</h2>
+      <p id="todayGlanceText">Loading today’s activities…</p>
+    </section>
+
+    <aside class="travel-key" aria-label="Colour guide">
+      <div class="travel-key-copy"><strong>Travel from the Marina area</strong><span>The exact home address stays private. Badges show whether each outing is walkable, straightforward by public transport, awkward without a car, or best driven.</span></div>
+      <div class="legend-group">
+        <strong>Travel colour</strong>
+        <div class="travel-key-items">
+          <span class="travel-pill walk">Walkable</span>
+          <span class="travel-pill transit">Easy public transport</span>
+          <span class="travel-pill awkward">Longer or needs a change</span>
+          <span class="travel-pill drive">Best by car</span>
+        </div>
+      </div>
+      <div class="legend-group">
+        <strong>Activity colour</strong>
+        <div class="category-key">
+          <span class="category-chip sports">Sports</span><span class="category-chip hubs">Family hubs</span><span class="category-chip music">Music &amp; movement</span><span class="category-chip play">Drop-in play</span><span class="category-chip library">Library</span><span class="category-chip events">Events</span>
+        </div>
+      </div>
+    </aside>
+
+    <nav class="sticky-days" id="stickyDays" aria-label="Jump to a day"></nav>
+
+    <section class="calendar-overview" aria-labelledby="calendarTitle">
+      <div class="section-head week-heading">
+        <div>
+          <h2 id="calendarTitle">The next seven days</h2>
+          <p class="calendar-intro">Activities within each day are in start-time order. Prices, travel and booking details are shown together; details that still need a call are marked clearly.</p>
+        </div>
+        <div class="verification-key" role="group" aria-label="Verification status">
+          <span class="entry-verify verified">Verified for this date</span>
+          <span class="entry-verify check">Call to check</span>
+        </div>
+      </div>
+      <div class="filter-dock" id="filterDock">
+        <div class="filter-dock-head">
+          <button class="filter-toggle" id="filterToggle" type="button" aria-expanded="false" aria-controls="filterPanel">Filters <span id="activeFilterSummary">All activities</span></button>
+          <button class="filter-reset" id="filterReset" type="button" disabled>Reset</button>
+        </div>
+        <div class="filter-panel" id="filterPanel" hidden>
+          <details class="filter-group" name="filter-sections" aria-label="Activity category">
+            <summary class="filter-group-head"><span class="filter-group-label">Activity category</span><span class="filter-group-current" data-current-for="category">All</span></summary>
+            <div class="filter-group-options">
+            <button class="week-filter" type="button" data-category-filter="all" aria-pressed="true">All</button>
+            <button class="week-filter" type="button" data-category-filter="soft-play" aria-pressed="false">Soft play</button>
+            <button class="week-filter" type="button" data-category-filter="swimming" aria-pressed="false">Swimming</button>
+            <button class="week-filter" type="button" data-category-filter="music-rhyme" aria-pressed="false">Music and rhyme</button>
+            <button class="week-filter" type="button" data-category-filter="libraries-story" aria-pressed="false">Libraries and story</button>
+            <button class="week-filter" type="button" data-category-filter="outdoors" aria-pressed="false">Outdoors</button>
+            <button class="week-filter" type="button" data-category-filter="special" aria-pressed="false">Special events</button>
+            </div>
+          </details>
+          <details class="filter-group" name="filter-sections" aria-label="Travel from the Marina area">
+            <summary class="filter-group-head"><span class="filter-group-label">Travel</span><span class="filter-group-current" data-current-for="travel">All travel</span></summary>
+            <div class="filter-group-options">
+            <button class="week-filter" type="button" data-travel-filter="all" aria-pressed="true">All travel</button>
+            <button class="week-filter" type="button" data-travel-filter="walk" aria-pressed="false">Walkable</button>
+            <button class="week-filter" type="button" data-travel-filter="transit" aria-pressed="false">Easy public transport</button>
+            <button class="week-filter" type="button" data-travel-filter="awkward" aria-pressed="false">Longer or needs a change</button>
+            <button class="week-filter" type="button" data-travel-filter="drive" aria-pressed="false">Best by car</button>
+            </div>
+          </details>
+          <details class="filter-group" name="filter-sections" aria-label="Town">
+            <summary class="filter-group-head"><span class="filter-group-label">Town</span><span class="filter-group-current" data-current-for="town">All towns</span></summary>
+            <div class="filter-group-options">
+            <button class="week-filter" type="button" data-town-filter="all" aria-pressed="true">All towns</button>
+            <button class="week-filter" type="button" data-town-filter="bexhill" aria-pressed="false">Bexhill</button>
+            <button class="week-filter" type="button" data-town-filter="hastings" aria-pressed="false">Hastings</button>
+            <button class="week-filter" type="button" data-town-filter="st-leonards" aria-pressed="false">St Leonards</button>
+            <button class="week-filter" type="button" data-town-filter="eastbourne" aria-pressed="false">Eastbourne</button>
+            <button class="week-filter" type="button" data-town-filter="battle" aria-pressed="false">Battle</button>
+            <button class="week-filter" type="button" data-town-filter="hailsham" aria-pressed="false">Hailsham</button>
+            <button class="week-filter" type="button" data-town-filter="villages" aria-pressed="false">Nearby villages</button>
+            </div>
+          </details>
+          <details class="filter-group" name="filter-sections" aria-label="Useful filters">
+            <summary class="filter-group-head"><span class="filter-group-label">More filters</span><span class="filter-group-current" data-current-for="toggles">Off</span></summary>
+            <div class="filter-group-options">
+            <button class="week-filter" type="button" data-toggle-filter="napSafe" aria-pressed="false">Nap-safe <span class="visually-explained">(ends by 12:00)</span></button>
+            <button class="week-filter" type="button" data-toggle-filter="free" aria-pressed="false">Free</button>
+            <button class="week-filter" type="button" data-toggle-filter="dropIn" aria-pressed="false">Drop-in, no booking needed</button>
+            </div>
+          </details>
+          <p class="filter-status" id="filterStatus" aria-live="polite">Showing all activities.</p>
+          <button class="filter-done" id="filterDone" type="button">Done</button>
+        </div>
+      </div>
+      <div class="week-snapshot" id="weekSnapshot"></div>
+    </section>
+
+    <section aria-labelledby="thisWeekTitle">
+      <div class="section-head">
+        <h2 id="thisWeekTitle">All researched activities</h2>
+        <p id="resultCount">Open a category to compare full details</p>
+      </div>
+      <div class="category-sections" id="activityGrid"></div>
+    </section>
+
+    <section class="callout-grid" aria-label="Planning ahead and free ideas">
+      <div class="panel">
+        <h2>Book ahead</h2>
+        <!-- Filled by renderBookAhead() from the activities that carry a bookAhead sentence.
+             Write the reason to book on the activity, not here: the dates come from the
+             week's calendar entries and the price, link and phone from the activity. -->
+        <div class="ahead-list" id="aheadList"></div>
+      </div>
+      <div class="panel alt">
+        <h2>Free fallbacks</h2>
+        <ul class="fallbacks">
+          <li><span class="travel-pill walk">Walkable</span> Seafront promenade from De La Warr Pavilion</li>
+          <li><span class="travel-pill walk">Walkable</span> Egerton Park playground</li>
+          <li><span class="travel-pill walk">Walkable</span> Bexhill Museum plus Egerton Park (museum: <span data-price-of="Bexhill Museum">Adult £4 · under-5 free</span>)</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="later-strip" aria-labelledby="laterTitle">
+      <div class="section-head"><h2 id="laterTitle">Later this month</h2><p>Notable dates beyond this seven-day view</p></div>
+      <div class="later-lines">
+        <div class="later-item"><time datetime="2026-10-10">10 Oct–1 Nov · 10:00–16:30</time><a class="later-main-link" href="https://www.nationaltrust.org.uk/visit/sussex/nymans/events/23048a14-e977-4df9-9c59-0d01bacc3e93" target="_blank" rel="noopener">We’re Going on a Ghost Hunt</a><span class="later-copy">Nymans, Handcross · preschool-friendly trail, free with normal admission · ~40 min drive · verified</span></div>
+        <div class="later-item"><time datetime="2026-10-17">10 Oct–1 Nov · 10:00–16:00</time><a class="later-main-link" href="https://www.nationaltrust.org.uk/visit/sussex/bodiam-castle" target="_blank" rel="noopener">Spell Quest at Bodiam Castle</a><span class="later-copy">£3.50 trail with prize, plus admission · under-5s free · no booking needed · verified</span></div>
+        <div class="later-item"><time datetime="2026-10-17">Sat 17 Oct · evening</time><span class="later-main-link">Hastings Bonfire Night</span><span class="later-copy">Hastings · free · event page · verified; loud and late, toddler caution</span></div>
+        <div class="later-item"><time datetime="2026-10-17">Sat 17 Oct · evening</time><span class="later-main-link">Hailsham Bonfire Celebrations</span><span class="later-copy">Hailsham · free · event page · verified; evening, toddler caution</span></div>
+        <div class="later-item"><time datetime="2026-10-17">17 Oct–1 Nov</time><a class="later-main-link" href="https://bordehill.co.uk/events/halloween-activities-sussex/" target="_blank" rel="noopener">Borde Hill Spellbinding Halloween</a><span class="later-copy">Borde Hill, Haywards Heath · kids trail (ages 3–8) £3.50 + admission; bookable shows 26–30 Oct · ~50 min drive · checked 13 Oct (roundup; direct page not re-verified)</span></div>
+        <div class="later-item"><time datetime="2026-10-17">17–18 Oct</time><a class="later-main-link" href="tel:01323768490">PYO Pumpkins at Sharnfold Farm</a><span class="later-copy">Sharnfold Farm, Stone Cross · £7.45/person online in advance (£8.45 on the gate); under-2 free · turn up on the day, no pre-booking needed · call 01323 768490 · verified 15 Oct</span></div>
+        <div class="later-item"><time datetime="2026-10-17">17–18 &amp; 20–31 Oct · daily</time><span class="later-main-link">Tibbs Farm Pumpkin Fest</span><span class="later-copy">Tibbs Farm · under-3s free confirmed; other prices and hours unconfirmed · call 07596 741680 · dates verified on own site 13 Oct · family games + piglet meet and greet included; cafe Tue–Sun 9–4</span></div>
+        <div class="later-item"><time datetime="2026-10-17">17 Oct–1 Nov</time><a class="later-main-link" href="https://www.nationaltrust.org.uk/visit/kent/scotney-castle/events" target="_blank" rel="noopener">Monsters around the Moat trail</a><span class="later-copy">Scotney Castle · gentle daytime trail · dates confirmed 17 Oct–1 Nov · £3.50 trail + admission · call 01892 893820 · checked 13 Oct</span></div>
+        <div class="later-item"><time datetime="2026-10-23">23–29 Oct · free drop-in</time><span class="later-main-link">Hastings Museum Halloween events</span><span class="later-copy">Hastings Museum &amp; Art Gallery · free, drop-in · main trail ages 7+ (borderline) · all-ages ‘Boo-tiful Costumes Galore’ alongside · checked 13 Oct</span></div>
+        <div class="later-item"><time datetime="2026-10-24">24–31 Oct · daily</time><a class="later-main-link" href="https://knockhatch.com/events/horrors" target="_blank" rel="noopener">Knockhatch Half Term Horrors</a><span class="later-copy">Knockhatch Adventure Park · £23.39 online / £25.99 gate (age 2+); under-2 free · family shows 11:30–16:00 daily; scare mazes 12A — skip with toddler · official event page says 24–31 Oct but the park's events index says Sat 24–Fri 30 Oct — call to confirm 31 Oct · verified 15 Oct</span></div>
+        <div class="later-item"><time datetime="2026-10-24">24 Oct–1 Nov · daily</time><a class="later-main-link" href="https://thefamilyparksgroup.co.uk/sharnfold-spooktacular/" target="_blank" rel="noopener">Sharnfold Spooktacular</a><span class="later-copy">Sharnfold Farm, Stone Cross · £8.45pp online; under-2s free · pumpkin carving +£6.95 (3+) · owner site · verified 13 Oct</span></div>
+        <div class="later-item"><time datetime="2026-10-24">24 Oct–1 Nov · 10:00–16:00</time><a class="later-main-link" href="https://www.english-heritage.org.uk/visit/whats-on/battle-abbey-halloween-20262/" target="_blank" rel="noopener">Great Pumpkin Party at Battle Abbey</a><span class="later-copy">Interactive storytelling, spooky games, themed trail · event INCLUDED in standard admission, 15% off advance booking · under-5s free; members free · gentle daytime, toddler-compatible · verified 15 Oct</span></div>
+        <div class="later-item"><time datetime="2026-10-24">24 Oct–1 Nov</time><a class="later-main-link" href="https://www.drusillas.co.uk/halloween-shriek-week-2026" target="_blank" rel="noopener">Drusillas Park Shriek Week</a><span class="later-copy">Drusillas Park · under-2s free · 20% off advance tickets; kids-for-£1 (ages 2–15, 17 Oct–1 Nov, advance only) · verified 13 Oct</span></div>
+        <div class="later-item"><time datetime="2026-10-24">24–31 Oct · 10:00–16:00</time><a class="later-main-link" href="https://feagansfarm.co.uk/" target="_blank" rel="noopener">Feagans Farm PYO Pumpkin Patch</a><span class="later-copy">Hurstwood Road, Uckfield TN22 4BD · free entry, no booking · wheelbarrow PYO, games, Hunt the Golden Pumpkin · about 40 min drive · partially verified (secondary source 13 Oct)</span></div>
+        <div class="later-item"><time datetime="2026-10-24T11:00">Sat 24–Mon 26 Oct · 11:00–16:00</time><a class="later-main-link" href="https://www.bexhillmuseum.org.uk/events/" target="_blank" rel="noopener">Bexhill Museum autumn book sale</a><span class="later-copy">Bexhill Museum, Egerton Road, Bexhill · adults £3, under-5s free · verified 15 Oct</span></div>
+        <div class="later-item"><time datetime="2026-10-24T12:30">Sat 24 Oct · 12:30 / 15:30</time><a class="later-main-link" href="https://www.dlwp.com/event/space-explorers/" target="_blank" rel="noopener">SPACE EXPLORERS!</a><span class="later-copy">De La Warr Pavilion · from £19.50 · Science Museum &amp; Mark Thompson Productions with the UK Space Agency · booking essential · no under-2 suitability stated · verified on dlwp.com 13 Oct; created for ages 6–12, borderline for 23 months</span></div>
+        <div class="later-item"><time datetime="2026-10-25T14:00">Sun 25 Oct · 14:00–16:30</time><a class="later-main-link" href="https://www.dlwp.com/event/art-sundays-a-feast-of-beasts/" target="_blank" rel="noopener">Art Sundays: A Feast of Beasts</a><span class="later-copy">The Studio, De La Warr Pavilion · free drop-in · verified</span><a class="calendar-link" data-calendar-end="16:30" data-calendar-where="The Studio, De La Warr Pavilion, Marina, Bexhill TN40 1DP" href="#" target="_blank" rel="noopener">Add to calendar</a></div>
+        <div class="later-item"><time datetime="2026-10-24T16:00">Sat 24 Oct · 16:00–18:00</time><a class="later-main-link" href="https://www.eventbrite.co.uk/e/kids-halloween-party-tickets-1998415685110" target="_blank" rel="noopener">RNLI Newhaven Kids Halloween Party</a><span class="later-copy">RNLI Newhaven Lifeboat Station, Riverside South, Newhaven BN9 9BT · £6.13 on Eventbrite · fancy dress, party games, food, face painting · ages 1–10, one adult per booking (adults free) · ~30 min drive · verified 14 Oct</span><a class="calendar-link" data-calendar-end="18:00" data-calendar-where="RNLI Newhaven Lifeboat Station, Riverside South, Newhaven BN9 9BT" href="#" target="_blank" rel="noopener">Add to calendar</a></div>
+        <div class="later-item"><time datetime="2026-10-27T11:00">Tue 27 Oct · 11:00</time><a class="later-main-link" href="https://www.dlwp.com/event/casper/" target="_blank" rel="noopener">Casper (U) half-term screening</a><span class="later-copy">De La Warr Pavilion · Halloween family films Tue 27 Oct: Casper (U) 11:00 + The Addams Family 14:00, double discount · £6 / £4 under-16s · doors 10:30 · 11am slot is nap-safe · verified 15 Oct; 101 min runtime borderline for 23 months</span><a class="calendar-link" data-calendar-end="12:45" data-calendar-where="De La Warr Pavilion, Marina, Bexhill TN40 1DP" href="#" target="_blank" rel="noopener">Add to calendar</a></div>
+        <div class="later-item"><time datetime="2026-10-28T11:00">Wed 28 Oct · 11:00 + 14:00</time><a class="later-main-link" href="https://www.dlwp.com/event/casper/" target="_blank" rel="noopener">Hocus Pocus + Ghostbusters half-term screenings</a><span class="later-copy">De La Warr Pavilion · Halloween family films Wed 28 Oct: Hocus Pocus 11:00 + Ghostbusters 14:00 · £6 / £4 under-16s · verified 15 Oct</span></div>
+        <div class="later-item"><time datetime="2026-10-28">Wed 28 &amp; Thu 29 Oct</time><a class="later-main-link" href="https://www.bluebell-railway.com/timetable/" target="_blank" rel="noopener">Bluebell Railway daytime Halloween</a><span class="later-copy">Bluebell Railway · adults £27, children from £1 with a fare-paying adult · far, day-trip only · verified 15 Oct</span></div>
+        <div class="later-item"><time datetime="2026-10-26">26–31 Oct · daily</time><a class="later-main-link" href="https://www.newhavenfort.org.uk/whats-on/halloween-half-term-fun-at-the-fort/" target="_blank" rel="noopener">Halloween Half Term Fun at Newhaven Fort</a><span class="later-copy">Newhaven Fort · daily programme: Mon 26 witch storytelling + crafts, Tue 27 reptiles, Wed 28 magic show, Thu 29–Sat 31 spooky tunnels (8+ only) · Adult £19.95 / Child 4–15 £16.95 / under-4s free · ~30 min drive · verified 15 Oct</span></div>
+        <div class="later-item"><time datetime="2026-10-27T12:00">Tue 27 Oct · 12:00 / 14:00</time><a class="later-main-link" href="https://whiterocktheatre.org.uk/whats-on/event/ultimate-bubble-show-2026/" target="_blank" rel="noopener">The Ultimate Bubble Show</a><span class="later-copy">Studio 27, White Rock Theatre · price via Eventim · verified; price unverified</span></div>
+        <div class="later-item"><time datetime="2026-10-28T10:30">Wed 28 Oct · 10:30–14:30</time><a class="later-main-link" href="https://www.eventbrite.com/e/halloween-half-term-kids-event-tickets-2002425676101?aff=oddtdtcreator" target="_blank" rel="noopener">Halloween Half Term Kids Event</a><span class="later-copy">Veterans’ Growth, Cottage Lane, Westfield, Hastings TN35 4RS · pay what you can (£5 suggested) · pottery painting, crafts, UV disco tent, sensory tray · overlaps nap · verified 15 Oct; under-2 suitability unverified</span><a class="calendar-link" data-calendar-end="14:30" data-calendar-where="Veterans’ Growth, Cottage Lane, Westfield, Hastings TN35 4RS" href="#" target="_blank" rel="noopener">Add to calendar</a></div>
+        <div class="later-item"><time datetime="2026-10-28T12:00">Wed 28 Oct · 12:00–15:00</time><span class="later-main-link">Halloween Painting Workshop</span><span class="later-copy">Alternative Market &amp; Creative Hub, 5 Harold Place, Hastings TN34 1JA · £8/person · <a href="https://www.facebook.com/events/28798386089797027" target="_blank" rel="noopener">facebook.com/events/28798386089797027</a> · verified via Facebook event; overlaps nap</span></div>
+        <div class="later-item"><time datetime="2026-10-28T09:30">Wed 28 Oct · 09:30 / 11:30</time><a class="later-main-link" href="https://birkdale-playcentre.pembee.app/" target="_blank" rel="noopener">Cherry Blossom Halloween Party</a><span class="later-copy">Cherry Blossom Playcentre, 8 London Road, Bexhill TN39 3JU (venue renamed from Birkdale Playcentre; booking at the legacy pembee subdomain) · sessions 9:30–11:00 and 11:30–13:00 · bookable on the provider booking page 13 Oct · price unpublished · call 01424 212545</span></div>
+        <div class="later-item"><time datetime="2026-10-30T13:00">Fri 30 Oct · crafts 13:00, film 14:00</time><span class="later-main-link">Halloween Film Fest: Coco Screening</span><span class="later-copy">Studio 27, White Rock Theatre, Hastings TN34 1JX · £3 · <a href="https://www.facebook.com/events/1078600908419495" target="_blank" rel="noopener">facebook.com/events/1078600908419495</a> · verified via Facebook event; crafts toddler-suitable, 105-minute film borderline</span></div>
+        <div class="later-item"><time datetime="2026-10-30T12:00">Fri 30 Oct · 12:00–16:00</time><a class="later-main-link" href="https://townereastbourne.org.uk/whats-on/family-day" target="_blank" rel="noopener">Towner Family Day: Inhabit</a><span class="later-copy">Towner Eastbourne · free ticketed · under-5-suitable · Quiet Hour 11:00–12:00 · 12:00–14:00 overlaps nap · verified 15 Oct</span><a class="calendar-link" data-calendar-end="16:00" data-calendar-where="Towner Eastbourne, Devonshire Park, College Road, Eastbourne BN21 4JJ" href="#" target="_blank" rel="noopener">Add to calendar</a></div>
+        <div class="later-item"><time datetime="2026-10-31T11:00">Sat 31 Oct · 11:00–14:00</time><a class="later-main-link" href="https://allevents.in/bexhill/halloween-trail-2026/100001979224880898" target="_blank" rel="noopener">Halloween Trail 2026</a><span class="later-copy">The Manor Barn, Manor Gardens, Bexhill TN40 2JA · from £6.13/child on Eventbrite (organiser copy: Trail Only £5, VIP £10); adults free · timed slots, advance booking · under-12s · availability uncertain (mirrors show sold out); check the live Eventbrite listing before going · checked 15 Oct</span><a class="calendar-link" data-calendar-end="14:00" data-calendar-where="Manor Gardens, Bexhill TN40 2JA" href="#" target="_blank" rel="noopener">Add to calendar</a></div>
+        <div class="later-item"><time datetime="2026-10-31T12:30">Sat 31 Oct · 12:30 / 15:30</time><a class="later-main-link" href="https://www.dlwp.com/event/the-dinosaur-that-pooped/" target="_blank" rel="noopener">The Dinosaur That Pooped: A Rock Show</a><span class="later-copy">De La Warr Pavilion · from £20 · verified; older-child lean for a 23-month-old</span><a class="calendar-link" data-calendar-end="13:30" data-calendar-where="De La Warr Pavilion, Marina, Bexhill TN40 1DP" data-calendar-details="Also at 15:30. Around 60 minutes; may suit older children better than a 23-month-old." href="#" target="_blank" rel="noopener">Add to calendar</a></div>
+        <div class="later-item"><time datetime="2026-10-31T18:30">Sat 31 Oct · 18:30–22:00</time><span class="later-main-link">Staplecross Bonfire 2026</span><span class="later-copy">Staplecross village · £2 adult / £2 child · junior procession 18:45 · evening drive, toddler caution · verified on esbs.org.uk 15 Oct</span></div>
+        <div class="later-item"><time datetime="2026-11-01T14:00">Sun 1 Nov · 14:00</time><span class="later-main-link">Mrs Mantell’s Tooth</span><span class="later-copy">Hastings Museum &amp; Art Gallery · £18 adult / £14 child · venue event page · verified; 55-minute seated show borderline for 23 months</span></div>
+        <div class="later-item"><time datetime="2026-11-06">6–8 Nov</time><span class="later-main-link">Towner Christmas Fair</span><span class="later-copy">Towner Eastbourne, Devonshire Park, College Road, Eastbourne BN21 4JJ · free entry · venue event page · verified</span></div>
+        <div class="later-item"><time datetime="2026-11-07">Sat 7 Nov · evening</time><a class="later-main-link" href="https://battelbonfire.co.uk/event-information/" target="_blank" rel="noopener">Battle Bonfire Night</a><span class="later-copy">Battle · free · CONFIRMED by Battel Bonfire Boyes: 19:30 procession, bonfire and fireworks on Abbey Green (roads close 18:00) · evening; organisers say not suitable for young children or pushchairs · checked 13 Oct</span></div>
+        <div class="later-item"><time datetime="2026-11-07T17:30">Sat 7 Nov · 17:30–21:00</time><a class="later-main-link" href="https://www.tickettailor.com/events/wadhurstwarriors/2397904" target="_blank" rel="noopener">Wadhurst Bonfire and Fireworks</a><span class="later-copy">Stone Cross Farm, Wadhurst TN5 6LS · Adult £10–£12 / Child 6–16 £5 / under-5s free · TicketTailor · gates 5.30pm, bonfire 6.30pm, fireworks 7.30pm · verified 14 Oct</span></div>
+        <div class="later-item"><time datetime="2026-11-07T16:30">Sat 7 Nov · 16:30–18:30</time><a class="later-main-link" href="https://bookwhen.com/glowbabyevents/e/ev-sdj9l-20261107163000" target="_blank" rel="noopener">Glow Baby “An Evening of Light” bonfire</a><span class="later-copy">Glow Baby Play Centre &amp; Sensory Barn, Ninfield Road, Bexhill TN39 5JG · £15 / £20 child tiers · NO fireworks; baby/toddler-focused · SOLD OUT both tiers (verified on Bookwhen 15 Oct)</span></div>
+        <div class="later-item"><time datetime="2026-11-07T10:30">7–8 Nov · 10:30–14:30</time><a class="later-main-link" href="https://www.eventbrite.com/e/christmas-gift-market-tickets-1988028021328" target="_blank" rel="noopener">Christmas Gift Market</a><span class="later-copy">The Manor Barn &amp; Gardens, 4 De La Warr Road, Bexhill TN40 2JA · free entry; paid car park · Eventbrite · verified</span></div>
+      </div>
+    </section>
+
+    <p class="source-line"><strong>Research checked 15 October 2026.</strong> Confirm items marked “Call to check” before setting out. <strong>Travel from the Marina area:</strong> the badges give the practical mode without publishing the home address. Weekend public transport can be less frequent, so red badges mark outings best kept for a day with the car.</p>
+    <p class="source-line">Church-run and SEND-specific groups are excluded. Secular classes that only hire a church hall and general stay-and-plays open to everyone remain eligible.</p>
+    <footer class="footer"><span id="rollingWeekRange">Rolling week: Mon 12 – Sun 18 Oct 2026.</span><span>Check availability before travelling where a card says to call.</span></footer>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <button class="back-to-top" id="backToTop" type="button" hidden aria-label="Back to top">Top <span aria-hidden="true">↑</span></button>
+
+  <script>
+    (function () {
+      const themeToggle = document.getElementById('themeToggle');
+      const themeColor = document.querySelector('meta[name="theme-color"]');
+      // Light stays the default; a reader who picks dark keeps it on their next visit.
+      let activeTheme = document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+
+      function applyTheme(theme) {
+        activeTheme = theme;
+        document.documentElement.dataset.theme = theme;
+        themeToggle.setAttribute('aria-pressed', String(theme === 'dark'));
+        // The installed app's status bar follows the page instead of staying blue.
+        themeColor.setAttribute('content', theme === 'dark' ? '#071923' : '#0e6e8c');
+      }
+
+      applyTheme(activeTheme);
+      themeToggle.addEventListener('click', function () {
+        applyTheme(activeTheme === 'dark' ? 'light' : 'dark');
+        try { localStorage.setItem('fa-theme', activeTheme); } catch (e) {}
+      });
+
+      // Lets the installed app open with the last copy it saw when there is
+      // little or no signal; otherwise every launch fetches the latest page.
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function () {
+          navigator.serviceWorker.register('service-worker.js').catch(function () {});
+        });
+      }
+
+      const installApp = document.getElementById('installApp');
+      const installHint = document.getElementById('installHint');
+      const installPrompt = document.getElementById('installPrompt');
+      const installPromptText = document.getElementById('installPromptText');
+      const installPromptAction = document.getElementById('installPromptAction');
+      const installPromptClose = document.getElementById('installPromptClose');
+      const standalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+      const isiOS = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      const isAndroid = /android/i.test(navigator.userAgent);
+      let deferredInstallPrompt = null;
+
+      function updateInstallHelp() {
+        if (isiOS) {
+          installPromptText.textContent = 'In Safari, tap Share, choose Add to Home Screen, then tap Add.';
+        } else if (isAndroid && !deferredInstallPrompt) {
+          installPromptText.textContent = 'Tap Install app. If no window appears, open the browser menu (⋮) and choose Install app or Add to Home screen.';
+        } else if (!deferredInstallPrompt) {
+          installPromptText.textContent = 'On Android, use Install app in the browser menu. On iPhone, tap Share, then Add to Home Screen.';
+        } else {
+          installPromptText.textContent = 'Install Family Activities on your home screen. It opens the latest version, or the last one you saw when there is little or no signal.';
+        }
+      }
+
+      const installDismissKey = 'fa-install-dismissed';
+      function dismissedRecently() {
+        try { return Date.now() - Number(localStorage.getItem(installDismissKey) || 0) < 14 * 86400000; } catch (e) { return false; }
+      }
+
+      function showInstallPrompt() {
+        if (standalone) return;
+        updateInstallHelp();
+        installPrompt.hidden = false;
+      }
+      function offerInstallPrompt() {
+        if (!dismissedRecently()) showInstallPrompt();
+      }
+
+      if (!standalone) {
+        installApp.hidden = false;
+        if (isiOS) window.setTimeout(offerInstallPrompt, 450);
+      }
+
+      window.addEventListener('beforeinstallprompt', function (event) {
+        event.preventDefault();
+        if (standalone) return;
+        deferredInstallPrompt = event;
+        installApp.hidden = false;
+        offerInstallPrompt();
+      });
+
+      installApp.addEventListener('click', showInstallPrompt);
+      installPromptClose.addEventListener('click', function () {
+        installPrompt.hidden = true;
+        try { localStorage.setItem(installDismissKey, String(Date.now())); } catch (e) {}
+      });
+      installPromptAction.addEventListener('click', function () {
+        if (!deferredInstallPrompt) {
+          updateInstallHelp();
+          installHint.textContent = isiOS ? 'On iPhone: tap Share, then Add to Home Screen.' : 'Use the browser menu, then tap Install app or Add to Home screen.';
+          installHint.hidden = false;
+          return;
+        }
+        deferredInstallPrompt.prompt();
+        deferredInstallPrompt.userChoice.then(function (choice) {
+          deferredInstallPrompt = null;
+          if (choice.outcome === 'accepted') {
+            installPrompt.hidden = true;
+            installApp.hidden = true;
+            installHint.hidden = true;
+          } else {
+            updateInstallHelp();
+          }
+        });
+      });
+
+      window.addEventListener('appinstalled', function () {
+        deferredInstallPrompt = null;
+        installPrompt.hidden = true;
+        installApp.hidden = true;
+        installHint.hidden = true;
+      });
+
+      const calendarConfig = { weekDays: 7 };
+
+      // Dated snapshot shared by the coming-week and rolling-month views.
+      function e(time, activity, venue, price, verified, napOverlap, status) {
+        return { time:time, activity:activity, venue:venue, price:price, verified:verified, napOverlap:!!napOverlap, status:status || (verified ? 'Verified' : 'Check before going') };
+      }
+      function appendSemanticClockText(container, text, dateKey) {
+        const value = String(text);
+        const clockPattern = /\b([01]?\d|2[0-3]):([0-5]\d)\b/g;
+        let cursor = 0;
+        let match;
+        while ((match = clockPattern.exec(value))) {
+          if (match.index > cursor) container.appendChild(document.createTextNode(value.slice(cursor, match.index)));
+          const clock = document.createElement('time');
+          const hours = String(Number(match[1])).padStart(2, '0');
+          const minutes = match[2];
+          clock.dateTime = (dateKey ? dateKey + 'T' : '') + hours + ':' + minutes;
+          clock.textContent = match[0];
+          container.appendChild(clock);
+          cursor = match.index + match[0].length;
+        }
+        if (cursor < value.length) container.appendChild(document.createTextNode(value.slice(cursor)));
+        if (!container.childNodes.length) container.textContent = value;
+      }
+      function semanticizeClockText(root) {
+        const nodes = [];
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+          acceptNode: function (node) {
+            if (!/\b(?:[01]?\d|2[0-3]):[0-5]\d\b/.test(node.nodeValue || '')) return NodeFilter.FILTER_REJECT;
+            return node.parentElement && node.parentElement.closest('time') ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
+          }
+        });
+        while (walker.nextNode()) nodes.push(walker.currentNode);
+        nodes.forEach(function (node) {
+          const fragment = document.createDocumentFragment();
+          appendSemanticClockText(fragment, node.nodeValue);
+          node.parentNode.replaceChild(fragment, node);
+        });
+      }
+      const calendarData = {
+        '2026-10-15': [
+          e('09:15 / 12:00 / 15:45',"Let’s Go Play soft play",'2 Haywood Way, Hastings TN35 4PL','£5 walker · adults free',true,true,'Weekday slots 9:15/12:00/15:45 bookable on Bookwhen 14 Oct · 12:00 session overlaps nap'),
+          e('09:30 · 90-min session',"Kids Play ESK Tots N’ Tunes",'ESK Warehouse, Courtlands Road, Eastbourne BN22 8TR','Check price',true,false,'Over-1s/walkers · booking required online'),
+          e('09:30–10:05','babyballet Tinies · Hailsham','Diplocks Hall, Hailsham BN27 3JY','Call to check price',false,false,'Thursday price unconfirmed; Saturday class is £6.25 · call 07842 244210 to confirm price and spaces'),
+          e('11:00','Baby and Me Stay and Play','Baby and Me Studio, 27 Sackville Road, Bexhill-on-Sea TN39 3JD','£5 + £0.15 VAT',false,false,'Thu sessions not on Bookwhen · timetable unverified 15 Oct (JS-heavy) · classes are 6 weeks to confidently crawling / up to 12 months — a 23-month-old is likely too old · call 07476 841583 before going'),
+          e('11:00–11:30','Hollington Library Rhymetime','Hollington Library, 96 Battle Road, St Leonards-on-Sea TN37 7AG','Free drop-in',true,false,'Spydus weekly series verified 11 Oct · free drop-in · nap-safe'),
+          e('Thursday morning · exact time unpublished','Aquababes 0–2 years','Hastings · venue unpublished','Price unpublished',false,false,'0–2 years, term-time only, on official Family Hubs page · call 01323 463204'),
+          e('11:30–15:00','Toddler Splash · Hailsham Leisure Centre','Hailsham Leisure Centre, Vicarage Lane, Hailsham BN27 1BA','Price unconfirmed',false,true,'Parent & Under 5, teaching pool (5m) · Thu 11:30–15:00 verified on provider timetable PDF 15 Oct · price unverified · book via the Freedom app/site or call 01323 846755'),
+          e('11:15–11:45','Bexhill Library Storytime','Bexhill Library, Western Road, Bexhill TN40 1DY','Free drop-in',true,false,'Spydus weekly Thursday series verified 11 Oct · free · no booking · nap-safe'),
+          e('13:00–14:30','Baby Feeding Group','Venue to confirm (may be Shinewater Family Hub, Milfoil Drive, Eastbourne)','Free',false,true,'Thursdays 13:00–14:30 verified on Eastbourne & Hailsham page; venue not stated · call 01323 463244'),
+          e('Bookable 30-min sessions','Blue Lagoon open swims','Blue Lagoon Warm Water Centre, 14 Brassey Parade, Hampden Park, Eastbourne BN22 9NG','Child free · adult £7.95–£13.95',true,false,'34°C pools · booking required'),
+          e('10:00','1066 Gymnastics Teeny Turtles','Unit 3A Brett Drive, Sidley, Bexhill-on-Sea TN40 2JP','Price unverified · call 01424 213779',false,false,'Thu 15 Oct 10:00 slot shown on Bookwhen 15 Oct · class name and price not visible · pre-booking required · call 01424 213779'),
+          e('10:30–11:30','Tots Play Family Tots','Totsy’s Treehouse, Unit 2 Keymer Buildings, Victoria Road, Bexhill TN39 3PD','£3',false,false,'Intergenerational music 2m–3y · weekly Thursday class on Happity; Thu 15 not individually date-stamped — confirm when booking · 07739 362568'),
+          e('10:30–12:00','Petal & Pop role play','BodiBlossom Studio, 15b Maple Road, Eastbourne BN23 6NY','£7 (1–3yrs) · £3 (6–12m) · under-6m & adults free',true,false,'Mini Sussex pop-up role play 0–5y · regular Thursdays verified on provider page 13 Oct · book ahead · bus 98/99 to Eastbourne ~40 min + short walk'),
+          e('10:00–17:00','Pevensey Castle','English Heritage, Castle Road, Pevensey BN24 5LE','Under-5s free · adult £10 (£8.50 advance)',true,true,'Open Wed–Sun · closed Mon/Tue · Stagecoach 99 (“The Wave”) Bexhill to Pevensey ~20–25 min')
+        ],
+        '2026-10-16': [
+          e('09:15 / 12:00',"Let’s Go Play soft play",'2 Haywood Way, Hastings TN35 4PL','£5 walker · adults free',true,true,'Friday slots 9:15/12:00 bookable on Bookwhen 14 Oct · 12:00 session overlaps nap'),
+                    e('09:45 / 13:15','Glow Baby Play Centre special events','Chestnut Meadow, Ninfield Road, Bexhill TN39 5JG','£11 child incl 2 adults · sibling £7',true,true,'Slots verified on Bookwhen 13 Oct · booking required · 13:15 overlaps nap'),
+          e('09:45–10:30','Tots Play Social Tots 8m–2y',"Totsy’s Treehouse, Unit 2 Keymer Buildings, Victoria Road, Bexhill TN39 3PD",'£9–£59.50',true,false,'Weekly Friday term-time class · NEXT ON: 16 Oct verified on Happity 13 Oct · booking required, no drop-ins · 07739 362568'),
+          e('10:00–17:00 daily','DLWP autumn exhibitions','De La Warr Pavilion, Marina, Bexhill TN40 1DP','Free',true,false,'Gallery hours verified on dlwp.com 11 Oct · free · no booking needed · Prem Sahib: Chamber; Gordon Matta-Clark: Discrete Violations, to 3 Jan 2027'),
+          e('10:05–10:40','babyballet Tinies 18m–3y','The Hastings Centre, The Ridge, Hastings TN34 2SA','£6.50–£7.25 · confirm at booking',false,false,'Price conflict: Happity (provider-owned) £6.50 vs school page £7.25; confirm at booking · booking required · call 07891 952104'),
+          e('10:00','1066 Gymnastics Teeny Turtles','Unit 3A Brett Drive, Sidley, Bexhill-on-Sea TN40 2JP','Price unverified · call 01424 213779',false,false,'Fri 16 Oct 10:00 slot shown on Bookwhen 15 Oct · class name and price not visible · pre-booking required · call 01424 213779'),
+          e('11:00–11:30','Hailsham Library Rhymetime','Hailsham Library, Western Road, Hailsham BN27 3DN','Free drop-in',false,false,'Series live, but dated record is stale · call 0345 6080196'),
+          e('11:00–12:30','Be Mini toddler play 0–4','Be Gymnastics, Hammonds Drive, Eastbourne BN23 6PW','£6.50',false,true,'Old timetable · check before going'),
+          e('11:00–16:00','Bexhill Museum','Egerton Road, Bexhill TN39 3HL','Adult £4 · under-5 free',true,true,'Opening hours and updated price verified on museum site'),
+          e('09:00–10:30 / 10:30–12:00','Cherry Blossom Playcentre open play 0–5','8 London Road, Bexhill-on-Sea TN39 3JU','£5 booked online',true,false,'Fiver Friday slots bookable on the provider booking page · price verified on own site 15 Oct · nap-safe'),
+          e('13:00–14:30','Cherry Blossom Playcentre open play 0–5','8 London Road, Bexhill-on-Sea TN39 3JU','£5 booked online',true,true,'Fiver Friday afternoon slot · overlaps the 12:00–14:00 nap · price verified on own site 15 Oct'),
+          e('10:00–18:00','Fort Fun soft play','Royal Parade, Eastbourne BN22 7LQ','12–24 months £6.75 · adults £2.00',true,true,'Open Fri–Sun 10:00–18:00 · prices verified on own site 15 Oct · no booking · overlaps nap'),
+        ],
+        '2026-10-17': [
+          e('08:45','1066 Gymnastics Weenie Whales','Unit 3A Brett Drive, Sidley, Bexhill-on-Sea TN40 2JP','Price unverified · call 01424 213779',false,false,'Sat 17 Oct 08:45 slot shown on Bookwhen 15 Oct · class name and price not visible · pre-booking required · call 01424 213779'),
+          e('07:30–13:30 (slots)','Water Babies at St Mary’s',"St Mary’s School, Wrestwood Road, Bexhill TN40 2LU",'Price on request — via organiser',false,false,'Weekend slots verified on Hoop listing 13 Oct · booking required · ages 0–6 · morning slots nap-safe, midday slots overlap · call 01424 892568'),
+          e('10:00 / 13:00','Glow Baby: Pumpkin Patch 0–7 years','Chestnut Meadow, Ninfield Road, Bexhill TN39 5JG','£20 child · £10 sibling',true,true,'Sat 17 is THE GLOW BABY PUMPKIN PATCH 0–7 YEARS (not open play) · 10:00 fully booked · booking required · 13:00 overlaps nap · per QA check 15 Oct'),
+          e('09:00–09:40 / 09:40–10:15','babyballet Tinies 18m–3y','The Hastings Centre, The Ridge, Hastings TN34 2SA','£6.50–£7.25 · confirm at booking',false,false,'Price conflict: Happity (provider-owned) £6.50 vs school page £7.25; confirm at booking · booking required · call 07891 952104 to confirm spaces'),
+          e('10:00 / 12:15 / 14:30','Let’s Go Play','2 Haywood Way, Hastings TN35 4PL','Walker £8 · adults free',true,true,'Sat 17 slots verified on Bookwhen 12 Oct · booking recommended · 12:15 and 14:30 overlap the nap window'),
+          e('10:00–16:00','PYO Pumpkins at Sharnfold Farm','Sharnfold Farm, Hailsham Road, Stone Cross, Pevensey BN24 5BU','£7.45 online',true,true,'Pumpkins by weight · turn up on the day, no pre-booking needed · under-2s free per Visit Eastbourne'),
+          e('10:00–17:00 (last entry 16:15)','Hastings Aquarium','Rock-a-Nore Road, Hastings TN34 3DW','£16.50 adult · £13 junior · 0–2 free',false,true,'Prices verified on the venue\'s own admission page 15 Oct (tickets valid 6 months, all-day re-entry) · no booking needed · call 01424 718776'),
+          e('10:00–16:00','Bodiam Castle: Spell Quest','Bodiam, Robertsbridge TN32 5UA','Adult £13 · under-5 free · trail £3.50 · parking £5',true,true,'Runs 10 Oct–1 Nov · no booking needed · verified 12 Oct'),
+          e('10:00–17:00 daily','DLWP autumn exhibitions','De La Warr Pavilion, Marina, Bexhill TN40 1DP','Free',true,false,'Gallery hours verified on dlwp.com 11 Oct · free · no booking needed · Prem Sahib: Chamber; Gordon Matta-Clark: Discrete Violations, to 3 Jan 2027'),
+          e('10:00–18:00','Fort Fun soft play','Royal Parade, Eastbourne BN22 7LQ','12–24 months £6.75 · adults £2.00',true,true,'Open Fri–Sun 10:00–18:00 · prices verified on own site 15 Oct · no booking · overlaps nap'),
+          e('17–18 & 20–31 Oct','Tibbs Farm Pumpkin Fest','Tibbs Farm, Udimore Road, Udimore, Rye TN31 6AR','Under-3s free · other prices unconfirmed',false,true,'Dates verified on own site 13 Oct · tickets include family games + piglet meet and greet; cafe Tue–Sun 9–4 · prices unpublished · call 07596 741680'),
+          e('17 Oct–1 Nov','Scotney Castle Monsters around the Moat','Scotney Castle, Lamberhurst, Tunbridge Wells TN3 8JN','£3.50 trail + normal admission',false,true,'Dates confirmed 17 Oct–1 Nov across NT-linked sources 12 Oct · Spotter Trail for younger children · book car parking ahead · call 01892 893820'),
+          e('Trail from Sat 17 · museum 10:00–17:00','Hastings Museum Bayeux short-films trail','Hastings Museum & Art Gallery, John’s Place, Bohemia Road, Hastings TN34 1ET','Free',true,false,'Year of the Normans short-films trail launch · new Threads Through Time exhibition opens Sat 17 Oct (to 11 Jul 2027) · free entry · drop-in · free onsite parking'),
+          e('10:00–17:00','Pevensey Castle','English Heritage, Castle Road, Pevensey BN24 5LE','Under-5s free · adult £10 (£8.50 advance)',true,true,'Open Wed–Sun · closed Mon/Tue · Stagecoach 99 (“The Wave”) Bexhill to Pevensey ~20–25 min'),
+          e('10:00–16:00','Pevensey Castle','English Heritage, Castle Road, Pevensey BN24 5LE','Under-5s free · adult £10 (£8.50 advance)',true,true,'Book Bunker family event · Sat 17 & Sun 18 only · check the English Heritage page for event details'),
+          e('10:00–12:00','DLWP Relaxed Morning Exhibition Visits','De La Warr Pavilion, Marina, Bexhill TN40 1DP','Free',true,false,'Free drop-in creative workshop + quieter exhibition visit · booking advised via learn@dlwp.com · about 10–15 min walk'),
+          e('09:00–13:00','Battle Farmers’ Market','Abbey Green, Battle TN33 0AD','Free entry',true,false,'Third-Saturday market · train Bexhill–Battle ~15 min · nap-safe morning'),
+        ],
+        '2026-10-18': [
+          e('09:00–12:30 block','Little Kickers Little Kicks 18m–2½y','Bexhill Community Centre, Station Road, Bexhill TN40 1RE','£35/month',false,false,'Sunday sessions 9:00–12:30; exact class time unpublished · booking page currently shows waitlisted Junior Kickers (2.5–3.5y), not Little Kicks · call 07739 362568 / 07802 864719 · nap-safe morning'),
+          e('07:30–13:30 (slots)','Water Babies at St Mary’s',"St Mary’s School, Wrestwood Road, Bexhill TN40 2LU",'Price on request — via organiser',false,false,'Weekend slots verified on Hoop listing 13 Oct · booking required · ages 0–6 · exact Sunday slot behind booking wall · call 01424 892568'),
+          e('10:00–16:00','PYO Pumpkins at Sharnfold Farm','Sharnfold Farm, Hailsham Road, Stone Cross, Pevensey BN24 5BU','£7.45/person online advance · pumpkins by weight',true,true,'Under-2s free per Visit Eastbourne · turn up on the day, no pre-booking needed · go 10–12 or after 14 · verified 15 Oct'),
+          e('17–18 & 20–31 Oct','Tibbs Farm Pumpkin Fest','Tibbs Farm, Udimore Road, Udimore, Rye TN31 6AR','Under-3s free · other prices unconfirmed',false,true,'Dates verified on own site 13 Oct · tickets include family games + piglet meet and greet; cafe Tue–Sun 9–4 · prices unpublished · call 07596 741680'),
+          e('11:00–14:00','The Baby Fayre Hastings','Bannatyne Hotel Hastings, Battle Road, Hastings TN38 8EA','Free time-slot entry · £10 anytime',true,true,'Free time-slot entry; £10 anytime incl goodie bag · book via Eventbrite · still bookable 15 Oct · overlaps nap: aim for the 11:00–12:00 slot'),
+          e('10:00–17:00 (last entry 16:15)','Hastings Aquarium','Rock-a-Nore Road, Hastings TN34 3DW','£16.50 adult · £13 junior · 0–2 free',false,true,'Prices verified on the venue\'s own admission page 15 Oct (tickets valid 6 months, all-day re-entry) · no booking needed · call 01424 718776'),
+          e('Trail from Sat 17 · museum 11:00–16:30','Hastings Museum Bayeux short-films trail','Hastings Museum & Art Gallery, John’s Place, Bohemia Road, Hastings TN34 1ET','Free',true,false,'Year of the Normans short-films trail · free entry · drop-in · free onsite parking · verified 12 Oct'),
+          e('17 Oct–1 Nov','Scotney Castle Monsters around the Moat','Scotney Castle, Lamberhurst, Tunbridge Wells TN3 8JN','£3.50 trail + normal admission',false,true,'Dates confirmed 17 Oct–1 Nov across NT-linked sources 12 Oct · Spotter Trail for younger children · book car parking ahead · call 01892 893820'),
+          e('10:00–17:00 daily','DLWP autumn exhibitions','De La Warr Pavilion, Marina, Bexhill TN40 1DP','Free',true,false,'Gallery hours verified on dlwp.com 11 Oct · free · no booking needed'),
+          e('10:00–18:00','Fort Fun soft play','Royal Parade, Eastbourne BN22 7LQ','12–24 months £6.75 · adults £2.00',true,true,'Open Fri–Sun 10:00–18:00 · prices verified on own site 15 Oct · no booking · overlaps nap'),
+          e('Call to check','Puddle Ducks swimming','Ocklynge Junior School, Victoria Drive, Eastbourne BN20 8XN','Call to check',false,false,'Free trial bookable · half term closed 26 Oct–1 Nov · call 01892 617246'),
+          e('10:00–16:00','Bodiam Castle: Spell Quest','Bodiam, Robertsbridge TN32 5UA','Adult £13 · under-5 free · trail £3.50 · parking £5',true,true,'Runs 10 Oct–1 Nov · weekend best-dressed competition 1pm (nap overlap) · last trail sold 3:30pm · no booking needed · verified on NT site 13 Oct'),
+          e('14:00–17:00 (approx)','Polegate Miniature Railway','William Daly Recreation Ground, Brightling Road, Polegate BN26 5AY','Rides for donation',false,false,'3rd-Sunday running day verified 13 Oct · volunteer-run, weather-dependent · call 07957 806577 before going · nap-overlapping afternoon'),
+          e('10:00–17:00','Pevensey Castle','English Heritage, Castle Road, Pevensey BN24 5LE','Under-5s free · adult £10 (£8.50 advance)',true,true,'Open Wed–Sun · closed Mon/Tue · Stagecoach 99 (“The Wave”) Bexhill to Pevensey ~20–25 min'),
+          e('10:00–16:00','Pevensey Castle','English Heritage, Castle Road, Pevensey BN24 5LE','Under-5s free · adult £10 (£8.50 advance)',true,true,'Book Bunker family event · Sat 17 & Sun 18 only · check the English Heritage page for event details'),
+        ],
+        '2026-10-19': [
+          e('11:00–11:45','Tots Play Social Tots 8m–2y',"Totsy’s Treehouse, Unit 2 Keymer Buildings, Victoria Road, Bexhill TN39 3PD",'£9–£59.50',true,false,'Booking required; no drop-ins · weekly Monday class verified on Happity 12 Oct · no cancellation for 19 Oct'),
+          e('10:00–14:45','Catkins Baby and Toddler Group',"Wallis Hall, Ancaster Nursery, Gunter’s Lane, Bexhill TN39 4EB",'Price unpublished',true,true,'Drop-in · call 01424 216670 for price or cancellations · overlaps the 12:00–14:00 nap'),
+          e('09:00–15:00 drop-in','Cherry Blossom Playcentre open play 0–5','8 London Road, Bexhill-on-Sea TN39 3JU','Price unpublished · call 01424 212545',false,false,'Mon 9am–3pm drop-in on provider site 12 Oct · timed 1.5h slots · go 9–11:45 pre-nap'),
+          e('13:30','Glow Baby Play Centre special event','Chestnut Meadow, Ninfield Road, Bexhill TN39 5JG','£11 child incl 2 adults · sibling £7',true,true,'13:30 slot verified on Bookwhen 13 Oct (only slot shown; 10:00 not listed) · booking required · overlaps the 12:00–14:00 nap · venue confirmed'),
+          e('13:00–14:30','Hastings Town Baby Feeding Group','Hastings Town Family Hub, Waterworks Road, Hastings TN34 1RT','Free',true,true,'Free drop-in · breastfeeding support group · term-time pattern current on council page 12 Oct · overlaps the 12:00–14:00 nap'),
+          e('09:30–10:05','babyballet Tinies 18m–3y','St Mary Hampden Park, Eastbourne · confirm address at booking','£6.50–£7.25 · confirm at booking',false,false,'Mon 19 09:30–10:05 at St Mary Hampden Park (not The Hastings Centre) · price conflict; confirm at booking · booking required · call 07891 952104'),
+          e('09:15–11:00','Polegate Pre-School Toddler group','Polegate Community Centre, 54 Windsor Way, Polegate BN26 6QF','£1.50 per family',true,false,'Term-time only · contact contact@polegatepreschool.co.uk before a first visit · nap-safe'),
+          e('09:15 / 12:00 / 15:45',"Let’s Go Play soft play",'2 Haywood Way, Hastings TN35 4PL','£5 walker · adults free',true,true,'Weekday slots 9:15/12:00/15:45 · 12:00 session overlaps nap'),
+        ],
+        '2026-10-20': [
+          e('09:00–11:00','Catkins Baby and Toddler Group',"Wallis Hall, Ancaster Nursery, Gunter’s Lane, Bexhill TN39 4EB",'Price unpublished',true,false,'Tue hours verified via Facebook hours listing 13 Oct · drop-in · call 01424 216670 for price or cancellations'),
+          e('10:00–11:30','Ticehurst Village Hall Stay and Play 0–5','Ticehurst Village Hall, Lower High Street, Ticehurst TN5 7BB','Free drop-in',true,false,'Time confirmed 10:00–11:30 on 14 Oct · free drop-in · ~15–20 min drive inland'),
+          e('09:45–10:30','Tots Play Social Tots 8m–2y',"Totsy’s Treehouse, Unit 2 Keymer Buildings, Victoria Road, Bexhill TN39 3PD",'£9–£59.50',false,false,'Weekly Tue class verified on Happity 13 Oct · confirm for 20 Oct · booking required, no drop-ins · 07739 362568'),
+          e('Timed 1.5h slots','Cherry Blossom Playcentre open play 0–5','8 London Road, Bexhill-on-Sea TN39 3JU','Price unpublished · call 01424 212545',false,false,'Timed 1.5h slots on provider site · go 9–11:45 pre-nap · price unpublished'),
+          e('12:00–13:00','Toddler Splash · Hailsham Leisure Centre','Hailsham Leisure Centre, Vicarage Lane, Hailsham BN27 1BA','Price unconfirmed',false,true,'Tue 12:00–13:00 verified on provider timetable PDF 15 Oct · parent & under 5, teaching pool · price unverified · book via the Freedom app/site or call 01323 846755'),
+          e('10:30–11:00','Battle Library Rhymetime','Battle Library, 7 Market Square, Battle TN33 0XB','Free drop-in',true,false,'Weekly Tuesday series pattern-verified 15 Oct · free · no booking · nap-safe · train Bexhill–Battle ~15 min + walk'),
+          e('11:00–11:30','Hastings Library Rhymetime','Hastings Library, Hastings','Free drop-in',true,false,'Tue 11:00–11:30 · 0–5y · free drop-in · pattern-verified 15 Oct · nap-safe · Stagecoach 98/99 to Hastings'),
+          e('09:15–09:50','babyballet Tinies 18m–3y','The Hastings Centre, The Ridge, Hastings TN34 2SA','£6.50–£7.25 · confirm at booking',false,false,'Tue 20 09:15–09:50 · price conflict; confirm at booking · booking required · call 07891 952104'),
+          e('10:55–11:30','babyballet Tinies 18m–3y','The Hastings Centre, The Ridge, Hastings TN34 2SA','£6.50–£7.25 · confirm at booking',false,false,'Tue 20 10:55–11:30 · price conflict; confirm at booking · booking required · call 07891 952104'),
+          e('10:30–11:00','Eastbourne Library Rhymetime','Eastbourne Library, Grove Road, Eastbourne BN21 4TL','Free',true,false,'No booking · term-time only · nap-safe · Source: East Sussex Libraries'),
+          e('10:30–11:00','Bexhill Library Rhymetime','Bexhill Library, Western Road, Bexhill TN40 1DY','Free drop-in',true,false,'Weekly series · free, no booking · nap-safe'),
+          e('09:15 / 12:00 / 15:45',"Let’s Go Play soft play",'2 Haywood Way, Hastings TN35 4PL','£5 walker · adults free',true,true,'Weekday slots 9:15/12:00/15:45 · 12:00 session overlaps nap'),
+          e('10:00','Wriggle Room at Towner Eastbourne','Willingdon Trees Community Centre, Hampden Park, Eastbourne','Free',true,false,'Selected Tuesdays in term time · free, booking advised · nap-safe · Source: townereastbourne.org.uk, checked 15 Oct'),
+        ],
+        '2026-10-21': [
+          e('10:00–12:00','Catkins Baby and Toddler Group',"Wallis Hall, Ancaster Nursery, Gunter’s Lane, Bexhill TN39 4EB",'Price unpublished',true,false,'Wed drop-in hours verified via Facebook hours listing · call 01424 216670 for price or cancellations'),
+          e('11:00','Glow Baby Play Centre special event','Chestnut Meadow, Ninfield Road, Bexhill TN39 5JG','£11 child incl 2 adults · sibling £7',true,false,'Open play 11:00 slot verified on Bookwhen 14 Oct · booking required · nap-safe'),
+          e('12:30–15:00','Toddler Splash · Hailsham Leisure Centre','Hailsham Leisure Centre, Vicarage Lane, Hailsham BN27 1BA','Price unconfirmed',false,true,'Wed 12:30–15:00 verified on provider timetable PDF 15 Oct · parent & under 5, teaching pool · price unverified · book via the Freedom app/site or call 01323 846755'),
+          e('10:00','1066 Gymnastics Teeny Turtles (10y and under)','Unit 3A Brett Drive, Sidley, Bexhill-on-Sea TN40 2JP','Price unverified · call 01424 213779',false,false,'Wed 21 Oct 10:00 slot shown on Bookwhen 15 Oct · class name and price not visible · pre-booking required · call 01424 213779'),
+          e('18:30','1066 Gymnastics Weenie Whales','Unit 3A Brett Drive, Sidley, Bexhill-on-Sea TN40 2JP','Price unverified · call 01424 213779',false,false,'Wed 21 Oct 18:30 slot shown on Bookwhen 15 Oct · class name and price not visible · pre-booking required · call 01424 213779'),
+          e('09:15 / 12:00 / 15:45',"Let’s Go Play soft play",'2 Haywood Way, Hastings TN35 4PL','£5 walker · adults free',true,true,'Weekday slots 9:15/12:00/15:45 bookable on Bookwhen 14 Oct · 12:00 session overlaps nap'),
+          e('Timed 1.5h slots','Cherry Blossom Playcentre open play 0–5','8 London Road, Bexhill-on-Sea TN39 3JU','£6 booked online',true,false,'Timed 1.5h slots · Wed open play £6 booked online · price verified on own site 15 Oct · go 9–11:45 pre-nap'),
+          e('10:30–11:00','Battle Storytime','Battle Library, 7 Market Square, Battle TN33 0XB','Free drop-in',true,false,'Weekly Wednesday series verified on Spydus 11 Oct · free · no booking · nap-safe · train Bexhill–Battle ~15 min + walk'),
+          e('13:00–14:30','Hastings Town 0–2 Stay and Play','Hastings Town Family Hub, Waterworks Road, Hastings TN34 1RT','Free',true,true,'Term-time free drop-in · verified on official Family Hubs page 15 Oct · infant feeding support available · overlaps the 12:00–14:00 nap'),
+          e('10:00–17:00','Pevensey Castle','English Heritage, Castle Road, Pevensey BN24 5LE','Under-5s free · adult £10 (£8.50 advance)',true,true,'Open Wed–Sun · closed Mon/Tue · Stagecoach 99 (“The Wave”) Bexhill to Pevensey ~20–25 min'),
+          e('10:00–11:30','Eastbourne Library Rhymes and Stories','Eastbourne Library, Grove Road, Eastbourne BN21 4TL','Free',true,false,'No booking · term-time only · weekly Wednesday series'),
+          e('10:00–12:30 block','Water Babies at Blue Lagoon','Blue Lagoon Warm Water Centre, 14 Brassey Parade, Hampden Park, Eastbourne BN22 9NG','Term-based price',true,true,'0–5 years · term-based booking · weekly Wednesday block'),
+          e('09:30–11:30','Tiddlers and Toddlers','Herstmonceux Village Hall, Hailsham Road, Herstmonceux BN27 4JX','£2.50 one child / £3.50 two+ · first session free',true,false,'Snack and drinks included · drop-in, no booking · term-time only · weekly Wednesdays'),
+          e('10:00–10:45','Hartbeeps Happy House · Hailsham','Hailsham Methodist Church, Hailsham BN27 1AU','£8–£8.60',true,false,'16 months–4y6m · must book via Happity · term-time only · secular class hiring the hall · weekly Wednesdays'),
+          e('10:00–11:00','Sidley community pantry','Behind Sidley Family Hub, 121 Ninfield Road, Bexhill TN39 5BD','£2 suggested donation',false,false,'Every Wednesday 10am–11am · suggested donation £2 per household · run by Bexhill Family Collective'),
+          e('10:00–11:30','Be Mini toddler play 0–4','Be Gymnastics, Hammonds Drive, Eastbourne BN23 6PW','£6.50',false,false,'Old timetable · check before going'),
+          e('10:00–12:00','Catkins Baby and Toddler Group',"Wallis Hall, Ancaster Nursery, Gunter’s Lane, Bexhill TN39 4EB",'Price unpublished',true,false,'Wed drop-in hours verified via Facebook hours listing · call 01424 216670 for price or cancellations'),
+        ],
+        '2026-10-22': [
+          e('10:00','1066 Gymnastics Teeny Turtles','Unit 3A Brett Drive, Sidley, Bexhill-on-Sea TN40 2JP','Price unverified · call 01424 213779',false,false,'Thu 22 Oct 10:00 slot shown on Bookwhen 15 Oct · class name and price not visible · pre-booking required · call 01424 213779'),
+          e('10:00–17:00','Pevensey Castle','English Heritage, Castle Road, Pevensey BN24 5LE','Under-5s free · adult £10 (£8.50 advance)',true,true,'Open Wed–Sun · closed Mon/Tue · Stagecoach 99 (“The Wave”) Bexhill to Pevensey ~20–25 min'),
+          e('12:30–15:00','Toddler Splash · Hailsham Leisure Centre','Hailsham Leisure Centre, Vicarage Lane, Hailsham BN27 1BA','Price unconfirmed',false,true,'Thu 12:30–15:00 verified on provider timetable PDF 15 Oct · parent & under 5, teaching pool · price unverified · book via the Freedom app/site or call 01323 846755'),
+          e('09:15 / 12:00 / 15:45',"Let’s Go Play soft play",'2 Haywood Way, Hastings TN35 4PL','£5 walker · adults free',true,true,'Weekday slots 9:15/12:00/15:45 · 12:00 session overlaps nap'),
+          e('10:30–12:00','Petal & Pop role play','BodiBlossom Studio, 15b Maple Road, Eastbourne BN23 6NY','£7 (1–3yrs) · £3 (6–12m) · under-6m & adults free',true,false,'Mini Sussex pop-up role play 0–5y · regular Thursdays · book ahead'),
+          e('10:30–11:30','Tots Play Family Tots',"Totsy’s Treehouse, Unit 2 Keymer Buildings, Victoria Road, Bexhill TN39 3PD",'£3',false,false,'Intergenerational music 2m–3y · weekly Thursday class · confirm availability when booking 07739 362568'),
+          e('11:15–11:45','Bexhill Library Storytime','Bexhill Library, Western Road, Bexhill TN40 1DY','Free drop-in',true,false,'Spydus weekly Thursday series · free · no booking · nap-safe'),
+          e('11:00–11:30','Hollington Library Rhymetime','Hollington Library, 96 Battle Road, St Leonards-on-Sea TN37 7AG','Free drop-in',true,false,'Free drop-in, no booking · runs through holidays · nap-safe'),
+          e('Thursday morning · exact time unpublished','Aquababes 0–2 years','Hastings · venue unpublished','Price unpublished',false,false,'0–2 years, term-time only, on official Family Hubs page · call 01323 463204'),
+          e('13:00–14:30','Baby Feeding Group','Venue to confirm (may be Shinewater Family Hub, Milfoil Drive, Eastbourne)','Free',false,true,'Thursdays 13:00–14:30 on Eastbourne & Hailsham page; venue not stated · call 01323 463244'),
+        ]
+      };
+
+      function startMinutes(value) {
+        const match = String(value).match(/^(\d{1,2})(?::(\d{2}))?/);
+        return match ? Number(match[1]) * 60 + Number(match[2] || 0) : 2000;
+      }
+      Object.keys(calendarData).forEach(function (key) {
+        calendarData[key].sort(function (a, b) { return startMinutes(a.time) - startMinutes(b.time); });
+      });
+
+      const calendarMonths = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+      const calendarDays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+      function dateFromKey(key) { return new Date(key + 'T12:00:00'); }
+      function fullCalendarDate(key) {
+        const date = dateFromKey(key);
+        return calendarDays[date.getDay()] + ' ' + date.getDate() + ' ' + calendarMonths[date.getMonth()];
+      }
+      function shortCalendarDate(key) {
+        const date = dateFromKey(key);
+        return { day: calendarDays[date.getDay()].slice(0, 3), date: date.getDate(), month: calendarMonths[date.getMonth()].slice(0, 3) };
+      }
+      function entryStatusClass(entry) { return entry.verified ? '' : ' check'; }
+      function activityOptionCount(entries) {
+        return entries.filter(Boolean).length;
+      }
+
+      function activityMetaFor(entry) {
+        const aliases = {
+          'Tots Play Social Tots 8m–2y':'Tots Play Social Tots',
+          'babyballet Tinies 18m–3y':'babyballet Tinies',
+          'Be Mini toddler play 0–4':'Be Mini toddler play',
+          'Cherry Blossom Playcentre open play 0–5':'Cherry Blossom Playcentre open play',
+          'Glow Baby Play Centre special event':'Glow Baby Play Centre special events',
+          'Battle Baby Group 0–1':'Battle Baby Group',
+          'Let’s Go Play soft play':'Let’s Go Play',
+          'Little Kickers Little Kicks 18m–2½y':'Little Kickers Little Kicks',
+          'Bodiam Castle: combat demos + Spell Quest':'Bodiam Castle Spell Quest',
+          'Bodiam Castle: Spell Quest':'Bodiam Castle Spell Quest',
+          '1066 Gymnastics Weenie Whales':'1066 Gymnastics preschool classes',
+          '1066 Gymnastics Teeny Turtles (10y and under)':'1066 Gymnastics preschool classes',
+          'Glow Baby: Pumpkin Patch 0–7 years':'Glow Baby Play Centre special events',
+          '1066 Gymnastics Teeny Turtles':'1066 Gymnastics preschool classes',
+          'Baby Feeding Group':'Baby Feeding Group (venue to confirm)'
+        };
+        const wanted = aliases[entry.activity] || entry.activity;
+        return activities.find(function (a) { return a.title === wanted; }) || null;
+      }
+
+      const newlyAddedOn = {
+        'Tots Play Social Tots':'2026-10-09',
+        'Freedom Leisure Discovery Day':'2026-10-09',
+        'Hastings Aquarium':'2026-10-09',
+        'Bodiam Castle weekend':'2026-10-09',
+        'Hollington Library Rhymetime':'2026-10-10',
+        'Aquababes 0–2 years':'2026-10-10',
+        'Toddler Splash · Hailsham Leisure Centre':'2026-10-10',
+        'Tibbs Farm Pumpkin Fest':'2026-10-10',
+        'Scotney Castle Monsters around the Moat':'2026-10-10',
+        'Singing and Music Group 0–2':'2026-10-10',
+        'Battle Storytime':'2026-10-10',
+        '“Animals!” children’s show':'2026-10-10',
+        'Parent & Toddler Swim, Bexhill Leisure Pool':'2026-10-11',
+        'Hastings Museum Bayeux short-films trail':'2026-10-11',
+        'The Baby Fayre Hastings':'2026-10-11',
+        'Baby Feeding Group':'2026-10-10',
+        'Tots Play Family Tots':'2026-10-12',
+        'Petal & Pop role play':'2026-10-12',
+        'Polegate Miniature Railway':'2026-10-12',
+        'Hastings Town 0–2 Stay and Play':'2026-10-15',
+        'Pevensey Castle':'2026-10-15',
+        'DLWP Relaxed Morning Exhibition Visits':'2026-10-15',
+        'Battle Farmers’ Market':'2026-10-15',
+        'Hastings Library Rhymetime':'2026-10-15'
+      };
+      function londonTodayKey(instant) {
+        const parts = new Intl.DateTimeFormat('en-GB', {timeZone:'Europe/London', year:'numeric', month:'2-digit', day:'2-digit'}).formatToParts(instant || new Date());
+        const values = {}; parts.forEach(function (part) { if (part.type !== 'literal') values[part.type] = part.value; });
+        return values.year + '-' + values.month + '-' + values.day;
+      }
+      const pageTodayKey = londonTodayKey();
+      // The researched days are the days calendarData has. A separate hand-typed list fell a day
+      // behind on 11 Oct and hid every session on Sunday 18.
+      const embeddedWeekDates = Object.keys(calendarData).sort();
+      const visibleWindowDates = embeddedWeekDates.filter(function (key) { return key >= pageTodayKey; }).slice(0, calendarConfig.weekDays);
+      function isNewTitle(title) {
+        const added = newlyAddedOn[title]; if (!added) return false;
+        const days = Math.floor((dateFromKey(pageTodayKey) - dateFromKey(added)) / 86400000);
+        return days >= 0 && days < 7;
+      }
+      function googleCalendarUrl(event) {
+        const params = new URLSearchParams({action:'TEMPLATE', text:event.title, dates:event.start + '/' + event.end, ctz:'Europe/London', location:event.location || '', details:event.details || 'Details checked on the Family Activities page.'});
+        return 'https://calendar.google.com/calendar/render?' + params.toString();
+      }
+      // "Add to calendar" is built from data already on the page, so a time is never typed twice.
+      // A week entry gets one when its activity has calendar:true and its time is a single range
+      // such as 10:00–17:00; the place is the activity's where. "Later this month" items carry
+      // their end time and place on the link itself (see below).
+      function compactStamp(key, hhmm) { return key.replace(/-/g, '') + 'T' + hhmm.replace(':', '') + '00'; }
+      function calendarEventFor(key, entry) {
+        const meta = activityMetaFor(entry);
+        const range = String(entry.time).match(/^(\d{1,2}):(\d{2})\s*[–-]\s*(\d{1,2}):(\d{2})$/);
+        if (!meta || !meta.calendar || !range) return null;
+        const pad = function (hour) { return String(hour).padStart(2, '0'); };
+        return { title: meta.title, start: compactStamp(key, pad(range[1]) + ':' + range[2]), end: compactStamp(key, pad(range[3]) + ':' + range[4]), location: meta.where };
+      }
+      function shortTravelLine(meta, entry) {
+        if (meta && meta.travel) {
+          const detail = meta.travel[2] || '';
+          const range = detail.match(/(?:about |allow )?(\d+)(?: to |–|-)(\d+) minutes/i);
+          if (range) return range[1] + '–' + range[2] + ' min ' + (meta.travel[0] === 'walk' ? 'walk' : meta.travel[0] === 'drive' ? 'drive' : 'journey');
+          if (/15 minutes by train/i.test(detail)) return 'About 15 min by train';
+          if (/short town-centre walk/i.test(detail)) return 'Short walk from town';
+          if (/few minutes on foot/i.test(detail)) return 'A few minutes’ walk';
+          if (/5-minute walk/i.test(detail)) return 'Bus 98 + 5 min walk';
+          return meta.travel[1];
+        }
+        const place = (entry.venue || '').toLowerCase();
+        if (/bexhill|wallis hall|sidley|pebsham/.test(place)) return 'Local Bexhill journey';
+        if (/hastings|st leonards/.test(place)) return 'Train or coast bus';
+        if (/eastbourne/.test(place)) return 'Train + local connection';
+        if (/battle/.test(place)) return 'About 15 min by train';
+        if (/hailsham/.test(place)) return 'Longer bus journey';
+        if (/pevensey|sharnfold/.test(place)) return 'Best by car';
+        return 'Check route before leaving';
+      }
+      function travelForEntry(meta, entry) {
+        if (meta && meta.travel) return meta.travel;
+        const place = (entry.venue || '').toLowerCase();
+        if (/bexhill|wallis hall|sidley|pebsham/.test(place)) return ['walk','Local'];
+        if (/hastings|st leonards/.test(place)) return ['transit','Public transport'];
+        if (/eastbourne|hailsham/.test(place)) return ['awkward','Longer journey'];
+        if (/battle/.test(place)) return ['transit','Easy train'];
+        if (/pevensey|sharnfold/.test(place)) return ['drive','Best by car'];
+        return ['awkward','Route check'];
+      }
+      function entryFacets(entry, meta) {
+        const text = [entry.activity, entry.venue, entry.status, meta && meta.note, meta && meta.label].join(' ').toLowerCase();
+        const categories = [];
+        if (/soft play|playcentre|play den|stay and play|stay & play|let’s go play|fort fun|clambers|treasure island|catkins|tots play soft/.test(text)) categories.push('soft-play');
+        if (/water babies|swim/.test(text)) categories.push('swimming');
+        if (/babyballet|rhymetime|storytime|social tots|music|rhyme|dance/.test(text)) categories.push('music-rhyme');
+        if (/library|storytime|rhymetime/.test(text)) categories.push('libraries-story');
+        if (/pumpkin|reenactment|park|farm|bonfire|trail|drusillas|sharnfold|tibbs|outdoor/.test(text)) categories.push('outdoors');
+        if (/reenactment|opening party|baby fayre|storytime at hastings aquarium|halloween|bonfire|pumpkin fest|shriek week|spooktacular|event/.test(text)) categories.push('special');
+        const ranges = []; const rx = /(\d{1,2})(?::(\d{2}))?\s*(?:–|-|to)\s*(\d{1,2})(?::(\d{2}))?/g; let match;
+        while ((match = rx.exec(entry.time))) ranges.push(Number(match[3]) * 60 + Number(match[4] || 0));
+        const napSafe = ranges.length > 0 && Math.max.apply(null, ranges) <= 720;
+        const free = /(^|\s)free(\s|$| entry)/i.test(entry.price || '');
+        const dropIn = /drop[ -]?in|no pre-booking|no booking|turn up|not strictly necessary/i.test(text);
+        return {categories:categories, napSafe:napSafe, free:free, dropIn:dropIn};
+      }
+
+      function appendSourceTitle(heading, titleText, sourceUrl) {
+        if (!sourceUrl) {
+          heading.textContent = titleText;
+          return;
+        }
+        const link = document.createElement('a');
+        link.className = 'source-title-link';
+        link.href = sourceUrl;
+        link.target = '_blank';
+        link.rel = 'noopener';
+        // The last word and the arrow wrap together, so the arrow never sits on a line of its own.
+        const words = String(titleText).split(' ');
+        const tail = document.createElement('span'); tail.className = 'title-tail'; tail.textContent = words.pop();
+        if (words.length) link.appendChild(document.createTextNode(words.join(' ') + ' '));
+        link.appendChild(tail);
+        link.setAttribute('aria-label', titleText + ', opens provider website');
+        heading.appendChild(link);
+      }
+
+      function townForEntry(meta, entry) {
+        const text = ((meta && meta.where) || '') + ' ' + (entry.venue || '') + ' ' + (entry.activity || '');
+        const t = text.toLowerCase();
+        if (t.indexOf('st leonards') !== -1) return 'st-leonards';
+        if (t.indexOf('bexhill') !== -1) return 'bexhill';
+        if (t.indexOf('hastings') !== -1) return 'hastings';
+        if (t.indexOf('eastbourne') !== -1) return 'eastbourne';
+        if (t.indexOf('herstmonceux') !== -1) return 'villages';
+        if (t.indexOf('pevensey') !== -1 || t.indexOf('stone cross') !== -1) return 'villages';
+        if (t.indexOf('hailsham') !== -1) return 'hailsham';
+        if (t.indexOf('battle') !== -1) return 'battle';
+        return 'villages';
+      }
+      function buildSnapshotEntry(entry, key) {
+        const meta = activityMetaFor(entry);
+        const facets = entryFacets(entry, meta);
+        const travelInfo = travelForEntry(meta, entry);
+        const line = document.createElement('article');
+        line.className = 'snapshot-entry' + entryStatusClass(entry);
+        line.dataset.categories = facets.categories.join(' ');
+        line.dataset.travel = travelInfo[0];
+        line.dataset.town = townForEntry(meta, entry);
+        line.dataset.napSafe = String(facets.napSafe); line.dataset.free = String(facets.free); line.dataset.dropIn = String(facets.dropIn);
+        const time = document.createElement('span'); time.className = 'entry-time'; appendSemanticClockText(time, entry.time, key);
+        if (!time.querySelector('time')) { const datedLabel = document.createElement('time'); datedLabel.dateTime = key; datedLabel.textContent = entry.time; time.textContent = ''; time.appendChild(datedLabel); }
+        const body = document.createElement('div'); body.className = 'entry-body';
+        const title = document.createElement('h4'); appendSourceTitle(title, entry.activity, meta && meta.source);
+        const facts = document.createElement('div'); facts.className = 'entry-facts';
+        const travel = document.createElement('span'); travel.className = 'travel-pill ' + travelInfo[0]; travel.textContent = travelInfo[1]; facts.appendChild(travel);
+        const travelText = shortTravelLine(meta, entry); if (travelText !== travelInfo[1]) { const travelLine = document.createElement('span'); travelLine.className = 'entry-travel'; travelLine.textContent = travelText; facts.appendChild(travelLine); }
+        const price = document.createElement('span'); price.className = 'entry-price'; price.textContent = entry.price; facts.appendChild(price);
+        const verify = document.createElement('span'); verify.className = 'entry-verify ' + (entry.verified ? 'verified' : 'check'); verify.textContent = entry.verified ? 'Verified for this date' : 'Call to check'; facts.appendChild(verify);
+        if (isNewTitle(entry.activity)) { const fresh = document.createElement('span'); fresh.className = 'new-tag'; fresh.textContent = 'New'; fresh.title = 'Added within the last 7 days'; facts.appendChild(fresh); }
+        const details = document.createElement('p'); details.textContent = entry.venue + (entry.status ? ' · ' + entry.status : '');
+        body.appendChild(title); body.appendChild(facts); body.appendChild(details);
+        const entryActions = document.createElement('div'); entryActions.className = 'entry-actions';
+        if (meta && meta.url) {
+          const link = document.createElement('a');
+          const isPrimaryAction = meta.action === 'Book' || meta.action === 'Check slots' || meta.action === 'Event page';
+          link.className = 'action' + (isPrimaryAction ? '' : ' secondary');
+          link.href = meta.url;
+          link.textContent = meta.action || 'Details';
+          link.setAttribute('aria-label', (meta.action || 'Details') + ' for ' + entry.activity);
+          if (meta.url.indexOf('http') === 0) { link.target = '_blank'; link.rel = 'noopener'; }
+          entryActions.appendChild(link);
+        }
+        const calendarEvent = calendarEventFor(key, entry);
+        if (calendarEvent) {
+          const cal = document.createElement('a');
+          cal.className = 'action secondary calendar-action';
+          cal.href = googleCalendarUrl(calendarEvent);
+          cal.target = '_blank';
+          cal.rel = 'noopener';
+          cal.textContent = 'Add to calendar';
+          cal.setAttribute('aria-label', 'Add ' + entry.activity + ' to calendar');
+          entryActions.appendChild(cal);
+        }
+        if (entryActions.childNodes.length) body.appendChild(entryActions);
+        line.appendChild(time); line.appendChild(body);
+        return line;
+      }
+
+      function appendCalendarEntries(list, entries, visibleCount, key, viewName) {
+        entries.slice(0, visibleCount).forEach(function (entry) { list.appendChild(buildSnapshotEntry(entry, key)); });
+        if (entries.length <= visibleCount) return;
+
+        const hiddenCount = entries.length - visibleCount;
+        const extra = document.createElement('div');
+        extra.className = 'calendar-extra';
+        extra.id = viewName + '-extra-' + key;
+        extra.hidden = true;
+        entries.slice(visibleCount).forEach(function (entry) { extra.appendChild(buildSnapshotEntry(entry, key)); });
+
+        const more = document.createElement('button');
+        more.className = 'snapshot-more';
+        more.type = 'button';
+        more.dataset.hiddenCount = String(hiddenCount);
+        more.textContent = 'Show ' + hiddenCount + ' more';
+        more.setAttribute('aria-expanded', 'false');
+        more.setAttribute('aria-controls', extra.id);
+        more.setAttribute('aria-label', 'Show ' + hiddenCount + ' more ' + (hiddenCount === 1 ? 'activity' : 'activities') + ' for ' + fullCalendarDate(key));
+        more.addEventListener('click', function (event) {
+          event.stopPropagation();
+          const expanding = extra.hidden;
+          const currentHiddenCount = Number(more.dataset.hiddenCount || 0);
+          extra.hidden = !expanding;
+          more.setAttribute('aria-expanded', String(expanding));
+          more.textContent = expanding ? 'Show less' : 'Show ' + currentHiddenCount + ' more';
+          more.setAttribute('aria-label', expanding ? 'Show fewer activities for ' + fullCalendarDate(key) : 'Show ' + currentHiddenCount + ' more ' + (currentHiddenCount === 1 ? 'activity' : 'activities') + ' for ' + fullCalendarDate(key));
+        });
+        list.appendChild(more);
+        list.appendChild(extra);
+      }
+
+      function renderWeekSnapshot() {
+        const container = document.getElementById('weekSnapshot');
+        container.innerHTML = '';
+        if (!visibleWindowDates.length) {
+          const stale = document.createElement('p'); stale.className = 'snapshot-empty stale-note';
+          stale.textContent = 'No activities are researched for today onwards yet. The latest research ends on ' + fullCalendarDate(embeddedWeekDates[embeddedWeekDates.length - 1]) + '.';
+          container.appendChild(stale);
+        }
+        visibleWindowDates.forEach(function (key) {
+          const entries = calendarData[key] || [];
+          const parts = shortCalendarDate(key);
+          const isToday = key === pageTodayKey;
+          const cell = document.createElement('section'); cell.className = 'snapshot-day'; cell.id = 'day-' + key;
+          const headingId = 'day-heading-' + key; cell.setAttribute('aria-labelledby', headingId);
+          if (isToday) cell.setAttribute('aria-current', 'date');
+          const date = document.createElement('header'); date.className = 'snapshot-date';
+          const nap = document.createElement('div'); nap.className = 'nap-band'; nap.innerHTML = '<strong><time datetime="' + key + 'T12:00">12:00</time>–<time datetime="' + key + 'T14:00">14:00</time></strong><span>Usual nap window · timing may shift</span>';
+          const list = document.createElement('div'); list.className = 'calendar-day-list';
+          if (entries.length) appendCalendarEntries(list, entries, 3, key, 'week');
+          else { const empty = document.createElement('span'); empty.className = 'snapshot-empty'; empty.textContent = 'No researched activities for this day.'; list.appendChild(empty); }
+          cell._allEntries = Array.from(list.querySelectorAll('.snapshot-entry'));
+          const optionCount = cell._allEntries.length;
+          date.innerHTML = '<span>' + (isToday ? 'Today · ' : '') + parts.day + '</span><h3 id="' + headingId + '"><time datetime="' + key + '">' + parts.date + ' ' + parts.month + '</time></h3><small class="day-count" data-original-count="' + optionCount + '">' + optionCount + (optionCount === 1 ? ' option' : ' options') + '</small>';
+          cell.appendChild(date); cell.appendChild(nap); cell.appendChild(list);
+          container.appendChild(cell);
+        });
+      }
+
+      function renderSlidingWindowChrome() {
+        const nav = document.getElementById('stickyDays');
+        nav.innerHTML = '';
+        nav.style.setProperty('--visible-days', String(Math.max(visibleWindowDates.length, 1)));
+        nav.style.display = visibleWindowDates.length ? '' : 'none';
+        visibleWindowDates.forEach(function (key) {
+          const parts = shortCalendarDate(key);
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.dataset.dayTarget = 'day-' + key;
+          button.appendChild(document.createTextNode(parts.day + ' '));
+          const date = document.createElement('span'); date.textContent = parts.date; button.appendChild(date);
+          nav.appendChild(button);
+        });
+
+        let range = 'No upcoming researched dates';
+        if (visibleWindowDates.length) {
+          const firstKey = visibleWindowDates[0];
+          const lastKey = visibleWindowDates[visibleWindowDates.length - 1];
+          const first = dateFromKey(firstKey); const last = dateFromKey(lastKey);
+          const firstParts = shortCalendarDate(firstKey); const lastParts = shortCalendarDate(lastKey);
+          if (firstKey === lastKey) {
+            range = firstParts.day + ' ' + firstParts.date + ' ' + firstParts.month + ' ' + first.getFullYear();
+          } else if (first.getFullYear() === last.getFullYear() && first.getMonth() === last.getMonth()) {
+            range = firstParts.day + ' ' + firstParts.date + ' – ' + lastParts.day + ' ' + lastParts.date + ' ' + lastParts.month + ' ' + last.getFullYear();
+          } else if (first.getFullYear() === last.getFullYear()) {
+            range = firstParts.day + ' ' + firstParts.date + ' ' + firstParts.month + ' – ' + lastParts.day + ' ' + lastParts.date + ' ' + lastParts.month + ' ' + last.getFullYear();
+          } else {
+            range = firstParts.day + ' ' + firstParts.date + ' ' + firstParts.month + ' ' + first.getFullYear() + ' – ' + lastParts.day + ' ' + lastParts.date + ' ' + lastParts.month + ' ' + last.getFullYear();
+          }
+        }
+        document.getElementById('visibleWeekRange').textContent = range;
+        document.getElementById('rollingWeekRange').textContent = 'Rolling week: ' + range + '.';
+      }
+
+      const activities = [
+        {cat:'music', label:'MUSIC &amp; MOVEMENT · BOOK', title:'Tots Play Social Tots', price:'£9–£59.50', when:'Fri 16, Mon 19 and Tue 20 Oct', where:"Totsy’s Treehouse, Unit 2 Keymer Buildings, Victoria Road, Bexhill TN39 3PD", travel:['walk','Walkable','About 25 to 30 minutes on foot from the seafront, or use a local bus.'], note:'For ages 8 months to 2 years. Fri/Tue 09:45 to 10:30; Mon 11:00 to 11:45. Booking required; no drop-ins. Mon to Fri only, no Saturday sessions. Sources: totsplay.co.uk and Happity, checked 13 Oct.', verified:true, url:'https://www.totsplay.co.uk/bexhill', action:'Book', bookAhead:'Booking required; no drop-ins. You can also call 07739 362568.', source:'https://www.totsplay.co.uk/bexhill'},
+        {cat:'music sports', label:'MUSIC &amp; MOVEMENT · DANCE', title:'babyballet Tinies', price:'£6.50–£7.25 · confirm at booking', when:'Fri 16, 10:05 to 10:40 · Sat 17, 09:00 to 09:40 or 09:40 to 10:15 · Mon 19, 09:30 to 10:05 (St Mary Hampden Park) · Tue 20, 09:15 to 09:50 or 10:55 to 11:30', where:'The Hastings Centre, The Ridge, Hastings TN34 2SA', travel:['transit','Coast bus + Ridge','Stagecoach 98/99 from Bexhill to Hastings in about 25 minutes, then bus or taxi up The Ridge.'], note:'For ages 18 months to 3 years. Price conflict: Happity (provider-owned listing) £6.50/session vs school page £7.25/class; confirm at booking. All sessions at The Hastings Centre except Mon 19 (St Mary Hampden Park). Booking required; call 07891 952104 to confirm spaces. Eastbourne is a different school (Miss Natalie, 07842 244210). Sources: Happity and babyballet.co.uk, checked 15 Oct.', verified:false, url:'https://babyballet.co.uk/babyballet-school/hastings-bexhill-battle/', action:'Book', bookAhead:'Booking required. Price is £6.50–£7.25; call 07891 952104 to confirm spaces.', source:'https://babyballet.co.uk/babyballet-school/hastings-bexhill-battle/'},
+        {cat:'play', label:'DROP-IN PLAY', title:'Clambers Playcentre open play', price:'£8.50 child non-member · £2 adults', when:'Daily · open 7 days from 10:00', where:'White Rock Gardens, Hastings TN34 1LD', travel:['transit','Coast bus','Stagecoach 98/99 from Bexhill to Hastings in about 25 minutes, then a 10-minute walk.'], note:'£8.50 non-member / £6.50 member for ages 18 months to 12 years; adults £2.00; under-6 months free. Open 7 days from 10:00. No booking; turn up. Source: clambers.co.uk admission page, checked 15 Oct.', verified:true, url:'https://www.clambers.co.uk/admission.asp', action:'Details', source:'https://www.clambers.co.uk/admission.asp'},
+        {cat:'sports play', label:'SPORTS · GYMNASTICS · CHECK FIRST', title:'1066 Gymnastics preschool classes', price:'Price unverified · call 01424 213779', when:'Thu 15 10:00 · Fri 16 10:00 · Sat 17 08:45 (Weenie Whales) · Wed 21 10:00 (Teeny Turtles, 10y and under) & 18:30 · Thu 22 10:00', where:'Unit 3A Brett Drive, Sidley, Bexhill-on-Sea TN40 2JP', travel:['transit','Local Bexhill','Short local bus or taxi journey from central Bexhill.'], note:'Sun 18 Oct 12:00 & 14:00 are Birthday Party Deposits, not classes (removed). Sat 17 08:45 is Weenie Whales; Wed 21 10:00 is Teeny Turtles (10 years and under). No Mon 19/Tue 20 sessions shown. Pre-booking required. Check before going: call 01424 213779. Source: 1066 Gymnastics Bookwhen via QA check 15 Oct.', verified:false, url:'https://bookwhen.com/1066gymnastics', action:'Book', bookAhead:'Class names and prices unverified tonight; call 01424 213779 to confirm before booking.', source:'https://bookwhen.com/1066gymnastics'},
+        {cat:'play', label:'SOFT PLAY', title:'Fort Fun soft play', price:'£6.75 (12–24 months) · £2 adults', when:'Fri 16, Sat 17 and Sun 18 Oct, 10:00 to 18:00', where:'Royal Parade, Eastbourne BN22 7LQ', travel:['transit','Coast bus','Stagecoach 98/99 from Bexhill to Eastbourne in about 40 minutes; seafront location.'], note:'Open Fri–Sun 10:00–18:00, verified on the venue site 15 Oct; venue site lists 12–24 months £6.75 and adults £2.00. No booking; just turn up.', verified:true, url:'https://www.fort-fun.co.uk/softplay.html', action:'Details', image:'images/fort-fun.webp', alt:'Children playing in the soft-play area at Fort Fun', source:'https://www.fort-fun.co.uk/softplay.html'},
+        {cat:'sports', label:'SWIMMING · CHECK PRICE', title:'Water Babies swimming · Hailsham', price:'Price on request', when:'Saturdays, morning hours · call to check times', where:'London Road, Hailsham BN27 3DD', travel:['awkward','Bus to Hailsham','Stagecoach 98 from Bexhill to Hailsham.'], note:'Opening hours verified (Sat 08:45–15:00; Sun 08:30–12:30); exact slots and prices are behind the booking wall. Booking is required; call 01424 892568. Source: Water Babies Sussex East, checked 10 Oct.', verified:true, url:'tel:01424892568', action:'Call', source:'https://www.waterbabies.co.uk/lp/baby-swimming/sussex-east-and-tunbridge-wells'},
+        {cat:'sports', label:'SWIMMING · CHECK BEFORE GOING', title:'Blue Lagoon open swims', price:'Child free · adult £7.95–£13.95', when:'Thu 15 and Fri 16 Oct · bookable 30-minute sessions', where:'Blue Lagoon Warm Water Centre, 14 Brassey Parade, Hampden Park, Eastbourne BN22 9NG', travel:['transit','Bus stop outside','Use the Eastbourne route and local connection; the bus stop is outside the door.'], note:'Children aged 0 to 9 swim free. The pools are heated to 34°C. Booking is required via eastbourne.bluelagooncentres.com/findsession. Weekday sessions from the 10 Oct check; no public weekend toddler sessions found on the venue investigation 11 Oct. Check before going.', verified:false, source:'https://eastbourne.bluelagooncentres.com/findsession'},
+        {cat:'sports', label:'SWIMMING · DRIVE-ONLY WEEKEND OPTION', title:'Puddle Ducks swimming', price:'Call to check', when:'Sun 18 Oct · call to check', where:'Ocklynge Junior School, Victoria Drive, Eastbourne BN20 8XN', travel:['drive','Drive only','About 30 to 35 minutes by car toward Eastbourne.'], note:'Free trial bookable. Class times and prices are not visible without the booking flow; call 01892 617246. Half term closed 26 Oct to 1 Nov. Source: Puddle Ducks, checked 11 Oct.', verified:false, url:'tel:01892617246', action:'Call', source:'https://www.puddleducks.com/local-teams/west-kent-east-sussex/our-pools-classes/'},
+        {cat:'library', label:'LIBRARY · RHYMETIME', title:'Hampden Park Library Rhymetime', price:'Free', when:'Mon 19 Oct, 10:30 to 11:00', where:'Hampden Park Library, Brodrick Close, Hampden Park, Eastbourne BN22 9NQ', travel:['awkward','Bus + local connection','Stagecoach 98/99 to Eastbourne, then a local bus to Hampden Park.'], note:'No booking. Term-time only. Source: East Sussex Libraries.', verified:true, source:'https://eastsussex.spydus.co.uk/cgi-bin/spydus.exe/ENQ/WPAC/EVSESENQ?SETLVL=&RNI=2099180'},
+        {cat:'play', label:'TODDLER GROUP · TERM-TIME', title:'Polegate Pre-School Toddler group', price:'£1.50 per family', when:'Mon 19 Oct, 09:15 to 11:00', where:'Polegate Community Centre, 54 Windsor Way, Polegate BN26 6QF', travel:['transit','Direct coast bus','Stagecoach 98/99 from Bexhill runs through Polegate.'], note:'Term-time only. Booking requirement is not stated; contact contact@polegatepreschool.co.uk before a first visit.', verified:true, url:'mailto:contact@polegatepreschool.co.uk', action:'Email', source:'https://polegatepreschool.co.uk/contact-us.php'},
+        {cat:'music', label:'MUSIC &amp; MOVEMENT · BOOK', title:'Hartbeeps Happy House · Polegate', price:'£8–£8.60', when:'Mon 19 Oct, 10:00 to 10:45', where:'Polegate Community Association, 54 Windsor Way, Polegate BN26 6QF', travel:['transit','Direct coast bus','Stagecoach 98/99 from Bexhill runs through Polegate.'], note:'For ages 16 months to 4 years 6 months. Book via Happity; term-time only.', verified:true, source:'https://www.happity.co.uk/hartbeeps/eastbourne-and-brighton'},
+        {cat:'play', label:'SOFT PLAY · CALL TO CHECK', title:'Sovey Tumblers soft play', price:'Call to check price', when:'Mon 19 Oct, 09:00 to 12:00', where:'The Sovereign Centre, Royal Parade, Eastbourne BN22 7LQ', travel:['transit','Coast bus','Stagecoach 98/99 from Bexhill to Eastbourne in about 40 minutes.'], note:'Giant bouncy castle and soft play. Booking requirement is not stated. Call 01323 738822 to check the price.', verified:false, url:'tel:01323738822', action:'Call', source:'https://www.better.org.uk/leisure-centre/eastbourne/the-sovereign-centre/soft-playrne-32753'},
+        {cat:'play', label:'SOFT PLAY · CALL TO CHECK', title:'Treasure Island indoor soft play', price:'Call to check hours/prices', when:'Daily · call to check hours', where:'Eastbourne seafront', travel:['transit','Coast bus','Stagecoach 98/99 from Bexhill to Eastbourne in about 40 minutes.'], note:'Fort Fun’s website directs visitors here on days Fort Fun is closed. Booking requirement is not stated. Call to check hours and prices before going.', verified:false, url:'https://www.treasure-island.co.uk/', action:'Details', source:'https://www.treasure-island.co.uk/'},
+        {cat:'library', label:'LIBRARY · RHYMETIME', title:'Eastbourne Library Rhymetime', price:'Free', when:'Tue 20 Oct, 10:30 to 11:00', where:'Eastbourne Library, Grove Road, Eastbourne BN21 4TL', travel:['transit','Coast bus','Stagecoach 98/99 from Bexhill to Eastbourne town centre.'], note:'No booking. Term-time only. Source: East Sussex Libraries.', verified:true, source:'https://eastsussex.spydus.co.uk/cgi-bin/spydus.exe/ENQ/WPAC/EVSESENQ?SETLVL=&RNI=1920214'},
+        {cat:'events play', label:'ARTS · FREE DROP-IN', title:'Wriggle Room at Towner Eastbourne', price:'Free', when:'Selected Tuesdays in term time: Tue 20 Oct 10:00 at Willingdon Trees Community Centre, Hampden Park; Tue 3 Nov (offsite, book a free ticket on Towner\'s site)', where:'Towner Eastbourne, Devonshire Park, College Road, Eastbourne BN21 4JJ', travel:['transit','Coast bus','Stagecoach 98/99 from Bexhill to Eastbourne in about 40 minutes.'], note:'For under-5s and caregivers. Towner\'s What\'s On listing shows a 20 Oct session at Willingdon Trees Community Centre; the venue\'s Wriggle Room page confirms a 3 Nov offsite session (free, ticketed). Sources: townereastbourne.org.uk/whats-on and townereastbourne.org.uk/whats-on/wriggle-room, checked 15 Oct.', verified:true, url:'https://townereastbourne.org.uk/whats-on/wriggle-room', action:'Details', source:'https://townereastbourne.org.uk/whats-on/wriggle-room'},
+        {cat:'library', label:'LIBRARY · RHYMES &amp; STORIES', title:'Eastbourne Library Rhymes and Stories', price:'Free', when:'Wed 21 Oct, 10:30 to 11:00', where:'Eastbourne Library, Grove Road, Eastbourne BN21 4TL', travel:['transit','Coast bus','Stagecoach 98/99 from Bexhill to Eastbourne town centre.'], note:'No booking. Term-time only. Source: East Sussex Libraries.', verified:true, source:'https://eastsussex.spydus.co.uk/cgi-bin/spydus.exe/ENQ/WPAC/EVSESENQ?SETLVL=&RNI=2097544'},
+        {cat:'library', label:'LIBRARY · STORYTIME', title:'Battle Storytime', price:'Free drop-in', when:'Wed 21 Oct, 10:30', where:'Battle Library, 7 Market Square, Battle TN33 0XB', travel:['transit','Easy train','Bexhill to Battle is about 15 minutes by train, plus a short walk.'], note:'Weekly Wednesday storytime series verified on Spydus 11 Oct. Free, no booking, nap-safe. Source: East Sussex Libraries Spydus.', verified:true, source:'https://eastsussex.spydus.co.uk/cgi-bin/spydus.exe/ENQ/WPAC/EVSESENQ?SETLVL=&RNI=1745938'},
+        {cat:'sports', label:'SWIMMING · TERM BOOKING', title:'Water Babies at Blue Lagoon', price:'Term-based price', when:'Wed 21 Oct, 10:00 to 12:30 block', where:'Blue Lagoon Warm Water Centre, 14 Brassey Parade, Hampden Park, Eastbourne BN22 9NG', travel:['awkward','Bus + local connection','Stagecoach 98/99 toward Eastbourne, then connect to Hampden Park.'], note:'For ages 0 to 5 years. Term-based booking. Source: Happity listing.', verified:true, source:'https://www.happity.co.uk/venues/baby-groups-eastbourne-water-babies-at-blue-lagoon-warm-water-centre'},
+        {cat:'play', label:'TODDLER GROUP · DROP-IN', title:'Tiddlers and Toddlers', price:'£2.50 one child · £3.50 two+', when:'Wed 21 Oct, 09:30 to 11:30', where:'Herstmonceux Village Hall, Hailsham Road, Herstmonceux BN27 4JX', travel:['transit','Direct bus','Stagecoach 98 from Bexhill to Herstmonceux takes about 25 minutes.'], note:'Snack and drinks included; first session free. Drop-in, no booking. Term-time only.', verified:true, url:'https://www.escis.org.uk/baby-toddler-groups/tiddlers-and-toddlers-herstmonceux-under-5s-group/', action:'Details', source:'https://www.escis.org.uk/baby-toddler-groups/tiddlers-and-toddlers-herstmonceux-under-5s-group/'},
+        {cat:'music', label:'MUSIC &amp; MOVEMENT · BOOK', title:'Hartbeeps Happy House · Hailsham', price:'£8–£8.60', when:'Wed 21 Oct, 10:00 to 10:45', where:'Hailsham Methodist Church, Hailsham BN27 1AU', travel:['awkward','Bus to Hailsham','Stagecoach 98 from Bexhill to Hailsham.'], note:'For ages 16 months to 4 years 6 months. Must book in advance via Happity; term-time only. This is a secular franchise hiring the church hall.', verified:true, source:'https://www.happity.co.uk/hartbeeps/eastbourne-and-brighton'},
+        {cat:'music play', label:'PLAY &amp; MUSIC · CHECK PRICE', title:"Kids Play ESK Tots N’ Tunes", price:'Check price', when:'Thu 15 Oct, 09:30 · 90-minute session', where:'ESK Warehouse, Courtlands Road, Eastbourne BN22 8TR', travel:['transit','Coast bus','Stagecoach 98/99 from Bexhill to Eastbourne in about 40 minutes.'], note:'For over-1s and walkers. Booking required online. Check the price when booking.', verified:true, url:'https://www.kidsplayesk.com/', action:'Book', source:'https://www.kidsplayesk.com/'},
+        {cat:'music sports', label:'MUSIC &amp; MOVEMENT · CALL TO CHECK', title:'babyballet Tinies · Hailsham', price:'£8.00 per class (half-term blocks); 3-week trial £25', when:'Thu 15 Oct, 09:30 to 10:05', where:'Diplocks Hall, Hailsham BN27 3JY', travel:['awkward','Bus to Hailsham','Stagecoach 98 from Bexhill to Hailsham.'], note:'£8.00 per class payable in half-term blocks via GoCardless; 3-week trial £25. Book in advance, no drop-ins. Tinies 18 months–3 years. Diplocks Hall listed on Happity; the school\'s own venue list does not show it, so call to confirm it still runs there. Sources: babyballet.co.uk/hailsham-lewes and happity.co.uk, checked 15 Oct.', verified:false, url:'tel:07842244210', action:'Call', source:'https://babyballet.co.uk/babyballet-school/hailsham-lewes/'},
+        {cat:'play', label:'STAY &amp; PLAY · CALL TO CHECK', title:'Baby and Me Stay and Play', price:'£5 + £0.15 VAT', when:'Thu 15 Oct, 11:00', where:'Baby and Me Studio, 27 Sackville Road, Bexhill-on-Sea TN39 3JD', travel:['walk','Local Bexhill','Local Bexhill journey from the Marina area.'], note:'Timetable unverified 15 Oct (JS-heavy). Classes are aimed at 6 weeks to confidently crawling / up to 12 months: a 23-month-old is likely too old for the current offer. Call 07476 841583 before going.', verified:false, url:'tel:07476841583', action:'Call', source:'https://bookwhen.com/babyandmees'},
+        {cat:'library', label:'LIBRARY · CALL TO CHECK', title:'Hailsham Library Rhymetime', price:'Free drop-in', when:'Fri 16 Oct, 11:00 to 11:30', where:'Hailsham Library, Western Road, Hailsham BN27 3DN', travel:['awkward','Longer bus trip','Check the current route in the Stagecoach app before leaving.'], note:'The series is live on Spydus, but the dated occurrence record is stale. Call 0345 6080196. Source: East Sussex Libraries Spydus, checked 9 Oct.', verified:false, url:'tel:03456080196', action:'Call', source:'https://eastsussex.spydus.co.uk/cgi-bin/spydus.exe/ENQ/WPAC/EVSESENQ?SETLVL=&RNI=1743334'},
+        {cat:'sports play', label:'SPORTS · TODDLER PLAY · CHECK', title:'Be Mini toddler play', price:'£6.50', when:'Wed 21, 10:00 to 11:30 · Fri 16, 11:00 to 12:30', where:'Be Gymnastics, Units 9–10 White Knight Business Park, Hammonds Drive, Eastbourne BN23 6PW', travel:['awkward','Longer journey','Stagecoach 98/99 toward Eastbourne, then walk or connect locally.'], note:'For ages 0 to 4. The activity page is around 523 days stale; the club homepage only confirms Be Mini is pay-as-you-go. Email before travelling. Source: Be Gymnastics site, checked 9 Oct.', verified:false, url:'mailto:begymnasticsclub@gmail.com', action:'Email'},
+        {cat:'events', label:'MUSEUM · LOCAL FALLBACK', title:'Bexhill Museum', price:'Adult £4 · under-5 free', when:'Tue to Sun, 11:00 to 16:00', where:'Egerton Road, Bexhill TN39 3HL', travel:['walk','Walkable','About 10 to 15 minutes on foot; Egerton Park is beside it.'], note:'Children 5–16 £2; concessions £3. Closed Mondays. Source: Bexhill Museum visit page, fetched 9 Oct.', verified:true, image:'images/bexhill-museum.webp', alt:'Exterior of Bexhill Museum', source:'https://www.bexhillmuseum.org.uk/visit-us/'},
+        {cat:'events', label:'AQUARIUM · INDOOR BACKUP', title:'Hastings Aquarium', price:'£16.50 adult · £13 junior · 0–2 free', when:'Sat 17 and Sun 18 Oct, 10:00 to 17:00', where:'Rock-a-Nore Road, Hastings TN34 3DW', travel:['drive','Drive or coast bus','About 20 to 25 minutes by car from Bexhill.'], note:'October hours 10:00–17:00 daily, last entry 16:15, on the venue site. Prices resolved 14 Oct: £16.50 adult, £13 junior, 0–2 free. No booking needed. Source: hastingsaquarium.co.uk, checked 14 Oct.', verified:true, nap:true, url:'https://hastingsaquarium.co.uk/visitor-info/admission-prices/', action:'Visitor info', calendar:true, source:'https://hastingsaquarium.co.uk/visitor-info/admission-prices/'},
+        {cat:'events', label:'CASTLE · HALLOWEEN TRAIL', title:'Bodiam Castle Spell Quest', price:'Adult £13 · under-5 free', when:'Spell Quest trail daily to Sun 1 Nov, 10:00 to 16:00', where:'Bodiam, Robertsbridge TN32 5UA', travel:['drive','Best by car','About 30 to 35 minutes by car from Bexhill.'], note:'Call to Arms ran Saturday only (10:30–15:30, displays 11:30 and 14:30). Spell Quest runs 10:00–16:00 daily to 1 Nov, £3.50 with a prize (last trail 3:30pm); weekend fancy-dress competition 1pm in the courtyard. Child 5–17 £6.50; non-member parking £5. No booking needed. Spiral stairs are not pushchair-friendly; lawns and moat paths are. Source: National Trust, checked 11 Oct.', verified:true, nap:true, url:'https://www.nationaltrust.org.uk/visit/sussex/bodiam-castle/events/5f0a21de-a397-4c4c-a758-4790f8a908e3', action:'Visitor info', calendar:true, source:'https://www.nationaltrust.org.uk/visit/sussex/bodiam-castle/events/5f0a21de-a397-4c4c-a758-4790f8a908e3'},
+        {cat:'events', label:'EVENT · FARM', title:'PYO Pumpkins at Sharnfold Farm', price:'£7.45 online', when:'Sat 17 and Sun 18 Oct, 10:00 to 16:00', where:'Sharnfold Farm, Hailsham Road, Stone Cross, Pevensey BN24 5BU', travel:['drive','Best by car','About 25 to 30 minutes by car from Bexhill.'], note:'Visit Eastbourne lists under-2s as free, but this was not confirmed on the operator site. Pumpkins cost extra by weight. Advance booking is recommended online; turn-up is possible. Go 10–12 or after 14. Sources: Visit Eastbourne and the operator’s PYO guide, checked 11 Oct. Call 01323 768490.', verified:true, nap:true, url:'https://www.visiteastbourne.com/whats-on/pyo-pumpkins-at-sharnfold-farm-p2641251', action:'Event details', image:'images/sharnfold-pumpkins.webp', alt:'Pumpkins arranged at Sharnfold Farm for pick-your-own days', bookAhead:'Advance booking is recommended. Under-2s free is listed by Visit Eastbourne but was not confirmed on the farm’s own site.', calendar:true, source:'https://www.visiteastbourne.com/whats-on/pyo-pumpkins-at-sharnfold-farm-p2641251'},
+        {cat:'events', label:'EXHIBITIONS · FREE', title:'DLWP autumn exhibitions', price:'Free', when:'Daily, 10:00 to 17:00', where:'De La Warr Pavilion, Marina, Bexhill TN40 1DP', travel:['walk','Walkable','About 10 to 15 minutes on foot.'], note:'Prem Sahib: Chamber and Gordon Matta-Clark: Discrete Violations run to 3 January 2027. Open seven days a week 10am–5pm; admission to building and galleries is free, no booking. Source: dlwp.com Plan Your Visit, checked 14 Oct. Free, no booking. A pre-nap or post-nap visit is easiest.', verified:true, source:'https://www.dlwp.com/whats-on/for-families/'},
+        {cat:'sports', label:'SPORTS · SWIMMING · CALL', title:'Water Babies at St Mary’s', price:'Price on request', when:'Sat 17 Oct, 08:45 to 15:00 · Sun 18 Oct, 08:30 to 12:30', where:"St Mary’s School, Wrestwood Road, Bexhill TN40 2LU", travel:['drive','Best by car','North Bexhill; driving is simplest.'], note:'Weekend windows are published, but the exact slot and price are behind the booking wall. Call 01424 892568. Source: Water Babies listing, checked 10 Oct.', verified:false, url:'tel:01424892568', action:'Call', bookAhead:'The exact weekend slot is not published; call before going.', source:'https://www.waterbabies.co.uk/baby-swimming/sussex-east-and-tunbridge-wells/st-marys-school-bexhill-pool/'},
+        {cat:'sports', label:'SPORTS · FOOTBALL · CALL', title:'Little Kickers Little Kicks', price:'£35/month', when:'Sun 18 Oct, within the 09:00 to 12:30 block', where:'Bexhill Community Centre, Station Road, Bexhill TN40 1RE', travel:['walk','Walkable','Town-centre walk from the Marina.'], note:'For ages 18 months to 2½ years. Sunday sessions run 9:00–12:30; the exact class time is unpublished. The booking page now resolves to waitlisted Junior Kickers (2.5–3.5y), NOT Little Kicks, so do not book through it. Call 07739 362568 or 07802 864719 for a Little Kicks slot. Source: provider site, checked 15 Oct.', verified:false, url:'tel:07802864719', action:'Call', bookAhead:'The exact class time is unpublished and the booking page shows waitlisted Junior Kickers only; call 07739 362568 or 07802 864719.', source:'https://clubhubuk.co.uk/clubs/little-kickers-bexhill/'},
+        {cat:'play', label:'DROP-IN PLAY · BOOK', title:'Cherry Blossom Playcentre open play', price:'£6 Wed booked online · £5 Fiver Fridays · Mon price unpublished', when:'Fri 16 (Fiver Fridays) · Mon 19 · Tue 20 · Wed 21 Oct · timed 1.5h slots', where:'8 London Road, Bexhill-on-Sea TN39 3JU · per provider booking page', travel:['walk','Walkable','About 25 to 30 minutes on foot from the seafront, or take a short bus ride.'], note:'Rebranded Cherry Blossom Playcentre (formerly Birkdale Playcentre) at 8 London Road. Wed open play £6 booked online; Fiver Fridays £5 booked online; Monday price unpublished, call 01424 212545. Book via the provider booking page. Sources: birkdale-playcentre.pembee.app and venue site, checked 15 Oct.', verified:true, url:'https://birkdale-playcentre.pembee.app', action:'Book', bookAhead:'Book via the provider booking page; prices differ by day.', source:'https://birkdale-playcentre.pembee.app'},
+        {cat:'play', label:'DROP-IN PLAY', title:'Catkins Baby and Toddler Group', price:'Price unpublished', when:'Wed 21, 10:00 to 12:00 · Mon 19, 10:00 to 14:45 · Tue 20, 09:00 to 11:00', where:"Wallis Hall, Ancaster Nursery, Gunter’s Lane, Bexhill TN39 4EB", travel:['transit','Bus toward Sidley','Use the 95, 98 or 101 toward Sidley, then walk a short distance.'], note:'Drop-in hours verified from the Facebook hours listing 13 Oct. Call 01424 216670 for price or before a first visit.', verified:true, nap:true, url:'tel:01424216670', action:'Call', source:'https://www.facebook.com/share/19ZEyn2xYt/'},
+        {cat:'play', label:'SOFT PLAY · INDOOR BACKUP', title:'Let’s Go Play', price:'£5 walker weekdays · £8 walker weekends · adults free', when:'Weekdays 9:15 / 12:00 / 15:45 · Sat 17 Oct 10:00 / 12:15 / 14:30', where:'2 Haywood Way, Hastings', travel:['drive','Best by car','About 25 minutes by car from Bexhill.'], note:'For a 23-month-old, choose the Walker ticket. Weekday slots £5 walker, weekend slots £8 walker; adults are free; an online booking fee applies. Morning sessions are nap-safe; 12:00–12:15 sessions partially overlap nap. Booking is recommended. Slots verified on Bookwhen 14 Oct. Source: bookwhen.com/lets-go-play.', verified:true, nap:true, url:'https://bookwhen.com/lets-go-play', action:'Book', image:'images/lets-go-play.webp', alt:'Climbing nets and colourful soft-play equipment at Let’s Go Play', bookAhead:'A 23-month-old pays the Walker rate; adults are free, plus an online booking fee.', source:'https://bookwhen.com/lets-go-play'}, 
+        {cat:'hubs', label:'FAMILY HUB · FEEDING', title:'Hastings Town Baby Feeding Group', price:'Free', when:'Mon 19 Oct, 13:00 to 14:30', where:'Hastings Town Family Hub, Waterworks Road, Hastings TN34 1RT', travel:['transit','Coast bus','Stagecoach 98/99 to Hastings; allow around 25 minutes plus the local leg.'], note:'Free drop-in; no booking. ESCIS-verified 11 Oct. Overlaps the 12:00–14:00 nap.', verified:true, nap:true, source:'https://www.escis.org.uk/advice-and-support/hastings-town-family-hub/'},
+        {cat:'library', label:'LIBRARY · RHYMETIME', title:'Bexhill Library Rhymetime', price:'Free drop-in', when:'Tue 20 Oct, 10:30 to 11:00', where:'Bexhill Library, Western Road, Bexhill TN40 1DY', travel:['walk','Walkable','About 15 minutes on foot.'], note:'Spydus weekly series verified 10 Oct; free, no booking, nap-safe.', verified:true, image:'images/bexhill-library.webp', alt:'Brick frontage and entrance of Bexhill Library', source:'https://eastsussex.spydus.co.uk/cgi-bin/spydus.exe/ENQ/WPAC/EVSESENQ?SETLVL=&RNI=1743235'},
+        {cat:'library', label:'LIBRARY · RHYMETIME', title:'Battle Library Rhymetime', price:'Free drop-in', when:'Tue 20 Oct, 10:30 to 11:00', where:'Battle Library, 7 Market Square, Battle TN33 0XB', travel:['transit','Easy train','Bexhill to Battle is about 15 minutes by train, plus a short walk.'], note:'Spydus weekly series verified 10 Oct; free, no booking, nap-safe.', verified:true, source:'https://eastsussex.spydus.co.uk/cgi-bin/spydus.exe/ENQ/WPAC/EVSESENQ?SETLVL=&RNI=1773714'},
+        {cat:'hubs', label:'COMMUNITY · CHECK FIRST', title:'Sidley community pantry', price:'£2 suggested', when:'Wed 21 Oct, 10:00 to 11:00', where:'Behind Sidley Family Hub, 121 Ninfield Road, Bexhill TN39 5BD', travel:['transit','Direct bus','Use the 95, 53 or 98 toward Sidley.'], note:'Every Wednesday 10am to 11am; suggested donation £2 per household. Run by Bexhill Family Collective behind Sidley Family Hub. Source: Family Hubs, checked 14 Oct.', verified:true, source:'https://familyhubs.eastsussex.gov.uk/about/find-family-hub/sidley'},
+        {cat:'hubs', label:'FAMILY HUB · STAY & PLAY · NEW', title:'Hastings Town 0–2 Stay and Play', price:'Free', when:'Wed 21 Oct, 13:00 to 14:30', where:'Hastings Town Family Hub, Waterworks Road, Hastings TN34 1RT', travel:['transit','Coast bus','Stagecoach 98/99 to Hastings; allow around 25 minutes plus the local leg.'], note:'Term-time free drop-in for 0–2s with infant feeding support. Verified on the official Family Hubs page 15 Oct. Overlaps the 12:00–14:00 nap.', verified:true, nap:true, source:'https://familyhubs.eastsussex.gov.uk/activities/hastings'},
+        {cat:'library', label:'LIBRARY · STORYTIME', title:'Bexhill Library Storytime', price:'Free drop-in', when:'Thu 15 and Thu 22 Oct, 11:15 to 11:45', where:'Bexhill Library, Western Road, Bexhill TN40 1DY', travel:['walk','Walkable','About 15 minutes on foot.'], note:'Series confirmed live on Spydus 9 Oct; dated occurrence carried from the 8 Oct check.', verified:true, image:'images/bexhill-library.webp', alt:'Brick frontage and entrance of Bexhill Library', source:'https://eastsussex.spydus.co.uk/cgi-bin/spydus.exe/ENQ/WPAC/EVSESENQ?SETLVL=&RNI=1746008'},
+        {cat:'hubs', label:'FAMILY HUB · FEEDING', title:'Baby Feeding Group (venue to confirm)', price:'Free', when:'Thu 15 and Thu 22 Oct, 13:00 to 14:30', where:'Venue to confirm: may be Shinewater Family Hub, Milfoil Drive, Eastbourne', travel:['awkward','Confirm venue first','Call before leaving to confirm the venue.'], note:'Thursdays 13:00 to 14:30 verified on the Eastbourne and Hailsham What’s On page, but no venue is stated; a May 2026 leaflet places it at Shinewater Family Hub. Call 01323 463244. Source: familyhubs.eastsussex.gov.uk, checked 10 Oct.', verified:false, url:'tel:01323463244', action:'Call', nap:true, source:'https://familyhubs.eastsussex.gov.uk/activities/eastbourne'},
+        {cat:'play events', label:'PLAY &amp; SENSORY · CHECK PRICE', title:'Glow Baby Play Centre special events', price:'£11 child (incl 2 adults) · £7 sibling (Sat 17 Pumpkin Patch £20/£10)', when:'Fri 16 Oct 09:45 / 13:15 · Sat 17 Oct Pumpkin Patch 10:00 (fully booked) / 13:00 · Mon 19 Oct 13:30 only · Wed 21 Oct 11:00', where:'Chestnut Meadow Country Park, A269 Ninfield Road, Bexhill TN39 5JG', travel:['transit','Local bus or taxi','North Bexhill along the A269 corridor; check the local bus connection before leaving.'], note:'“Open Play Session | 0–6 Years | Play Cafe, Sensory Barn & Outside Play”. £11 per child including up to 2 adults, £7 siblings, annual members free. Booking required via Bookwhen; sessions sell out. Slots verified on Bookwhen 14 Oct; Mon 19 is 13:30 only (no 10:00); venue confirmed; session names and prices not shown on the listing view. Afternoon sessions overlap nap. Source: bookwhen.com/glowbabyevents.', verified:false, nap:true, url:'https://bookwhen.com/glowbabyevents', action:'Check slots', image:'images/glow-baby.webp', alt:'Colourful soft-play ball pit at Glow Baby Play Centre', bookAhead:'Slots are listed on Bookwhen; sessions sell out, so book ahead.', source:'https://bookwhen.com/glowbabyevents'},
+        {cat:'library', label:'LIBRARY · RHYMETIME · NEW', title:'Hollington Library Rhymetime', price:'Free', when:'Thu 15 and Thu 22 Oct, 11:00 to 11:30', where:'Hollington Library, 96 Battle Road, St Leonards-on-Sea TN37 7AG', travel:['transit','Coast bus','Stagecoach 98/99 from Bexhill to St Leonards-on-Sea in about 25 to 30 minutes.'], note:'Free drop-in, no booking; runs through holidays (not term-time only). Nap-safe. Source: East Sussex Libraries Spydus, checked 10 Oct.', verified:true, source:'https://www.eastsussex.gov.uk/libraries/whats-on'},
+        {cat:'sports', label:'SWIMMING · CHECK DETAILS', title:'Aquababes 0–2 years', price:'Price unpublished', when:'Thu 15 and Thu 22 Oct, morning · exact time unpublished', where:'Hastings · venue unpublished', travel:['transit','Coast bus','Stagecoach 98/99 from Bexhill to Hastings in about 25 minutes; call to confirm the venue.'], note:'Listed on the official Family Hubs Hastings page: 0 to 2 years, Thursday mornings, term-time only. Exact time, venue and price are unpublished. Call 01323 463204 or email esht.hv-duty@nhs.net. Source: familyhubs.eastsussex.gov.uk, checked 10 Oct.', verified:false, url:'tel:01323463204', action:'Call', source:'https://familyhubs.eastsussex.gov.uk/activities/hastings'},
+        {cat:'sports', label:'SWIMMING · CHECK PRICE', title:'Toddler Splash · Hailsham Leisure Centre', price:'Price unconfirmed', when:'Thu 15, 11:30 to 15:00 · Tue 20, 12:00 to 13:00 · Wed 21 and Thu 22, 12:30 to 15:00 · none Fri–Mon', where:'Hailsham Leisure Centre, Vicarage Lane, Hailsham BN27 1BA', travel:['transit','Bus to Hailsham','Stagecoach bus from Bexhill to Hailsham in about 40 to 45 minutes.'], note:'Parent & Under 5 in the 5m teaching pool. Per-day times verified on the provider timetable PDF 15 Oct. Price unverified; book via the Freedom app/site or call 01323 846755. All sessions overlap nap. Bexhill Leisure Pool is closed for refurbishment. Source: Freedom Leisure, checked 15 Oct.', verified:false, nap:true, url:'tel:01323846755', action:'Call', source:'https://www.freedom-leisure.co.uk/centres/hailsham-leisure-centre/'},
+        {cat:'events', label:'EVENT · FARM · NEW', title:'Tibbs Farm Pumpkin Fest', price:'Under-3s free · other prices unconfirmed', when:'Sat 17 and Sun 18 Oct, and daily 20 to 31 Oct', where:'Tibbs Farm, Udimore Road, Udimore, Rye TN31 6AR', travel:['drive','Drive','About 25 minutes by car from Bexhill.'], note:'Woodchip pumpkin patch (pram-friendly), games, piglet meet-and-greet, cafe. Under-3s free confirmed; adult/child ticket price and exact hours unconfirmed. Dates verified on the Beyonk booking page — call 07596 741680. Tickets via Beyonk. Half-term opening is 20 Oct (per the pumpkin page). Source: tibbsfarm.com, checked 11 Oct.', verified:false, nap:true, url:'https://shop.beyonk.com/lg8bqssr/experiences/tjukklg2', action:'Tickets', image:'images/tibbs-farm-pumpkins.webp', alt:'Pumpkins arranged in the patch at Tibbs Farm', source:'https://tibbsfarm.com'},
+        {cat:'events', label:'CASTLE · TRAIL · NEW', title:'Scotney Castle Monsters around the Moat', price:'Trail £3.50 + normal admission', when:'Sat 17 Oct to Sun 1 Nov', where:'Scotney Castle, Lamberhurst, Tunbridge Wells TN3 8JN', travel:['drive','Drive','About 40 minutes by car from Bexhill.'], note:'Spotter trail for younger children; daytime and gentle. £3.50 trail + normal admission. Start date confirmed 17 Oct–1 Nov across NT-linked sources. Book car parking ahead. Call 01892 893820. Checked on nationaltrust.org.uk 12 Oct.', verified:false, nap:true, source:'https://www.nationaltrust.org.uk/visit/kent/scotney-castle/events'},
+        {cat:'sports', label:'SWIMMING · CLOSED', title:'Parent & Toddler Swim, Bexhill Leisure Pool', price:'£6.70 non-member (when running)', when:'Closed until the New Year', where:'Bexhill Leisure Pool, Hastings Road, Bexhill-on-Sea', travel:['transit','Local Bexhill','Local journey within Bexhill.'], note:'Closed 1 Sep 2026 for 12–16 weeks of improvement works; reopening in the New Year. No swimming here this window: try Hailsham Toddler Splash or Blue Lagoon Eastbourne. Source: Freedom Leisure news page, checked 15 Oct.', verified:true, url:'https://www.freedom-leisure.co.uk/centres/bexhill-leisure-pool/latest-news/essential-improvement-works-at-bexhill-leisure-centre-and-bexhill-leisure-pool/', action:'Details', calendar:true, source:'https://www.freedom-leisure.co.uk/centres/bexhill-leisure-pool/latest-news/essential-improvement-works-at-bexhill-leisure-centre-and-bexhill-leisure-pool/'},
+        {cat:'events', label:'MUSEUM · TRAIL LAUNCH · NEW', title:'Hastings Museum Bayeux short-films trail', price:'Free', when:'From Sat 17 Oct · Tue–Sat 10:00 to 17:00, Sun 11:00 to 16:30 (closed Mon)', where:'Hastings Museum & Art Gallery, John’s Place, Bohemia Road, Hastings TN34 1ET', travel:['transit','Coast bus','Stagecoach 98/99 to Hastings.'], note:'Year of the Normans short-films trail launches 17 Oct. New exhibition “Threads Through Time: Hastings and the Bayeux Tapestry Story” opens Sat 17 Oct (to 11 Jul 2027). Free entry, drop-in, free onsite parking. No real activity/venue photo found. Sources: hmag.org.uk (exhibition and hours, checked 15 Oct) and hastings.gov.uk (trail, checked 12 Oct).', verified:true, source:'https://www.hmag.org.uk/see-and-do/exhibitions/threads-through-time-hastings-and-the-bayeux-tapestry-story/'},
+        {cat:'events', label:'EVENT · BABY FAIR · NEW', title:'The Baby Fayre Hastings', price:'Free time-slot entry · £10 anytime incl goodie bag', when:'Sun 18 Oct, 11:00 to 14:00', where:'Bannatyne Hotel Hastings, Battle Road, Hastings TN38 8EA', travel:['transit','Coast bus','Stagecoach 98/99 toward Hastings; about 15 to 20 minutes by car via the A259.'], note:'Free time-slot entry; £10 anytime entry includes a goodie bag. Book via Eventbrite. Overlaps the 12:00–14:00 nap: aim for the 11:00–12:00 slot. No real activity/venue photo found. Source: Eventbrite, checked 15 Oct; still bookable.', verified:true, nap:true, url:'https://www.eventbrite.co.uk/e/the-baby-fayre-hastings-tickets-1817955316289', action:'Get tickets', bookAhead:'Free Eventbrite ticket required.', calendar:true, source:'https://www.eventbrite.co.uk/e/the-baby-fayre-hastings-tickets-1817955316289'},
+        {cat:'music', label:'MUSIC &amp; MOVEMENT · CHECK', title:'Tots Play Family Tots', price:'£3', when:'Thu 15 Oct, 10:30 to 11:30', where:"Totsy’s Treehouse, Unit 2 Keymer Buildings, Victoria Road, Bexhill TN39 3PD", travel:['walk','Walkable','About 25 to 30 minutes on foot from the seafront, or use a local bus.'], note:'Intergenerational music class for ages 2 months to 3 years. Weekly Thursday class on the provider’s Happity page; Thu 15 not individually date-stamped — confirm availability when booking on 07739 362568.', verified:false, url:'https://www.happity.co.uk/tots-play/bexhill-and-hastings-west', action:'Details', source:'https://www.happity.co.uk/tots-play/bexhill-and-hastings-west'},
+        {cat:'play', label:'ROLE PLAY · BOOK', title:'Petal & Pop role play', price:'£7 (1–3yrs) · £3 (6–12m)', when:'Thu 15 Oct, 10:30 to 12:00', where:'BodiBlossom Studio, 15b Maple Road, Eastbourne BN23 6NY', travel:['transit','Train to Eastbourne','Train from Bexhill to Eastbourne in about 25 to 30 minutes, then a local connection.'], note:'Mini Sussex pop-up role play for ages 0 to 5. Under-6 months and adults go free. Regular Thursdays verified on the provider page 13 Oct. Book via the provider’s booking page. Source: petalandpop.co.uk.', verified:true, url:'https://www.bodiblossom.com/booking-calendar/mini-sussex-pop-up-role-play-thursday', action:'Book', source:'https://www.bodiblossom.com/booking-calendar/mini-sussex-pop-up-role-play-thursday'},
+        {cat:'events', label:'ONE-OFF · RAILWAY', title:'Polegate Miniature Railway', price:'Rides for donation', when:'Sun 18 Oct, about 14:00 to 17:00', where:'William Daly Recreation Ground, Brightling Road, Polegate BN26 5AY', travel:['drive','Short drive','About 15 minutes by car from Bexhill.'], note:'Volunteer-run miniature railway open day; likely the last running day of the season and weather-dependent. Call 07957 806577 before going.', verified:false, url:'tel:07957806577', action:'Call', source:'https://www.thebestof.co.uk/local/eastbourne/community-hub/local-guides/view/polegate-miniature-railway/'},
+        {cat:'play', label:'STAY & PLAY · DROP-IN', title:'Ticehurst Village Hall Stay and Play 0–5', price:'Free drop-in', when:'Tuesdays, 10:00 to 11:30', where:'Ticehurst Village Hall, Lower High Street, Ticehurst TN5 7BB', travel:['drive','Best by car','No direct bus from Bexhill; driving is simplest — about 25 minutes by car from Bexhill.'], note:'Free weekly drop-in stay and play for under-5s, Tuesdays 10:00 to 11:30. Listed on the Family Hubs Rother autumn timetable. Source: Family Hubs, checked 14 Oct.', verified:true, url:'https://familyhubs.eastsussex.gov.uk/activities/rother', action:'Details', source:'https://familyhubs.eastsussex.gov.uk/activities/rother'},
+        {cat:'library', label:'LIBRARY · RHYMETIME · NEW', title:'Hastings Library Rhymetime', price:'Free drop-in', when:'Tue 20 Oct, 11:00 to 11:30', where:'Hastings Library, Hastings', travel:['transit','Coast bus','Stagecoach 98/99 from Bexhill to Hastings town centre.'], note:'For ages 0–5. Free drop-in, no booking. Tue 11:00–11:30 pattern-verified 15 Oct. Nap-safe. No real activity/venue photo found. Source: East Sussex Libraries.', verified:true, source:'https://www.eastsussex.gov.uk/libraries/whats-on'},
+        {cat:'events', label:'CASTLE · ENGLISH HERITAGE · NEW', title:'Pevensey Castle', price:'Under-5s free · adult £10 (£8.50 advance)', when:'Thu 15, Fri 16, Sat 17, Sun 18, Wed 21, Thu 22 Oct, 10:00 to 17:00 · Book Bunker family event Sat 17 & Sun 18, 10:00 to 16:00', where:'English Heritage, Castle Road, Pevensey BN24 5LE', travel:['transit','Stagecoach 99','Stagecoach 99 (“The Wave”) from Bexhill to Pevensey, about 20 to 25 minutes.'], note:'Open Wed–Sun 10:00–17:00; closed Mon/Tue. Under-5s free; adult £10 on the day / £8.50 in advance (date bands may vary). Book Bunker family event Sat 17–Sun 18, 10:00–16:00. Sunday 99 bus runs reduced: check bustimes.org. Source: english-heritage.org.uk prices-and-opening-times page, checked 15 Oct.', verified:true, nap:true, url:'https://www.english-heritage.org.uk/visit/places/pevensey-castle/prices-and-opening-times/', action:'Plan visit', calendar:true, image:'images/pevensey-castle.webp', alt:'Medieval stone walls and moat of Pevensey Castle on a sunny day', source:'https://www.english-heritage.org.uk/visit/places/pevensey-castle/prices-and-opening-times/'},
+        {cat:'events', label:'GALLERY · RELAXED MORNING · NEW', title:'DLWP Relaxed Morning Exhibition Visits', price:'Free', when:'Sat 17 Oct, 10:00 to 12:00', where:'De La Warr Pavilion, Marina, Bexhill TN40 1DP', travel:['walk','Walkable','About 10 to 15 minutes on foot along the seafront.'], note:'Free drop-in creative workshop with a quieter exhibition visit. Booking advised via learn@dlwp.com. Source: dlwp.com, checked 15 Oct.', verified:true, url:'mailto:learn@dlwp.com', action:'Email', calendar:true, image:'images/dlwp-relaxed-morning.webp', alt:'Gallery installation view at De La Warr Pavilion', source:'https://www.dlwp.com/event/relaxed-morning-exhibition-visits/'},
+        {cat:'events', label:'MARKET · SATURDAY · NEW', title:'Battle Farmers’ Market', price:'Free entry', when:'Sat 17 Oct, 09:00 to 13:00', where:'Abbey Green, Battle TN33 0AD', travel:['transit','Easy train','Bexhill to Battle is about 15 minutes by train, plus a short walk.'], note:'Monthly farmers market on Abbey Green (third Saturday). Free entry. Nap-safe morning. Source: visit1066country.com, checked 15 Oct.', verified:true, url:'https://www.visit1066country.com/whats-on/battle-farmers-market-p666531', action:'Event details', calendar:true, image:'images/battle-farmers-market.webp', alt:'Stalls at Battle Farmers Market on Abbey Green', source:'https://www.visit1066country.com/whats-on/battle-farmers-market-p666531'},
+      ];
+
+
+      const grid = document.getElementById('activityGrid');
+      const categoryOrder = [
+        ['sports','Sports'], ['hubs','Family hubs'], ['music','Music & movement'],
+        ['play','Drop-in play'], ['library','Library'], ['events','Events']
+      ];
+      // A category missing from the list above goes under "Other". Without this one mistyped
+      // record stops the script and every activity disappears, as on 10 Oct.
+      const knownCategories = categoryOrder.map(function (category) { return category[0]; });
+      function sectionFor(a) {
+        const category = String(a.cat || '').split(' ')[0];
+        if (knownCategories.indexOf(category) !== -1) return category;
+        console.error('Unknown category "' + a.cat + '" on ' + a.title + '; shown under Other.');
+        return 'other';
+      }
+      const activitySections = activities.map(sectionFor);
+      if (activitySections.indexOf('other') !== -1) categoryOrder.push(['other', 'Other']);
+      const sectionGrids = {};
+      categoryOrder.forEach(function (category) {
+        const section = document.createElement('section');
+        section.className = 'category-section'; section.dataset.category = category[0];
+        const count = activitySections.filter(function (section) { return section === category[0]; }).length;
+        const heading = document.createElement('h3'); heading.className = 'category-heading';
+        const toggle = document.createElement('button'); toggle.className = 'category-toggle'; toggle.type = 'button';
+        const contentId = 'category-content-' + category[0]; toggle.setAttribute('aria-controls', contentId);
+        const expanded = window.matchMedia('(min-width: 761px)').matches; toggle.setAttribute('aria-expanded', String(expanded));
+        toggle.innerHTML = '<span>' + category[1] + '</span><small>' + count + (count === 1 ? ' option' : ' options') + '</small>';
+        const inner = document.createElement('div'); inner.className = 'activity-grid category-content'; inner.id = contentId; inner.hidden = !expanded;
+        toggle.addEventListener('click', function () { const opening = toggle.getAttribute('aria-expanded') !== 'true'; toggle.setAttribute('aria-expanded', String(opening)); inner.hidden = !opening; });
+        heading.appendChild(toggle); section.appendChild(heading); section.appendChild(inner); grid.appendChild(section); sectionGrids[category[0]] = inner;
+      });
+
+      activities.forEach(function (a, index) {
+        const primaryCategory = activitySections[index];
+        const card = document.createElement('article'); card.className = 'card'; card.dataset.category = primaryCategory;
+        if (a.image) { const img=document.createElement('img'); img.className='card-photo'; img.loading='lazy'; img.decoding='async'; img.src=a.image; img.alt=a.alt || ''; card.appendChild(img); }
+        const top = document.createElement('div'); top.className = 'card-top';
+        const heading = document.createElement('div');
+        const cat = document.createElement('div'); cat.className = 'category'; cat.innerHTML = a.label;
+        const h4 = document.createElement('h4'); h4.className = 'card-title'; appendSourceTitle(h4, a.title, a.source);
+        heading.appendChild(cat); heading.appendChild(h4);
+        if (isNewTitle(a.title)) { const tags = document.createElement('div'); tags.className = 'title-tags'; const fresh = document.createElement('span'); fresh.className = 'new-tag'; fresh.textContent = 'New'; fresh.title = 'Added within the last 7 days'; tags.appendChild(fresh); heading.appendChild(tags); }
+        const price = document.createElement('div'); price.className = 'price'; price.textContent = a.price; top.appendChild(heading); top.appendChild(price); card.appendChild(top);
+        const meta = document.createElement('div'); meta.className = 'meta';
+        [['When',a.when],['Where',a.where]].forEach(function (pair) { const row=document.createElement('div'); row.className='meta-row'; const label=document.createElement('span'); label.className='meta-label'; label.textContent=pair[0]; const value=document.createElement('span'); value.className='meta-value'; if (pair[0] === 'When') appendSemanticClockText(value, pair[1]); else value.textContent=pair[1]; row.appendChild(label); row.appendChild(value); meta.appendChild(row); });
+        const travelRow=document.createElement('div'); travelRow.className='meta-row'; const travelLabel=document.createElement('span'); travelLabel.className='meta-label'; travelLabel.textContent='Travel'; const travelValue=document.createElement('span'); travelValue.className='meta-value'; const pill=document.createElement('span'); pill.className='travel-pill '+a.travel[0]; pill.textContent=a.travel[1]; const detail=document.createElement('span'); detail.className='travel-detail'; detail.textContent=a.travel[2]; travelValue.appendChild(pill); travelValue.appendChild(detail); travelRow.appendChild(travelLabel); travelRow.appendChild(travelValue); meta.appendChild(travelRow); card.appendChild(meta);
+        const note=document.createElement('p'); note.className='note' + (a.verified === false ? ' warn' : ''); note.textContent=(a.verified === false ? 'Call to check. ' : '') + a.note; card.appendChild(note);
+        const actions=document.createElement('div'); actions.className='actions';
+        if(a.url){
+          const link=document.createElement('a');
+          const isPrimaryAction = a.action === 'Book' || a.action === 'Check slots' || a.action === 'Event page';
+          link.className='action' + (isPrimaryAction ? '' : ' secondary');
+          link.href=a.url;
+          link.textContent=a.action;
+          link.setAttribute('aria-label', a.action + ' ' + a.title);
+          if(a.url.indexOf('http')===0){link.target='_blank';link.rel='noopener';}
+          actions.appendChild(link);
+        }
+        // One button per session still to come, from the same calendar entries as the week view.
+        if (a.calendar) upcomingDates(a).forEach(function (key) {
+          const entry = (calendarData[key] || []).find(function (item) { return activityMetaFor(item) === a; });
+          const event = entry && calendarEventFor(key, entry);
+          if (!event) return;
+          const parts = shortCalendarDate(key);
+          const cal = document.createElement('a');
+          cal.className = 'action secondary calendar-action';
+          cal.href = googleCalendarUrl(event);
+          cal.target = '_blank';
+          cal.rel = 'noopener';
+          cal.textContent = 'Add ' + parts.date + ' ' + parts.month + ' to calendar';
+          cal.setAttribute('aria-label', 'Add ' + a.title + ' on ' + parts.date + ' ' + calendarMonths[dateFromKey(key).getMonth()] + ' to calendar');
+          actions.appendChild(cal);
+        });
+        const copy=document.createElement('button');
+        copy.className='action secondary copy-btn';
+        copy.type='button';
+        copy.textContent='Copy details';
+        copy.setAttribute('aria-label', 'Copy details for ' + a.title);
+        actions.appendChild(copy);
+        if (actions.childNodes.length > 3) actions.classList.add('actions-many');
+        card.appendChild(actions);
+        sectionGrids[primaryCategory].appendChild(card);
+      });
+
+      // "Book ahead" is built from the activities that carry a bookAhead sentence. Its dates
+      // are the researched days from today on whose calendar entries are that activity (every
+      // embedded day, one more than the week view, since booking is about looking ahead), and
+      // its price and booking link or phone come from the activity, so it cannot disagree with
+      // the cards and the week view (a hand-written copy had lost babyballet's Saturday).
+      function upcomingDates(activity) {
+        const nowParts = new Intl.DateTimeFormat('en-GB', {timeZone:'Europe/London', hour:'2-digit', minute:'2-digit', hour12:false}).formatToParts(new Date());
+        const clock = {}; nowParts.forEach(function (part) { if (part.type !== 'literal') clock[part.type] = Number(part.value); });
+        const nowMinutes = (clock.hour % 24) * 60 + (clock.minute || 0);
+        return embeddedWeekDates.filter(function (key) {
+          if (key < pageTodayKey) return false;
+          return (calendarData[key] || []).some(function (entry) {
+            if (activityMetaFor(entry) !== activity) return false;
+            // Today counts only while a session is still to start (an untimed one always counts).
+            const start = startMinutes(entry.time);
+            return key !== pageTodayKey || start === 2000 || start > nowMinutes;
+          });
+        });
+      }
+      function appendDateList(container, keys) {
+        keys.forEach(function (key, index) {
+          if (index) container.appendChild(document.createTextNode(index === keys.length - 1 ? ' and ' : ', '));
+          const parts = shortCalendarDate(key);
+          const next = keys[index + 1];
+          const time = document.createElement('time'); time.dateTime = key;
+          time.textContent = parts.day + ' ' + parts.date + (!next || shortCalendarDate(next).month !== parts.month ? ' ' + parts.month : '');
+          container.appendChild(time);
+        });
+      }
+      function formatPhone(digits) {
+        if (/^02\d{9}$/.test(digits)) return digits.replace(/^(\d{3})(\d{4})(\d{4})$/, '$1 $2 $3');
+        if (/^0[389]\d{9}$/.test(digits)) return digits.replace(/^(\d{4})(\d{3})(\d{4})$/, '$1 $2 $3');
+        if (/^0\d{10}$/.test(digits)) return digits.replace(/^(\d{5})(\d{6})$/, '$1 $2');
+        return digits;
+      }
+      function renderBookAhead() {
+        const list = document.getElementById('aheadList');
+        const marked = activities.filter(function (a) { return a.bookAhead; });
+        // A page whose items were written by hand marks nothing; leave those items alone.
+        if (!list || !marked.length) return;
+        const items = marked.map(function (a) { return { activity: a, keys: upcomingDates(a) }; })
+          .filter(function (item) { return item.keys.length; })
+          .sort(function (x, y) { return x.keys[0] < y.keys[0] ? -1 : x.keys[0] > y.keys[0] ? 1 : 0; });
+        list.textContent = '';
+        if (!items.length) {
+          const none = document.createElement('p'); none.className = 'ahead-empty'; none.textContent = 'Nothing coming up needs booking ahead.';
+          list.appendChild(none);
+          return;
+        }
+        items.forEach(function (item) {
+          const a = item.activity;
+          const row = document.createElement('div'); row.className = 'ahead-item';
+          const name = document.createElement('strong'); name.textContent = a.title; row.appendChild(name);
+          const when = document.createElement('span'); when.className = 'ahead-when';
+          appendDateList(when, item.keys);
+          if (a.price) when.appendChild(document.createTextNode(' · ' + a.price.replace(/([–-])/g, '$1\u2060')));
+          row.appendChild(when);
+          const advice = document.createElement('span'); advice.textContent = a.bookAhead;
+          if (a.url) {
+            const link = document.createElement('a'); link.href = a.url;
+            if (a.url.indexOf('tel:') === 0) {
+              link.textContent = 'Call ' + formatPhone(a.url.slice(4));
+              link.setAttribute('aria-label', link.textContent + ' for ' + a.title);
+            } else if (a.url.indexOf('mailto:') === 0) {
+              link.textContent = 'Email';
+              link.setAttribute('aria-label', 'Email ' + a.title);
+            } else {
+              link.textContent = a.action || 'Details';
+              link.setAttribute('aria-label', link.textContent + ' for ' + a.title);
+              link.target = '_blank'; link.rel = 'noopener';
+            }
+            advice.appendChild(document.createTextNode(' ')); advice.appendChild(link);
+          }
+          row.appendChild(advice);
+          list.appendChild(row);
+        });
+      }
+
+      // A price shown outside its card is read from the card's record, so the two cannot differ.
+      // The text written in the page stays if no activity has that title, and the console says so.
+      document.querySelectorAll('[data-price-of]').forEach(function (el) {
+        const a = activities.find(function (item) { return item.title === el.dataset.priceOf; });
+        if (a && a.price) el.textContent = a.price;
+        else console.warn('No activity titled "' + el.dataset.priceOf + '" for a price');
+      });
+
+      const cards = Array.from(document.querySelectorAll('.card'));
+      document.getElementById('resultCount').textContent = cards.length + ' options in ' + categoryOrder.length + ' categories';
+      renderWeekSnapshot();
+      renderSlidingWindowChrome();
+      renderBookAhead();
+
+      document.querySelectorAll('.sticky-days [data-day-target]').forEach(function (button) {
+        const key = button.dataset.dayTarget.replace('day-', '');
+        const parts = shortCalendarDate(key);
+        const isToday = key === pageTodayKey;
+        button.childNodes[0].nodeValue = (isToday ? 'Today' : parts.day) + ' ';
+        if (isToday) button.setAttribute('aria-label', 'Today, ' + fullCalendarDate(key));
+        else button.removeAttribute('aria-label');
+      });
+
+      // Day jumps are buttons rather than hash links, so in-page navigation never
+      // adds a browser-history entry. The selected day updates immediately and
+      // then follows the section nearest the sticky controls while scrolling.
+      function setupDayNavigation() {
+        const nav = document.querySelector('.sticky-days');
+        const buttons = Array.from(nav.querySelectorAll('[data-day-target]'));
+        const sections = buttons.map(function (button) { return document.getElementById(button.dataset.dayTarget); }).filter(Boolean);
+        const dock = document.getElementById('filterDock');
+        let scrollFrame = 0;
+        let programmaticTarget = null;
+        let scrollEndTimer = 0;
+
+        function setActiveDay(button) {
+          buttons.forEach(function (item) { item.removeAttribute('aria-current'); });
+          if (button) button.setAttribute('aria-current', 'true');
+        }
+
+        function stickyOffset() {
+          return nav.offsetHeight + (dock ? dock.offsetHeight : 0) + 10;
+        }
+
+        buttons.forEach(function (button) {
+          button.addEventListener('click', function () {
+            const target = document.getElementById(button.dataset.dayTarget);
+            if (!target) return;
+            programmaticTarget = button.dataset.dayTarget;
+            setActiveDay(button);
+            const top = Math.max(0, target.getBoundingClientRect().top + window.scrollY - stickyOffset());
+            if (Math.abs(window.scrollY - top) < 2) programmaticTarget = null;
+            window.scrollTo({
+              top: top,
+              behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+            });
+          });
+        });
+
+        function updateActiveDay() {
+          scrollFrame = 0;
+          if (programmaticTarget) {
+            setActiveDay(buttons.find(function (button) { return button.dataset.dayTarget === programmaticTarget; }));
+            return;
+          }
+          const marker = stickyOffset() + 4;
+          let activeSection = document.getElementById('day-' + pageTodayKey) || sections[0];
+          sections.forEach(function (section) {
+            if (section.getBoundingClientRect().top <= marker) activeSection = section;
+          });
+          const activeButton = buttons.find(function (button) { return button.dataset.dayTarget === activeSection.id; });
+          setActiveDay(activeButton);
+        }
+
+        function requestDayUpdate() {
+          if (!scrollFrame) scrollFrame = window.requestAnimationFrame(updateActiveDay);
+          if (programmaticTarget) {
+            window.clearTimeout(scrollEndTimer);
+            scrollEndTimer = window.setTimeout(function () {
+              programmaticTarget = null;
+              updateActiveDay();
+            }, 160);
+          }
+        }
+
+        window.addEventListener('scroll', requestDayUpdate, {passive:true});
+        window.addEventListener('resize', requestDayUpdate);
+        updateActiveDay();
+      }
+      setupDayNavigation();
+
+      // Calendar links in the later-this-month strip.
+      // The start is the item's own <time datetime>; the link carries the end and the place. A
+      // link that cannot be built is removed rather than left pointing at "#".
+      document.querySelectorAll('.later-item .calendar-link').forEach(function (link) {
+        const item = link.closest('.later-item');
+        const start = ((item.querySelector('time') || {}).dateTime || '').match(/^(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2})$/);
+        const end = link.dataset.calendarEnd || '';
+        if (!start || !/^\d{2}:\d{2}$/.test(end)) { link.remove(); return; }
+        const title = item.querySelector('.later-main-link').textContent.trim();
+        link.href = googleCalendarUrl({ title: title, start: compactStamp(start[1], start[2]), end: compactStamp(start[1], end), location: link.dataset.calendarWhere || '', details: link.dataset.calendarDetails });
+        link.setAttribute('aria-label', 'Add ' + title + ' to calendar');
+      });
+
+      // Compact, instant filters for every activity in the seven-day view, including overflow entries.
+      const filterState = {category:'all', travel:'all', town:'all', napSafe:false, free:false, dropIn:false};
+      const filterToggle = document.getElementById('filterToggle'); const filterPanel = document.getElementById('filterPanel');
+      const filterInitiallyOpen = window.matchMedia('(min-width: 761px)').matches; filterToggle.setAttribute('aria-expanded', String(filterInitiallyOpen)); filterPanel.hidden = !filterInitiallyOpen;
+      filterToggle.addEventListener('click', function () { const opening = filterToggle.getAttribute('aria-expanded') !== 'true'; filterToggle.setAttribute('aria-expanded', String(opening)); filterPanel.hidden = !opening; });
+      document.getElementById('filterDone').addEventListener('click', function () {
+        filterToggle.setAttribute('aria-expanded', 'false'); filterPanel.hidden = true; filterToggle.focus();
+      });
+      function filtersActive() { return filterState.category !== 'all' || filterState.travel !== 'all' || filterState.town !== 'all' || filterState.napSafe || filterState.free || filterState.dropIn; }
+      function setGroupCurrent(key, text) { var el = document.querySelector('[data-current-for="' + key + '"]'); if (el) el.textContent = text; }
+      function labelFor(selectorPrefix, value, allLabel) { if (value === 'all') return allLabel; var b = document.querySelector(selectorPrefix + value + '"]'); return b ? b.textContent.trim() : allLabel; }
+      function applyWeekFilters() {
+        const active = filtersActive(); let totalVisible = 0;
+        document.querySelectorAll('.snapshot-day').forEach(function (day) {
+          const allEntries = day._allEntries || Array.from(day.querySelectorAll('.snapshot-entry'));
+          const matchingEntries = allEntries.filter(function (entry) {
+            const categories = (entry.dataset.categories || '').split(' ');
+            return (filterState.category === 'all' || categories.indexOf(filterState.category) !== -1) &&
+              (filterState.travel === 'all' || entry.dataset.travel === filterState.travel) &&
+              (filterState.town === 'all' || entry.dataset.town === filterState.town) &&
+              (!filterState.napSafe || entry.dataset.napSafe === 'true') &&
+              (!filterState.free || entry.dataset.free === 'true') &&
+              (!filterState.dropIn || entry.dataset.dropIn === 'true');
+          });
+          allEntries.forEach(function (entry) { entry.classList.toggle('entry-filtered-out', active && matchingEntries.indexOf(entry) === -1); });
+
+          const list = day.querySelector('.calendar-day-list');
+          const extra = day.querySelector('.calendar-extra');
+          const control = extra ? day.querySelector('[aria-controls="' + extra.id + '"]') : null;
+          const entriesToShowFirst = (active ? matchingEntries : allEntries).slice(0, 3);
+          if (extra && control) {
+            entriesToShowFirst.forEach(function (entry) { list.insertBefore(entry, control); });
+            allEntries.forEach(function (entry) { if (entriesToShowFirst.indexOf(entry) === -1) extra.appendChild(entry); });
+            const hiddenCount = active ? Math.max(0, matchingEntries.length - 3) : Math.max(0, allEntries.length - 3);
+            control.dataset.hiddenCount = String(hiddenCount);
+            control.hidden = hiddenCount === 0;
+            control.setAttribute('aria-expanded', 'false');
+            control.textContent = 'Show ' + hiddenCount + ' more';
+            control.setAttribute('aria-label', 'Show ' + hiddenCount + ' more ' + (hiddenCount === 1 ? 'activity' : 'activities') + ' for ' + day.querySelector('.snapshot-date time').textContent);
+            extra.hidden = true;
+          }
+
+          const visible = active ? matchingEntries.length : allEntries.length;
+          let empty = day.querySelector('.filter-empty');
+          if (active && visible === 0) {
+            if (!empty) { empty = document.createElement('div'); empty.className = 'filter-empty'; empty.textContent = 'No activities match these filters.'; list.appendChild(empty); }
+          } else if (empty) empty.remove();
+          const count = day.querySelector('.day-count');
+          const displayedCount = active ? visible : allEntries.length;
+          if (count) {
+            count.dataset.originalCount = String(allEntries.length);
+            count.textContent = displayedCount + (displayedCount === 1 ? ' option' : ' options');
+          }
+          totalVisible += visible;
+        });
+        const activeNames = [];
+        if (filterState.category !== 'all') { const button = document.querySelector('[data-category-filter="' + filterState.category + '"]'); activeNames.push(button.textContent.trim()); }
+        if (filterState.travel !== 'all') { const button = document.querySelector('[data-travel-filter="' + filterState.travel + '"]'); activeNames.push(button.textContent.trim()); }
+        if (filterState.town !== 'all') { const button = document.querySelector('[data-town-filter="' + filterState.town + '"]'); activeNames.push(button.textContent.trim()); }
+        if (filterState.napSafe) activeNames.push('Nap-safe'); if (filterState.free) activeNames.push('Free'); if (filterState.dropIn) activeNames.push('Drop-in');
+        setGroupCurrent('category', labelFor('[data-category-filter="', filterState.category, 'All'));
+        setGroupCurrent('travel', labelFor('[data-travel-filter="', filterState.travel, 'All travel'));
+        setGroupCurrent('town', labelFor('[data-town-filter="', filterState.town, 'All towns'));
+        var togglesOn = (filterState.napSafe ? 1 : 0) + (filterState.free ? 1 : 0) + (filterState.dropIn ? 1 : 0);
+        setGroupCurrent('toggles', togglesOn ? togglesOn + ' on' : 'Off');
+        document.getElementById('activeFilterSummary').textContent = activeNames.length ? activeNames.join(', ') : 'All activities';
+        document.getElementById('filterStatus').textContent = active ? 'Showing ' + totalVisible + (totalVisible === 1 ? ' matching activity.' : ' matching activities.') : 'Showing all activities.';
+        document.getElementById('filterReset').disabled = !active;
+      }
+      document.querySelectorAll('[data-category-filter]').forEach(function (button) { button.addEventListener('click', function () { filterState.category = button.dataset.categoryFilter; document.querySelectorAll('[data-category-filter]').forEach(function (item) { item.setAttribute('aria-pressed', String(item === button)); }); applyWeekFilters(); }); });
+      document.querySelectorAll('[data-travel-filter]').forEach(function (button) { button.addEventListener('click', function () { filterState.travel = button.dataset.travelFilter; document.querySelectorAll('[data-travel-filter]').forEach(function (item) { item.setAttribute('aria-pressed', String(item === button)); }); applyWeekFilters(); }); });
+      document.querySelectorAll('[data-town-filter]').forEach(function (button) { button.addEventListener('click', function () { filterState.town = button.dataset.townFilter; document.querySelectorAll('[data-town-filter]').forEach(function (item) { item.setAttribute('aria-pressed', String(item === button)); }); applyWeekFilters(); }); });
+      document.querySelectorAll('[data-toggle-filter]').forEach(function (button) { button.addEventListener('click', function () { const key = button.dataset.toggleFilter; filterState[key] = !filterState[key]; button.setAttribute('aria-pressed', String(filterState[key])); applyWeekFilters(); }); });
+      document.getElementById('filterReset').addEventListener('click', function () { filterState.category = 'all'; filterState.travel = 'all'; filterState.town = 'all'; filterState.napSafe = false; filterState.free = false; filterState.dropIn = false; document.querySelectorAll('[data-category-filter]').forEach(function (button) { button.setAttribute('aria-pressed', String(button.dataset.categoryFilter === 'all')); }); document.querySelectorAll('[data-travel-filter]').forEach(function (button) { button.setAttribute('aria-pressed', String(button.dataset.travelFilter === 'all')); }); document.querySelectorAll('[data-town-filter]').forEach(function (button) { button.setAttribute('aria-pressed', String(button.dataset.townFilter === 'all')); }); document.querySelectorAll('[data-toggle-filter]').forEach(function (button) { button.setAttribute('aria-pressed', 'false'); }); applyWeekFilters(); });
+      applyWeekFilters();
+
+      // One-line summary uses Europe/London for both date and the next session.
+      function updateTodayGlance() {
+        const today = pageTodayKey; const entries = calendarData[today] || []; const count = activityOptionCount(entries);
+        const nowParts = new Intl.DateTimeFormat('en-GB', {timeZone:'Europe/London', hour:'2-digit', minute:'2-digit', hour12:false}).formatToParts(new Date()); const clock = {}; nowParts.forEach(function (part) { if (part.type !== 'literal') clock[part.type] = Number(part.value); }); const nowMinutes = (clock.hour || 0) * 60 + (clock.minute || 0);
+        const upcoming = entries.find(function (entry) { const minutes = startMinutes(entry.time); return minutes < 2000 && minutes >= nowMinutes; });
+        const dayLabel = fullCalendarDate(today);
+        let nextText = 'No more sessions today'; if (upcoming) nextText = 'Next: ' + upcoming.activity + ' at ' + upcoming.time.split(/[–-]| to /)[0];
+        if (!entries.length) nextText = 'No activities currently listed';
+        const glance = document.getElementById('todayGlanceText');
+        glance.textContent = '';
+        const day = document.createElement('strong'); day.textContent = dayLabel; glance.appendChild(day);
+        [count + (count === 1 ? ' activity' : ' activities'), nextText].forEach(function (part) {
+          const divider = document.createElement('span'); divider.className = 'glance-divider'; divider.setAttribute('aria-hidden', 'true'); divider.textContent = ' · ';
+          glance.appendChild(divider); glance.appendChild(document.createTextNode(part));
+        });
+      }
+      updateTodayGlance();
+      document.querySelectorAll('.ahead-list, .later-lines, #todayGlanceText').forEach(semanticizeClockText);
+
+      // Phone numbers written in the text become tappable, so "call 01424 212545" can be called.
+      // Only UK numbers in their usual written forms (01424 212545, 0345 6080196) match;
+      // links, buttons and anything already linked are left alone.
+      function linkifyPhones(root) {
+        const pattern = /(^|[^\d\/])(0\d{3,4} \d{6,7})(?!\d)/g;
+        const nodes = [];
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+          acceptNode: function (node) {
+            if (!/0\d{3,4} \d{6,7}/.test(node.nodeValue)) return NodeFilter.FILTER_REJECT;
+            return node.parentElement.closest('a, button, script, style') ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
+          }
+        });
+        while (walker.nextNode()) nodes.push(walker.currentNode);
+        nodes.forEach(function (node) {
+          const text = node.nodeValue; const fragment = document.createDocumentFragment();
+          let last = 0; let match;
+          pattern.lastIndex = 0;
+          while ((match = pattern.exec(text))) {
+            const number = match[2]; const digits = number.replace(/ /g, '');
+            if (digits.length !== 11) continue;
+            const at = match.index + match[1].length;
+            fragment.appendChild(document.createTextNode(text.slice(last, at)));
+            const link = document.createElement('a'); link.className = 'phone-link'; link.href = 'tel:' + digits; link.textContent = number;
+            fragment.appendChild(link);
+            last = at + number.length;
+          }
+          if (!last) return;
+          fragment.appendChild(document.createTextNode(text.slice(last)));
+          node.parentNode.replaceChild(fragment, node);
+        });
+      }
+      linkifyPhones(document.getElementById('activities'));
+
+      const backToTop = document.getElementById('backToTop');
+      window.addEventListener('scroll', function () { backToTop.hidden = window.scrollY < 650; }, {passive:true});
+      backToTop.addEventListener('click', function () { window.scrollTo({top:0, behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'}); });
+
+      const toast = document.getElementById('toast'); let toastTimer;
+      function showToast(message) { toast.textContent = message; toast.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(function () { toast.classList.remove('show'); }, 1800); }
+      document.addEventListener('click', function (event) {
+        const button = event.target.closest('.copy-btn'); if (!button) return; const card = button.closest('.card');
+        const lines = [card.querySelector('.card-title').textContent, 'Price: ' + card.querySelector('.price').textContent.trim()];
+        card.querySelectorAll('.meta-row').forEach(function (row) { lines.push(row.querySelector('.meta-label').textContent + ': ' + row.querySelector('.meta-value').textContent.trim()); });
+        const note = card.querySelector('.note'); if (note) lines.push(note.textContent.trim()); const link = card.querySelector('a.action'); if (link) lines.push(link.href); const text = lines.join('\n');
+        if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(text).then(function () { showToast('Details copied'); }).catch(function () { showToast('Could not copy'); }); }
+        else { const area = document.createElement('textarea'); area.value=text; area.style.position='fixed'; area.style.opacity='0'; document.body.appendChild(area); area.select(); try { document.execCommand('copy'); showToast('Details copied'); } catch (e) { showToast('Could not copy'); } document.body.removeChild(area); }
+      });
+    }());
+  </script>
+</body>
+</html>
