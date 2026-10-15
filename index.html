@@ -343,6 +343,27 @@
     .travel-pill.transit { color: var(--transit); background: var(--transit-soft); }
     .travel-pill.awkward { color: var(--awkward); background: var(--awkward-soft); }
     .travel-pill.drive { color: var(--drive); background: var(--drive-soft); }
+    .town-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      width: fit-content;
+      padding: 4px 8px;
+      border-radius: 7px;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.35;
+      color: var(--accent-strong);
+      background: var(--accent-soft);
+    }
+    .town-pill::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+      flex: 0 0 auto;
+    }
 
     .calendar-overview { margin: 0 0 26px; }
     .calendar-overview .section-head { margin-bottom: 12px; }
@@ -1632,6 +1653,10 @@ function entryFacets(entry, meta) {
 function townForEntry(meta, entry) {
   return (meta && meta.town) || 'villages';
 }
+function townDisplayName(slug) {
+  var names = {bexhill:'Bexhill', hastings:'Hastings', 'st-leonards':'St Leonards', eastbourne:'Eastbourne', battle:'Battle', hailsham:'Hailsham', villages:'Nearby villages', all:'All towns'};
+  return names[slug] || slug;
+}
 
 
 const embeddedWeekDates = Object.keys(calendarData).sort();
@@ -1733,6 +1758,7 @@ const embeddedWeekDates = Object.keys(calendarData).sort();
         const title = document.createElement('h4'); appendSourceTitle(title, entry.activity, meta && meta.source);
         const facts = document.createElement('div'); facts.className = 'entry-facts';
         const travel = document.createElement('span'); travel.className = 'travel-pill ' + travelInfo[0]; travel.textContent = travelInfo[1]; facts.appendChild(travel);
+        const townPill = document.createElement('span'); townPill.className = 'town-pill'; townPill.textContent = townDisplayName(townForEntry(meta, entry)); facts.appendChild(townPill);
         const travelText = shortTravelLine(meta, entry); if (travelText !== travelInfo[1]) { const travelLine = document.createElement('span'); travelLine.className = 'entry-travel'; travelLine.textContent = travelText; facts.appendChild(travelLine); }
         const price = document.createElement('span'); price.className = 'entry-price'; price.textContent = entry.price; facts.appendChild(price);
         const verify = document.createElement('span'); verify.className = 'entry-verify ' + (entry.verified ? 'verified' : 'check'); verify.textContent = entry.verified ? 'Verified for this date' : 'Call to check'; facts.appendChild(verify);
@@ -1903,7 +1929,9 @@ const embeddedWeekDates = Object.keys(calendarData).sort();
         const heading = document.createElement('div');
         const cat = document.createElement('div'); cat.className = 'category'; cat.innerHTML = a.label;
         const h4 = document.createElement('h4'); h4.className = 'card-title'; appendSourceTitle(h4, a.title, a.source);
-        heading.appendChild(cat); heading.appendChild(h4);
+        heading.appendChild(cat);
+        if (a.town) { const townPill = document.createElement('span'); townPill.className = 'town-pill'; townPill.textContent = townDisplayName(a.town); heading.appendChild(townPill); }
+        heading.appendChild(h4);
         if (isNewTitle(a.title)) { const tags = document.createElement('div'); tags.className = 'title-tags'; const fresh = document.createElement('span'); fresh.className = 'new-tag'; fresh.textContent = 'New'; fresh.title = 'Added within the last 7 days'; tags.appendChild(fresh); heading.appendChild(tags); }
         const price = document.createElement('div'); price.className = 'price'; price.textContent = a.price; top.appendChild(heading); top.appendChild(price); card.appendChild(top);
         const meta = document.createElement('div'); meta.className = 'meta';
