@@ -1,1413 +1,514 @@
 <!doctype html>
-<html lang="en-GB" data-theme="light">
+<html lang="en-GB">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <!-- This page is intentionally unlisted. -->
-  <meta name="robots" content="noindex, nofollow">
-  <!-- Keep the manifest a real file beside this page. Chrome resolves the
-       manifest's start_url, scope and icons against the manifest's own address,
-       so a data: URL manifest loses all of them and Chrome will not install the
-       app. Paths inside manifest.json stay relative ("./"), so the manifest is
-       right wherever the site is served. That does not make renaming the
-       repository safe: every installed copy keeps the address it was installed
-       from, and a rename turns that address into a 404 on every phone. -->
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#0e6e8c">
-  <link rel="apple-touch-icon" href="icon-192.png">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="color-scheme" content="light dark" />
-  <link rel="icon" href="icon-192.png" type="image/png" sizes="192x192">
-  <title>Family Activities</title>
-  <script>try { if (localStorage.getItem('fa-theme') === 'dark') document.documentElement.dataset.theme = 'dark'; } catch (e) {}</script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,600;6..72,700&display=swap">
-  <style>
-    :root {
-      color-scheme: light dark;
-      --bg: #eef8fc;
-      --surface: #ffffff;
-      --surface-soft: #e2f1f7;
-      --text: #153244;
-      --muted: #4b6574;
-      --line: #bfd8e4;
-      --accent: #056b91;
-      --accent-strong: #035475;
-      --accent-soft: #d8eef7;
-      --on-accent: #ffffff;
-      --coral: #7d421e;
-      --coral-soft: #f4e2cf;
-      --gold: #765300;
-      --gold-soft: #fff0b8;
-      --nap: #d7eaf2;
-      --walk: #176142;
-      --walk-soft: #d9f0e3;
-      --transit: #705100;
-      --transit-soft: #ffefb3;
-      --awkward: #884619;
-      --awkward-soft: #f7dfcc;
-      --drive: #873449;
-      --drive-soft: #f4dbe2;
-      --cat-sports: #056b91;
-      --cat-hubs: #275f8e;
-      --cat-music: #9b4f31;
-      --cat-play: #765300;
-      --cat-library: #476b38;
-      --cat-events: #8b3b4d;
-      --cat-cafes: #73533b;
-      --sunny: #f2bd36;
-      --shadow: 0 12px 30px rgba(15, 71, 96, .11);
-      --radius: 18px;
-    }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Family Activities</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#056b91">
+<link rel="icon" href="icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="preload" href="fonts/dmsans-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/dmsans-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/newsreader-latin.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* Self-hosted fonts */
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/dmsans-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('fonts/dmsans-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('fonts/dmsans-700.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 600 700;
+  font-display: swap;
+  src: url('fonts/newsreader-latin.woff2') format('woff2');
+}
 
-    :root[data-theme="light"] { color-scheme: light; }
+/* Design tokens */
+:root {
+  --accent: #056b91;
+  --accent-strong: #044e6b;
+  --accent-soft: #e6f2f7;
+  --on-accent: #ffffff;
+  --surface: #ffffff;
+  --bg: #eef4f7;
+  --line: #bfd8e4;
+  --text: #16282f;
+  --muted: #5c7a88;
+  --green: #187a3c;
+  --green-bg: #e4f4e9;
+  --amber: #a86a12;
+  --amber-bg: #fdf0dc;
+  --grey: #64767f;
+  --grey-bg: #eef1f3;
+  --radius: 0.75rem;
+  --tabbar-h: 3.5rem;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --accent: #4db3d9;
+    --accent-strong: #7ccbe8;
+    --accent-soft: #14313d;
+    --on-accent: #06222d;
+    --surface: #12242c;
+    --bg: #0b1a20;
+    --line: #23414d;
+    --text: #e8f1f4;
+    --muted: #9db4be;
+    --green: #5fce8a;
+    --green-bg: #123a22;
+    --amber: #f0b429;
+    --amber-bg: #3d2c0e;
+    --grey: #9aa8ae;
+    --grey-bg: #1c2b32;
+  }
+}
+/* Manual theme override */
+html[data-theme="light"] {
+  --accent: #056b91; --accent-strong: #044e6b; --accent-soft: #e6f2f7; --on-accent: #ffffff;
+  --surface: #ffffff; --bg: #eef4f7; --line: #bfd8e4; --text: #16282f; --muted: #5c7a88;
+  --green: #187a3c; --green-bg: #e4f4e9; --amber: #a86a12; --amber-bg: #fdf0dc;
+  --grey: #64767f; --grey-bg: #eef1f3; color-scheme: light;
+}
+html[data-theme="dark"] {
+  --accent: #4db3d9; --accent-strong: #7ccbe8; --accent-soft: #14313d; --on-accent: #06222d;
+  --surface: #12242c; --bg: #0b1a20; --line: #23414d; --text: #e8f1f4; --muted: #9db4be;
+  --green: #5fce8a; --green-bg: #123a22; --amber: #f0b429; --amber-bg: #3d2c0e;
+  --grey: #9aa8ae; --grey-bg: #1c2b32; color-scheme: dark;
+}
 
-    :root[data-theme="dark"] {
-      color-scheme: dark;
-      --bg: #071923;
-      --surface: #0d2532;
-      --surface-soft: #143444;
-      --text: #edfaff;
-      --muted: #b9d3df;
-      --line: #315365;
-      --accent: #78c8e8;
-      --accent-strong: #a9e0f5;
-      --accent-soft: #173f53;
-      --on-accent: #06202b;
-      --coral: #e8b684;
-      --coral-soft: #473323;
-      --gold: #ffd665;
-      --gold-soft: #40381b;
-      --nap: #163845;
-      --walk: #8bd9ae;
-      --walk-soft: #173c2d;
-      --transit: #f6cf64;
-      --transit-soft: #3b3217;
-      --awkward: #efb280;
-      --awkward-soft: #462d1f;
-      --drive: #f2a0b3;
-      --drive-soft: #432530;
-      --cat-sports: #78c8e8;
-      --cat-hubs: #9ecbf1;
-      --cat-music: #f0ad8f;
-      --cat-play: #f6cf64;
-      --cat-library: #b5d69e;
-      --cat-events: #f1a5b5;
-      --cat-cafes: #e1b995;
-      --sunny: #ffd665;
-      --shadow: 0 16px 36px rgba(0, 0, 0, .32);
-    }
+* { box-sizing: border-box; }
+html { font-size: 100%; }
+body {
+  margin: 0;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom));
+  -webkit-tap-highlight-color: transparent;
+}
 
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; scroll-padding-top: 124px; }
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: "DM Sans", sans-serif;
-      line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
-    }
-    button, a { font: inherit; }
-    a { color: inherit; }
-    button { color: inherit; }
-    .skip-link {
-      position: fixed;
-      left: 16px;
-      top: 12px;
-      z-index: 20;
-      padding: 10px 14px;
-      border-radius: 8px;
-      background: var(--text);
-      color: var(--bg);
-      font-weight: 700;
-      text-decoration: none;
-      transform: translateY(-160%);
-    }
-    .skip-link:focus { transform: translateY(0); }
-    .page {
-      width: min(1180px, 100%);
-      margin: 0 auto;
-      padding: 30px clamp(16px, 4vw, 46px) 72px;
-    }
-    .masthead {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 20px;
-      align-items: end;
-      margin-bottom: 24px;
-    }
-    h1, h2, h3 { margin: 0; }
-    h1 {
-      flex: 1 1 auto;
-      font-family: "Newsreader", serif;
-      font-size: clamp(38px, 6vw, 68px);
-      line-height: .98;
-      letter-spacing: -.035em;
-    }
-    .brand-heading {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-    }
-    .site-logo {
-      width: 52px;
-      height: 52px;
-      flex: 0 0 52px;
-      border-radius: 12px;
-      object-fit: cover;
-      box-shadow: 0 0 0 2px var(--surface), 0 0 0 3px var(--line);
-    }
-    .header-actions {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 8px;
-    }
-    .theme-toggle {
-      flex: 0 0 auto;
-      min-height: 44px;
-      margin-left: 5px;
-      padding: 8px 12px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: var(--surface);
-      color: var(--accent-strong);
-      box-shadow: 0 4px 14px rgba(15, 71, 96, .08);
-      cursor: pointer;
-      font-size: 13px;
-      font-weight: 700;
-      white-space: nowrap;
-    }
-    .theme-toggle:hover { border-color: var(--accent); background: var(--surface-soft); }
-    .theme-toggle[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
-    .theme-toggle-mark {
-      width: 17px;
-      height: 17px;
-      display: inline-block;
-      border: 2px solid currentColor;
-      border-radius: 50%;
-      background: var(--sunny);
-      box-shadow: inset 6px -3px 0 var(--surface);
-    }
-    .theme-toggle[aria-pressed="true"] .theme-toggle-mark {
-      background: var(--sunny);
-      box-shadow: none;
-    }
-    .install-button {
-      min-height: 44px;
-      padding: 8px 14px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid var(--accent);
-      border-radius: 999px;
-      background: var(--accent);
-      color: var(--on-accent);
-      box-shadow: 0 4px 14px rgba(15, 71, 96, .1);
-      cursor: pointer;
-      font-size: 13px;
-      font-weight: 700;
-      white-space: nowrap;
-    }
-    .install-button:hover { background: var(--accent-strong); border-color: var(--accent-strong); }
-    .install-button:focus-visible,
-    .theme-toggle:focus-visible {
-      outline: 3px solid var(--sunny);
-      outline-offset: 3px;
-    }
-    .install-button[hidden], .install-hint[hidden] { display: none; }
-    .install-hint {
-      flex-basis: 100%;
-      margin: 0;
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 600;
-    }
-    .install-prompt {
-      margin: -2px 0 20px;
-      padding: 16px;
-      display: grid;
-      grid-template-columns: auto minmax(0, 1fr) auto;
-      gap: 13px;
-      align-items: center;
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      background: var(--surface);
-      box-shadow: var(--shadow);
-    }
-    .install-prompt[hidden] { display: none; }
-    .install-prompt-icon {
-      width: 52px;
-      height: 52px;
-      border-radius: 12px;
-      object-fit: cover;
-      box-shadow: 0 0 0 1px var(--line);
-    }
-    .install-prompt h2 { margin: 0 0 2px; font-family: "Newsreader", serif; font-size: 23px; line-height: 1.05; }
-    .install-prompt p { margin: 0; color: var(--muted); font-size: 14px; }
-    .install-prompt-actions { display: flex; gap: 8px; }
-    .install-prompt-actions button {
-      min-height: 44px;
-      padding: 9px 13px;
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      background: var(--surface);
-      color: var(--accent-strong);
-      cursor: pointer;
-      font-weight: 700;
-      white-space: nowrap;
-    }
-    .install-prompt-actions .primary { border-color: var(--accent); background: var(--accent); color: var(--on-accent); }
-    .install-prompt-actions .primary:hover { background: var(--accent-strong); border-color: var(--accent-strong); }
-    @media (max-width: 620px) {
-      .install-prompt { grid-template-columns: auto minmax(0, 1fr); align-items: start; }
-      .install-prompt-actions { grid-column: 1 / -1; }
-      .install-prompt-actions button { flex: 1; }
-    }
-    .week {
-      margin: 9px 0 0;
-      color: var(--muted);
-      font-size: 17px;
-      font-weight: 600;
-    }
-    .freshness {
-      text-align: right;
-      color: var(--muted);
-      font-size: 13px;
-    }
-    .freshness strong {
-      display: block;
-      color: var(--accent-strong);
-      font-size: 14px;
-    }
+/* Header */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+.app-header h1 {
+  font-family: 'Newsreader', serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
+}
+.icon-btn {
+  min-width: 2.75rem; min-height: 2.75rem;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid var(--line); border-radius: 50%;
+  background: var(--surface); color: var(--text);
+  font-size: 1.125rem; cursor: pointer;
+}
 
-    .travel-key {
-      display: grid;
-      grid-template-columns: minmax(220px, .8fr) 1.2fr;
-      gap: 18px;
-      align-items: center;
-      margin: 0 0 18px;
-      padding: 15px 17px;
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: 14px;
-    }
-    details.travel-key { display: block; }
-    .travel-key-summary {
-      cursor: pointer;
-      list-style: none;
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 2px 0;
-    }
-    .travel-key-summary::-webkit-details-marker { display: none; }
-    .travel-key-summary::after {
-      content: "+";
-      font-weight: 700;
-      color: var(--accent-strong);
-      flex: 0 0 auto;
-    }
-    details.travel-key[open] .travel-key-summary::after { content: "−"; }
-    .travel-key-toggle-hint {
-      font-size: 13px;
-      color: var(--muted);
-      font-weight: 400;
-    }
-    details.travel-key .travel-key-copy { margin-top: 12px; }
-    .travel-key-copy { grid-column: 1 / -1; }
-    .travel-key-copy strong { display: block; font-size: 14px; }
-    .travel-key-copy span { display: block; margin-top: 2px; color: var(--muted); font-size: 12px; }
-    .legend-group strong { display: block; margin-bottom: 7px; font-size: 12px; color: var(--muted); }
-    .travel-key-items, .category-key { display: flex; flex-wrap: wrap; gap: 7px; }
-    .category-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      color: var(--category-color);
-      font-size: 12px;
-      font-weight: 700;
-    }
-    .category-chip::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
-    .category-chip.sports { --category-color: var(--cat-sports); }
-    .category-chip.hubs { --category-color: var(--cat-hubs); }
-    .category-chip.music { --category-color: var(--cat-music); }
-    .category-chip.play { --category-color: var(--cat-play); }
-    .category-chip.library { --category-color: var(--cat-library); }
-    .category-chip.events { --category-color: var(--cat-events); }
-    .category-chip.cafes { --category-color: var(--cat-cafes); }
-    .travel-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      width: fit-content;
-      padding: 4px 8px;
-      border-radius: 7px;
-      font-size: 12px;
-      font-weight: 700;
-      line-height: 1.35;
-    }
-    .travel-pill::before {
-      content: "";
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: currentColor;
-      flex: 0 0 auto;
-    }
-    .travel-pill.walk { color: var(--walk); background: var(--walk-soft); }
-    .travel-pill.transit { color: var(--transit); background: var(--transit-soft); }
-    .travel-pill.awkward { color: var(--awkward); background: var(--awkward-soft); }
-    .travel-pill.drive { color: var(--drive); background: var(--drive-soft); }
-    .town-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      width: fit-content;
-      padding: 4px 8px;
-      border-radius: 7px;
-      font-size: 12px;
-      font-weight: 700;
-      line-height: 1.35;
-      color: var(--accent-strong);
-      background: var(--accent-soft);
-    }
-    .town-pill::before {
-      content: "";
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: currentColor;
-      flex: 0 0 auto;
-    }
+/* Tab panels */
+.tab-panel { display: none; padding: 0 1rem 1rem; max-width: 40rem; margin: 0 auto; }
+.tab-panel.active { display: block; }
 
-    .calendar-overview { margin: 0 0 26px; }
-    .calendar-overview .section-head { margin-bottom: 12px; }
-    .calendar-intro { max-width: 620px; }
-    .verification-key { display: flex; flex-wrap: wrap; gap: 8px; }
-    .week-snapshot {
-      display: grid;
-      grid-template-columns: repeat(7, minmax(0, 1fr));
-      overflow: hidden;
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      background: var(--surface);
-    }
-    .snapshot-day {
-      appearance: none;
-      min-width: 0;
-      min-height: 178px;
-      padding: 13px 11px;
-      border: 0;
-      border-right: 1px solid var(--line);
-      background: var(--surface);
-      text-align: left;
-      cursor: pointer;
-    }
-    .snapshot-day:last-child { border-right: 0; }
-    .calendar-day-list { min-width: 0; }
-    .snapshot-date { display: block; margin-bottom: 10px; font-size: 12px; color: var(--muted); font-weight: 700; }
-    .snapshot-more, .snapshot-empty { display: block; margin-top: 9px; color: var(--muted); font-weight: 600; }
-    button.snapshot-more {
-      width: 100%;
-      min-height: 32px;
-      margin-bottom: -7px;
-      padding: 5px 0;
-      border: 0;
-      background: transparent;
-      color: var(--accent-strong);
-      text-align: left;
-      cursor: pointer;
-    }
-    button.snapshot-more:hover { text-decoration: underline; }
-    button.snapshot-more[hidden] { display: none; }
-    .calendar-extra[hidden] { display: none; }
+/* Bottom tab bar */
+.tab-bar {
+  position: fixed; left: 0; right: 0; bottom: 0;
+  height: calc(var(--tabbar-h) + env(safe-area-inset-bottom));
+  padding-bottom: env(safe-area-inset-bottom);
+  display: flex;
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+  z-index: 30;
+}
+.tab-bar button {
+  flex: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 0.125rem;
+  border: 0; background: none; color: var(--muted);
+  font-size: 0.6875rem; font-weight: 500; cursor: pointer;
+  min-height: var(--tabbar-h);
+  font-family: inherit;
+}
+.tab-bar button .tab-icon { font-size: 1.375rem; line-height: 1; }
+.tab-bar button[aria-selected="true"] { color: var(--accent); font-weight: 700; }
 
-    .section-head {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 20px;
-      margin: 0 0 15px;
-    }
-    .section-head h2 {
-      font-family: "Newsreader", serif;
-      font-size: clamp(29px, 4vw, 40px);
-      line-height: 1;
-    }
-    .section-head p { margin: 0; color: var(--muted); font-size: 14px; }
-    .activity-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-    }
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 19px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      min-width: 0;
-      box-shadow: inset 0 4px 0 var(--category-color, var(--accent));
-    }
-    .card-top {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px 12px;
-      align-items: flex-start;
-      justify-content: space-between;
-    }
-    .card-top > :first-child { flex: 1 1 14em; min-width: 0; }
-    .category {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--category-color, var(--accent-strong));
-      margin-bottom: 5px;
-    }
-    .category::before {
-      content: "";
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: currentColor;
-      flex: 0 0 auto;
-    }
-    .card[data-category="sports"] { --category-color: var(--cat-sports); }
-    .card[data-category="hubs"] { --category-color: var(--cat-hubs); }
-    .card[data-category="music"] { --category-color: var(--cat-music); }
-    .card[data-category="play"] { --category-color: var(--cat-play); }
-    .card[data-category="library"] { --category-color: var(--cat-library); }
-    .card[data-category="events"] { --category-color: var(--cat-events); }
-    .card[data-category="cafes"] { --category-color: var(--cat-cafes); }
-    .card-photo {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      object-fit: cover;
-      border-radius: 11px;
-      background: var(--surface-soft);
-    }
-    .price {
-      flex: 0 0 auto;
-      background: var(--accent-soft);
-      color: var(--accent-strong);
-      padding: 5px 8px;
-      border-radius: 8px;
-      font-size: 12px;
-      font-weight: 700;
-      max-width: 100%;
-    }
-    .meta { display: grid; gap: 8px; }
-    .meta-row {
-      display: grid;
-      grid-template-columns: 72px 1fr;
-      gap: 8px;
-      font-size: 16px;
-    }
-    .meta-label { color: var(--muted); font-weight: 600; }
-    .meta-value { min-width: 0; overflow-wrap: anywhere; }
-    .travel-detail { display: block; margin-top: 4px; color: var(--muted); line-height: 1.4; }
-    .note {
-      margin: 0;
-      padding: 10px 12px;
-      background: var(--surface-soft);
-      border-radius: 10px;
-      font-size: 16px;
-      color: var(--muted);
-      overflow-wrap: anywhere;
-    }
-    .note.warn { background: var(--gold-soft); color: var(--text); }
-    .actions {
-      display: flex;
-      flex-wrap: nowrap;
-      gap: 10px;
-      align-items: stretch;
-      margin-top: auto;
-      padding-top: 2px;
-    }
-    .actions.actions-many { flex-wrap: wrap; }
-    .action {
-      flex: 1 1 0;
-      min-width: 0;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 44px;
-      padding: 10px 16px;
-      border: 1px solid var(--accent);
-      border-radius: 10px;
-      background: var(--accent);
-      color: var(--on-accent);
-      box-shadow: 0 3px 10px rgba(15, 71, 96, .12);
-      cursor: pointer;
-      font-size: 15px;
-      font-weight: 700;
-      line-height: 1.25;
-      text-align: center;
-      text-decoration: none;
-    }
-    .action:hover { background: var(--accent-strong); border-color: var(--accent-strong); }
-    .action.secondary {
-      background: var(--surface);
-      color: var(--accent-strong);
-      border-color: var(--line);
-      box-shadow: none;
-    }
-    .action.secondary:hover { background: var(--accent-soft); border-color: var(--accent); }
-    .action.calendar-action { color: var(--accent-strong); }
-    .action.copy-btn { color: var(--muted); }
-    .actions.actions-many .action { flex-basis: calc(50% - 5px); }
-    .card .action:focus-visible {
-      outline: 3px solid var(--accent-strong);
-      outline-offset: 3px;
-    }
-    .callout-grid {
-      display: grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap: 14px;
-      margin: 38px 0 18px;
-    }
-    .panel {
-      border-radius: 22px;
-      padding: 24px;
-      background: var(--text);
-      color: var(--bg);
-    }
-    .panel.alt {
-      background: var(--coral-soft);
-      color: var(--text);
-      content-visibility: visible;
-      contain: none;
-    }
-    .panel h2 {
-      font-family: "Newsreader", serif;
-      font-size: 31px;
-      line-height: 1;
-      margin-bottom: 14px;
-    }
-    .ahead-list { display: grid; gap: 11px; }
-    .ahead-item {
-      padding-top: 11px;
-      border-top: 1px solid color-mix(in srgb, currentColor 22%, transparent);
-    }
-    .ahead-item:first-child { border-top: 0; padding-top: 0; }
-    .ahead-item strong { display: block; }
-    .ahead-item strong .travel-pill { margin-left: 6px; vertical-align: middle; }
-    .ahead-item span { font-size: 16px; opacity: .9; }
-    .ahead-item a { padding-block: 10px; }
-    .ahead-item .ahead-when { display: block; font-weight: 600; }
-    .ahead-when time, .ahead-item a { white-space: nowrap; }
-    .ahead-empty { margin: 0; opacity: .9; }
-    .ahead-item .travel-pill { opacity: 1; }
-    .fallbacks .travel-pill { margin-right: 5px; }
-    .fallbacks { margin: 0; padding-left: 18px; }
-    .fallbacks li { margin: 8px 0; }
-    .source-line {
-      color: var(--muted);
-      font-size: 12px;
-      margin: 18px 2px 0;
-    }
-    .source-line a { color: var(--accent-strong); }
-    .footer {
-      margin-top: 42px;
-      padding-top: 18px;
-      border-top: 1px solid var(--line);
-      display: flex;
-      justify-content: space-between;
-      gap: 18px;
-      color: var(--muted);
-      font-size: 13px;
-    }
-    .toast {
-      position: fixed;
-      left: 50%;
-      bottom: max(20px, env(safe-area-inset-bottom));
-      transform: translateX(-50%) translateY(20px);
-      background: var(--text);
-      color: var(--bg);
-      padding: 10px 15px;
-      border-radius: 10px;
-      box-shadow: var(--shadow);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity .2s, transform .2s;
-      z-index: 10;
-      font-size: 13px;
-      font-weight: 700;
-    }
-    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+/* Day headings */
+.day-heading {
+  font-family: 'Newsreader', serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 1.25rem 0 0.25rem;
+}
+.day-sub { color: var(--muted); font-size: 0.8125rem; margin: 0 0 0.75rem; }
 
-    @media (max-width: 760px) {
-      .page { padding-top: 22px; padding-bottom: 48px; }
-      .masthead { grid-template-columns: 1fr; gap: 8px; }
-      .brand-heading { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px 10px; }
-      .site-logo { width: 48px; height: 48px; flex-basis: 48px; border-radius: 11px; }
-      .header-actions { grid-column: 2; justify-self: start; }
-      .theme-toggle { margin-left: 0; }
-      .freshness { text-align: left; }
-      .travel-key { grid-template-columns: 1fr; gap: 10px; }
-      .week-snapshot { grid-template-columns: 1fr; }
-      .snapshot-day { min-height: 0; border-right: 0; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: 62px minmax(0, 1fr); gap: 8px 11px; }
-      .snapshot-day:last-child { border-bottom: 0; }
-      .snapshot-date { margin: 0; }
-      .snapshot-entry, .snapshot-more, .snapshot-empty { margin-top: 0; }
-      button.snapshot-more { min-height: 44px; margin-bottom: -11px; }
-      .section-head { align-items: start; flex-direction: column; gap: 6px; }
-      .activity-grid, .callout-grid { grid-template-columns: 1fr; }
-      .card { padding: 17px; }
-      .footer { flex-direction: column; }
-    }
+/* Band headings */
+.band-heading {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 1rem 0 0.5rem;
+  font-family: 'Newsreader', serif;
+}
+.nap-divider {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.8125rem;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  border-top: 1px dashed var(--line);
+  border-bottom: 1px dashed var(--line);
+}
 
-    @media (max-width: 390px) {
-      .meta-row { grid-template-columns: 64px 1fr; }
-    }
+/* Compact cards */
+.card {
+  display: grid;
+  grid-template-columns: 4rem 1fr 2.75rem;
+  gap: 0.5rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--cat-color, var(--line));
+  border-radius: var(--radius);
+  padding: 0.625rem 0.5rem 0.625rem 0.75rem;
+  margin-bottom: 0.75rem;
+  cursor: pointer;
+  min-height: 5.5rem;
+  max-height: 7.5rem;
+  overflow: hidden;
+  text-align: left;
+  width: 100%;
+  font: inherit; color: inherit;
+}
+.card:active { background: var(--accent-soft); }
+.card-time {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--accent-strong);
+  line-height: 1.3;
+  padding-top: 0.125rem;
+}
+.card-main { min-width: 0; }
+.card-title {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.3;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.card-title .new-dot {
+  display: inline-block;
+  width: 0.5rem; height: 0.5rem;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-right: 0.375rem;
+  vertical-align: baseline;
+}
+.card-venue {
+  font-size: 0.8125rem;
+  color: var(--muted);
+  margin: 0.125rem 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.card-facts {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.8125rem;
+  color: var(--muted);
+  flex-wrap: wrap;
+}
+.card-facts .fact { display: inline-flex; align-items: center; gap: 0.25rem; }
+.fact-price-free { color: var(--green); font-weight: 700; }
+.fact-status-confirmed { color: var(--green); font-weight: 600; }
+.fact-status-call { color: var(--amber); font-weight: 600; }
+.fact-status-unconfirmed { color: var(--grey); font-weight: 600; }
+.fact-nap { color: var(--amber); font-weight: 600; }
+.card-star {
+  display: flex; align-items: flex-start; justify-content: center;
+  font-size: 1.375rem; color: var(--muted);
+  background: none; border: 0; cursor: pointer;
+  min-width: 2.75rem; min-height: 2.75rem;
+  padding: 0.25rem;
+}
+.card-star[aria-pressed="true"] { color: var(--accent); }
 
-    /* Mobile-first rolling week */
-    body { font-size: 16px; }
-    .page { width: min(920px, 100%); padding: 22px clamp(14px, 4vw, 36px) 56px; }
-    .masthead { margin-bottom: 18px; }
-    h1 { font-size: clamp(38px, 10vw, 58px); }
-    .sticky-days {
-      position: sticky;
-      top: 0;
-      z-index: 8;
-      display: grid;
-      grid-template-columns: repeat(var(--visible-days, 7), minmax(0, 1fr));
-      margin: 0 calc(clamp(14px, 4vw, 36px) * -1) 26px;
-      padding: 8px clamp(8px, 2vw, 18px);
-      background: color-mix(in srgb, var(--bg) 94%, transparent);
-      border-bottom: 1px solid var(--line);
-      backdrop-filter: blur(12px);
-    }
-    .sticky-days button {
-      position: relative;
-      min-width: 0;
-      min-height: 48px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      border: 0;
-      border-radius: 9px;
-      background: transparent;
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-    .sticky-days button:hover { background: var(--surface-soft); color: var(--text); }
-    .sticky-days button[aria-current="true"] {
-      background: var(--text);
-      color: var(--bg);
-      box-shadow: inset 0 0 0 2px currentColor;
-    }
-    .sticky-days button[aria-current="true"]::after {
-      content: "✓";
-      content: "✓" / "";
-      position: absolute;
-      top: 2px;
-      right: 5px;
-      font-size: 10px;
-      line-height: 1;
-      font-weight: 800;
-    }
-    .sticky-days button span { color: inherit; font-size: 17px; line-height: 1.1; }
-    .week-heading { align-items: flex-start; }
-    .calendar-overview { margin-bottom: 38px; }
-    .week-snapshot { display: grid; grid-template-columns: 1fr; gap: 16px; overflow: visible; border: 0; background: transparent; }
-    .snapshot-day { min-height: 0; padding: 0; display: block; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: var(--surface); cursor: default; scroll-margin-top: 124px; }
-    .snapshot-day[aria-current="date"] { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
-    .snapshot-day:last-child { border-right: 1px solid var(--line); }
-    .snapshot-date { min-height: 64px; margin: 0; padding: 12px 15px; display: grid; grid-template-columns: 1fr auto; align-items: center; border-bottom: 1px solid var(--line); background: var(--surface-soft); }
-    .snapshot-date span { grid-row: 1 / 3; font-size: 14px; color: var(--accent-strong); }
-    .snapshot-date small { font-size: 12px; color: var(--muted); text-align: right; }
-    .nap-band { min-height: 50px; padding: 10px 15px; display: flex; align-items: center; gap: 12px; background: var(--nap); color: var(--muted); border-bottom: 1px solid var(--line); }
-    .nap-band strong { color: var(--text); font-size: 14px; }
-    .nap-band span { font-size: 13px; }
-    .calendar-day-list { display: grid; }
-    .snapshot-entry { margin: 0; padding: 14px 15px; display: grid; grid-template-columns: 96px minmax(0,1fr); gap: 13px; border-top: 1px solid var(--line); font-size: 14px; line-height: 1.35; }
-    .calendar-day-list > .snapshot-entry:first-child { border-top: 0; }
-    .entry-time { color: var(--text); font-weight: 700; }
-    .entry-facts { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
-    .entry-price, .entry-verify { display: inline-flex; align-items: center; min-height: 26px; padding: 3px 8px; border-radius: 7px; font-size: 12px; font-weight: 700; }
-    .entry-price { color: var(--accent-strong); background: var(--accent-soft); }
-    .entry-verify.verified { color: var(--walk); background: var(--walk-soft); }
-    .entry-verify.check { color: var(--gold); background: var(--gold-soft); }
-    .entry-body p { margin: 8px 0 0; color: var(--muted); font-size: 16px; }
-    .entry-actions {
-      display: flex;
-      flex-wrap: nowrap;
-      gap: 8px;
-      align-items: center;
-      margin-top: 10px;
-    }
-    .entry-actions .action {
-      flex: 0 0 auto;
-      min-width: 0;
-      padding: 8px 18px;
-      font-size: 14px;
-      box-shadow: none;
-      min-height: 40px;
-    }
-    .calendar-extra { display: grid; }
-    .calendar-extra[hidden] { display: none; }
-    button.snapshot-more { min-height: 48px; margin: 0; padding: 8px 15px; border-top: 1px solid var(--line); color: var(--accent-strong); font-size: 16px; }
-    .snapshot-empty { margin: 0; padding: 18px 15px; font-size: 14px; }
-    .stale-note { border: 1px solid var(--line); border-radius: 16px; background: var(--surface); font-size: 16px; }
-    .category-sections { display: grid; gap: 12px; }
-    .category-section { border: 1px solid var(--line); border-radius: 14px; background: var(--surface); overflow: hidden; }
-    .category-section .activity-grid { padding: 0 14px 14px; grid-template-columns: 1fr; }
-    .action { min-height: 44px; }
-    .later-strip { margin: 40px 0 24px; }
-    .later-lines { border-top: 1px solid var(--line); }
-    .later-lines a { min-height: 62px; padding: 10px 2px; display: grid; grid-template-columns: 100px 1fr; gap: 2px 12px; align-items: center; border-bottom: 1px solid var(--line); text-decoration: none; }
-    .later-lines time { grid-row: 1 / 3; color: var(--accent-strong); font-size: 13px; font-weight: 700; }
-    .later-lines strong { font-size: 15px; }
-    .later-lines span { color: var(--muted); font-size: 16px; }
+/* Category left-border colours */
+.card[data-category="sports"] { --cat-color: #2a7de1; }
+.card[data-category="hubs"] { --cat-color: #7a4fd0; }
+.card[data-category="music"] { --cat-color: #d0547a; }
+.card[data-category="play"] { --cat-color: #c77e1f; }
+.card[data-category="library"] { --cat-color: #2e9e5b; }
+.card[data-category="events"] { --cat-color: #b03a48; }
 
-    @media (min-width: 761px) {
-      .activity-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
-      .category-section .activity-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
-    }
+/* Up next hero */
+.upnext {
+  background: var(--accent);
+  color: var(--on-accent);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin: 0.75rem 0 1rem;
+  cursor: pointer;
+  border: 0; width: 100%; text-align: left; font: inherit;
+}
+.upnext-label { font-size: 0.8125rem; opacity: 0.85; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+.upnext-title { font-size: 1.25rem; font-weight: 700; margin: 0.25rem 0; font-family: 'Newsreader', serif; }
+.upnext-meta { font-size: 0.9375rem; opacity: 0.92; }
 
-    @media (max-width: 760px) {
-      .travel-key { padding: 13px; }
-      .travel-key .legend-group { display: block; }
-      .travel-key .legend-group strong { margin-bottom: 5px; }
-      .travel-key-items, .category-key { gap: 5px; }
-      .travel-key .travel-pill { padding: 3px 6px; font-size: 12px; }
-      .section-head h2 { font-size: 31px; }
-      .callout-grid { margin-top: 30px; }
-      .panel { padding: 19px; }
-    }
+/* Collapsed rows */
+.collapsed-row {
+  width: 100%;
+  display: flex; justify-content: space-between; align-items: center;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 0.75rem 1rem; margin-bottom: 0.75rem;
+  font: inherit; color: var(--text); cursor: pointer;
+  min-height: 2.75rem;
+}
+.text-btn {
+  background: none; border: 0; color: var(--accent); font: inherit;
+  font-weight: 600; cursor: pointer; padding: 0.5rem; min-height: 2.75rem;
+}
 
-    @media (max-width: 460px) {
-      .snapshot-entry { grid-template-columns: 1fr; gap: 5px; }
-      .entry-time { color: var(--accent-strong); font-size: 13px; }
-      .later-lines a { grid-template-columns: 1fr; gap: 3px; }
-      .later-lines time { grid-row: auto; }
-      .sticky-days { padding-left: 4px; padding-right: 4px; }
-      .sticky-days button { font-size: 12px; }
-    }
+/* Free and easy horizontal cards */
+.free-row { display: flex; gap: 0.75rem; overflow-x: auto; padding-bottom: 0.5rem; margin: 0 -1rem; padding-left: 1rem; padding-right: 1rem; }
+.free-card {
+  flex: 0 0 10rem;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 0.75rem; font-size: 0.8125rem;
+  cursor: pointer; font: inherit; color: inherit; text-align: left;
+}
+.free-card strong { display: block; font-size: 0.9375rem; margin-bottom: 0.25rem; }
 
-    /* Usability and accessibility enhancements */
-    :where(a, button, summary, [tabindex]):focus-visible {
-      outline: 3px solid var(--accent-strong);
-      outline-offset: 3px;
-      border-radius: 6px;
-    }
-    .today-glance {
-      min-height: 52px;
-      margin: 0 0 14px;
-      padding: 10px 14px;
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      background: var(--accent-soft);
-      color: var(--text);
-    }
-    .today-glance h2 { flex: 0 0 auto; font-family: "Newsreader", serif; font-size: 18px; line-height: 1; }
-    .today-glance p { margin: 0; font-size: 14px; }
-    .today-glance .glance-divider { color: var(--muted); }
+/* Filter chips */
+.chip-row {
+  display: flex; gap: 0.5rem; overflow-x: auto;
+  padding: 0.75rem 1rem; margin: 0 -1rem;
+  position: sticky; top: 3.5rem; z-index: 15;
+  background: var(--bg);
+}
+.chip {
+  flex: 0 0 auto;
+  display: inline-flex; align-items: center; gap: 0.375rem;
+  border: 1px solid var(--line); border-radius: 999px;
+  background: var(--surface); color: var(--text);
+  padding: 0.5rem 0.875rem; font-size: 0.8125rem; font-weight: 600;
+  cursor: pointer; font-family: inherit;
+  min-height: 2.75rem;
+}
+.chip[aria-pressed="true"] {
+  background: var(--accent); border-color: var(--accent); color: var(--on-accent);
+}
+.chip .chip-x { font-size: 1rem; line-height: 1; }
 
-    .filter-dock {
-      position: sticky;
-      top: 64px;
-      z-index: 7;
-      margin: 0 0 16px;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      background: color-mix(in srgb, var(--surface) 96%, transparent);
-      box-shadow: 0 6px 18px rgba(15,71,96,.10);
-      backdrop-filter: blur(12px);
-    }
-    .filter-dock-head { display: flex; align-items: center; gap: 8px; padding: 4px; }
-    .filter-toggle, .filter-reset {
-      min-height: 44px;
-      border: 0;
-      border-radius: 9px;
-      background: transparent;
-      cursor: pointer;
-      font-weight: 700;
-    }
-    .filter-toggle { flex: 1; padding: 8px 10px; text-align: left; }
-    #activeFilterSummary { color: var(--muted); font-weight: 600; }
-    #activeFilterSummary::before { content: " · "; content: " · " / ""; }
-    .filter-toggle::after { content: "+"; content: "+" / ""; float: right; color: var(--accent-strong); font-size: 19px; }
-    .filter-toggle[aria-expanded="true"]::after { content: "−"; content: "−" / ""; }
-    .filter-reset { padding: 8px 12px; color: var(--accent-strong); }
-    .filter-reset:disabled { color: var(--muted); opacity: .55; cursor: default; }
-    .filter-panel { padding: 7px 8px 10px; border-top: 1px solid var(--line); }
-    .filter-panel[hidden] { display: none; }
-    .filter-group { display: block; }
-    .filter-group + .filter-group { margin-top: 4px; padding-top: 4px; border-top: 1px solid var(--line); }
-    .filter-group-head { display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 4px 2px; cursor: pointer; list-style: none; }
-    .filter-group-head::-webkit-details-marker { display: none; }
-    .filter-group-head::after { content: "+"; content: "+" / ""; margin-left: 2px; color: var(--accent-strong); font-size: 19px; font-weight: 700; }
-    .filter-group[open] > .filter-group-head::after { content: "\2212"; content: "\2212" / ""; }
-    .filter-group-label { font-weight: 700; font-size: 13px; }
-    .filter-group-current { margin-left: auto; color: var(--muted); font-weight: 600; font-size: 12px; text-align: right; }
-    .filter-group[open] .filter-group-current { color: var(--accent-strong); }
-    .filter-group-options { display: flex; flex-wrap: wrap; gap: 7px; padding: 6px 0 10px; }
-    .week-filter {
-      min-height: 44px;
-      padding: 7px 10px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: var(--surface);
-      color: var(--text);
-      cursor: pointer;
-      font-size: 12px;
-      font-weight: 700;
-      line-height: 1.2;
-    }
-    .week-filter:hover { border-color: var(--accent); }
-    .week-filter:focus-visible, .filter-toggle:focus-visible, .filter-reset:focus-visible {
-      outline: 3px solid var(--sunny);
-      outline-offset: 2px;
-    }
-    .week-filter[aria-pressed="true"] { border-color: var(--text); background: var(--text); color: var(--bg); }
-    .week-filter[data-travel-filter]:not([data-travel-filter="all"])::before {
-      content: "";
-      display: inline-block;
-      width: 7px;
-      height: 7px;
-      margin-right: 6px;
-      border-radius: 50%;
-      background: var(--travel-filter-color);
-    }
-    .week-filter[data-travel-filter="walk"] { --travel-filter-color: var(--walk); }
-    .week-filter[data-travel-filter="transit"] { --travel-filter-color: var(--transit); }
-    .week-filter[data-travel-filter="awkward"] { --travel-filter-color: var(--awkward); }
-    .week-filter[data-travel-filter="drive"] { --travel-filter-color: var(--drive); }
-    .week-filter[data-travel-filter][aria-pressed="true"]::before { background: currentColor; }
-    .filter-status { margin: 7px 3px 0; color: var(--muted); font-size: 12px; }
-    .entry-filtered-out { display: none !important; }
-    .filter-empty { padding: 16px 15px; color: var(--muted); font-size: 14px; }
-    .filter-done { display: none; }
-    @media (max-width: 760px) {
-      /* On a phone the open panel covers much of the screen; close it from the bottom. */
-      .filter-done {
-        display: block;
-        width: 100%;
-        min-height: 44px;
-        margin-top: 8px;
-        border: 1px solid var(--accent);
-        border-radius: 999px;
-        background: var(--accent);
-        color: var(--on-accent);
-        cursor: pointer;
-        font-weight: 700;
-      }
-      .filter-done:focus-visible { outline: 3px solid var(--sunny); outline-offset: 2px; }
-    }
+/* Bottom sheets */
+.scrim {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.45);
+  opacity: 0; pointer-events: none; transition: opacity 0.2s;
+  z-index: 40;
+}
+.scrim.open { opacity: 1; pointer-events: auto; }
+.sheet {
+  position: fixed; left: 0; right: 0; bottom: 0;
+  max-height: 85vh; overflow-y: auto;
+  background: var(--surface); color: var(--text);
+  border-radius: 1rem 1rem 0 0;
+  padding: 0 1rem calc(1rem + env(safe-area-inset-bottom));
+  transform: translateY(100%); transition: transform 0.25s ease-out;
+  z-index: 50;
+  max-width: 40rem; margin: 0 auto;
+}
+.sheet.open { transform: translateY(0); }
+.sheet-handle {
+  width: 2.5rem; height: 0.25rem; border-radius: 999px;
+  background: var(--line); margin: 0.625rem auto;
+}
+.sheet h2 { font-family: 'Newsreader', serif; font-size: 1.25rem; margin: 0.5rem 0; }
+.sheet-row { display: flex; justify-content: space-between; gap: 1rem; padding: 0.5rem 0; border-bottom: 1px solid var(--line); font-size: 0.9375rem; }
+.sheet-row .k { color: var(--muted); flex: 0 0 auto; }
+.sheet-footer { font-size: 0.75rem; color: var(--muted); margin-top: 1rem; }
+.btn-primary {
+  display: block; width: 100%;
+  background: var(--accent); color: var(--on-accent);
+  border: 0; border-radius: 0.625rem;
+  padding: 0.875rem; font-size: 1rem; font-weight: 700;
+  cursor: pointer; margin: 0.75rem 0; font-family: inherit;
+  min-height: 2.75rem;
+}
+.btn-secondary {
+  display: block; width: 100%;
+  background: var(--surface); color: var(--accent);
+  border: 1px solid var(--accent); border-radius: 0.625rem;
+  padding: 0.875rem; font-size: 1rem; font-weight: 600;
+  cursor: pointer; margin: 0.5rem 0; font-family: inherit;
+  min-height: 2.75rem; text-decoration: none; text-align: center;
+}
 
-    .snapshot-date h3 { margin: 0; font-family: "Newsreader", serif; font-size: 25px; line-height: 1; }
-    .entry-body h4 { margin: 0 0 7px; font-size: 17px; line-height: 1.25; }
-    .source-title-link {
-      padding-block: 8px;
-      color: inherit;
-      text-decoration-line: underline;
-      text-decoration-thickness: 1px;
-      text-underline-offset: 3px;
-      text-decoration-color: color-mix(in srgb, var(--accent) 55%, transparent);
-    }
-    .source-title-link .title-tail { white-space: nowrap; }
-    .source-title-link .title-tail::after {
-      content: "↗";
-      content: "↗" / "";
-      display: inline-block;
-      margin-left: .3em;
-      color: var(--accent-strong);
-      font-family: "DM Sans", sans-serif;
-      font-size: .78em;
-      font-weight: 700;
-      line-height: 1;
-      text-decoration: none;
-    }
-    .source-title-link:hover { color: var(--accent-strong); text-decoration-color: currentColor; }
-    .entry-travel { color: var(--muted); font-size: 12px; font-weight: 650; }
-    .new-tag {
-      display: inline-flex;
-      align-items: center;
-      min-height: 24px;
-      padding: 2px 7px;
-      border-radius: 7px;
-      background: var(--coral-soft);
-      color: var(--coral);
-      font-size: 12px;
-      font-weight: 800;
-    }
-    .calendar-link {
-      display: inline-flex;
-      align-items: center;
-      min-height: 44px;
-      color: var(--accent-strong);
-      font-size: 14px;
-      font-weight: 700;
-    }
+/* Plan ahead date tiles */
+.plan-row {
+  display: grid; grid-template-columns: 3.5rem 1fr 2.75rem;
+  gap: 0.75rem; align-items: center;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 0.75rem; margin-bottom: 0.75rem; width: 100%;
+  font: inherit; color: inherit; text-align: left; cursor: pointer;
+}
+.date-tile {
+  text-align: center; line-height: 1.2;
+}
+.date-tile .d { font-size: 1.5rem; font-weight: 700; font-family: 'Newsreader', serif; }
+.date-tile .m { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; }
+.plan-meta { font-size: 0.8125rem; color: var(--muted); }
 
-    .category-heading { margin: 0; }
-    .category-toggle {
-      width: 100%;
-      min-height: 56px;
-      padding: 12px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      border: 0;
-      background: var(--surface);
-      color: var(--text);
-      cursor: pointer;
-      text-align: left;
-      font-size: 18px;
-      font-weight: 700;
-    }
-    .category-toggle::after { content: "+"; content: "+" / ""; width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; background: var(--surface-soft); color: var(--accent-strong); }
-    .category-toggle[aria-expanded="true"]::after { content: "−"; content: "−" / ""; }
-    .category-toggle small { margin-left: auto; color: var(--muted); font-size: 12px; font-weight: 600; }
-    .category-content[hidden] { display: none; }
-    .card h4 { margin: 0; font-size: 19px; line-height: 1.25; }
-    .title-tags { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; margin-top: 4px; }
+/* Week group headers */
+.week-group { font-size: 1.25rem; font-weight: 700; font-family: 'Newsreader', serif; margin: 1.25rem 0 0.5rem; }
 
-    .later-lines .later-item { min-height: 70px; padding: 10px 2px; display: grid; grid-template-columns: 100px minmax(0, 1fr) auto; gap: 2px 12px; align-items: center; border-bottom: 1px solid var(--line); }
-    .later-lines .later-item > time { grid-row: 1 / 3; color: var(--accent-strong); font-size: 13px; font-weight: 700; }
-    .later-lines .later-item a { min-height: 44px; padding: 0; display: inline-flex; align-items: center; border: 0; }
-    .later-main-link { grid-column: 2; grid-row: 1; align-self: end; font-size: 15px; font-weight: 700; text-decoration: none; }
-    .later-copy { grid-column: 2; grid-row: 2; align-self: start; color: var(--muted); font-size: 14px; overflow-wrap: anywhere; }
-    .later-item .calendar-link { grid-column: 3; grid-row: 1 / 3; white-space: nowrap; }
-    .later-main-link:hover, .calendar-link:hover { text-decoration: underline; }
+/* Day chips (Week tab) */
+.day-chips {
+  display: flex; gap: 0.5rem; overflow-x: auto;
+  padding: 0.75rem 1rem; margin: 0 -1rem;
+  position: sticky; top: 3.5rem; z-index: 15; background: var(--bg);
+}
+.day-chip {
+  flex: 0 0 auto; min-width: 3.5rem; min-height: 2.75rem;
+  border: 1px solid var(--line); border-radius: 0.625rem;
+  background: var(--surface); color: var(--text);
+  font-family: inherit; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.day-chip .dow { font-size: 0.6875rem; color: var(--muted); }
+.day-chip .dom { font-size: 1rem; font-weight: 700; }
+.day-chip[aria-current="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.day-chip[aria-current="true"] .dow { color: var(--on-accent); opacity: 0.85; }
 
-    .back-to-top {
-      position: fixed;
-      right: max(14px, env(safe-area-inset-right));
-      bottom: max(16px, env(safe-area-inset-bottom));
-      z-index: 9;
-      min-width: 44px;
-      min-height: 44px;
-      padding: 8px 12px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: var(--text);
-      color: var(--bg);
-      box-shadow: var(--shadow);
-      cursor: pointer;
-      font-weight: 800;
-    }
-    .back-to-top[hidden] { display: none; }
+/* Empty states */
+.empty { text-align: center; color: var(--muted); padding: 2rem 1rem; }
+.empty .btn-secondary { max-width: 16rem; margin: 1rem auto; }
 
-    @media (max-width: 460px) {
-      .today-glance { align-items: flex-start; flex-direction: column; gap: 4px; }
-      .filter-dock { top: 62px; }
-      .filter-panel { max-height: min(56vh, 390px); overflow-y: auto; }
-      .week-filter { flex: 1 1 calc(50% - 7px); }
-      .later-lines .later-item { grid-template-columns: minmax(0, 1fr) auto; gap: 3px 10px; }
-      .later-lines .later-item > time { grid-row: auto; grid-column: 1 / -1; }
-      .later-main-link, .later-copy { grid-column: 1; }
-      .later-item .calendar-link { grid-column: 2; grid-row: 2 / 4; }
-      .actions { gap: 8px; }
-      .actions .action { padding-left: 8px; padding-right: 8px; }
-    }
+/* Settings sheet rows */
+.set-row { display: flex; align-items: center; justify-content: space-between; padding: 0.875rem 0; border-bottom: 1px solid var(--line); min-height: 2.75rem; }
 
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
-      .toast { transition: none; }
-    }
-  </style>
+/* Skip link */
+.skip-link { position: absolute; left: -9999px; }
+.skip-link:focus { left: 1rem; top: 1rem; z-index: 100; background: var(--accent); color: var(--on-accent); padding: 0.875rem 1rem; border-radius: 0.5rem; min-height: 2.75rem; display: inline-flex; align-items: center; }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .sheet, .scrim { transition: none; }
+}
+
+/* 200% text safety */
+.card-title, .card-venue { overflow-wrap: anywhere; }
+</style>
 </head>
 <body>
-<noscript><p style="padding:1rem;font-family:system-ui">This guide needs JavaScript to show the week view. The listings are updated daily at https://thamistco.github.io/bex/</p></noscript>
-  <a class="skip-link" href="#activities">Skip to activities</a>
-  <div class="page">
-    <header class="masthead">
-      <div>
-        <div class="brand-heading">
-          <img class="site-logo" src="images/logo-156.webp" alt="" width="52" height="52">
-          <h1>Family activities</h1>
-          <div class="header-actions">
-            <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false">
-              <span class="theme-toggle-mark" aria-hidden="true"></span>
-              <span>Dark mode</span>
-            </button>
-            <button class="install-button" id="installApp" type="button" hidden>Install app</button>
-            <p class="install-hint" id="installHint" role="status" hidden></p>
-          </div>
-        </div>
-        <p class="week" id="visibleWeekRange">Thu 15 – Thu 22 Oct 2026</p>
-      </div>
-      <div class="freshness"><strong>Checked 15 October 2026</strong>For a child under 2 · usual nap 12:00 to 14:00</div>
-    </header>
+<a class="skip-link" href="#main">Skip to activities</a>
+<header class="app-header">
+  <h1>Family activities</h1>
+  <button class="icon-btn" id="settingsBtn" aria-label="Settings and info" aria-haspopup="dialog">i</button>
+</header>
 
-    <section class="install-prompt" id="installPrompt" aria-labelledby="installPromptTitle" hidden>
-      <img class="install-prompt-icon" src="images/logo-156.webp" alt="" width="52" height="52">
-      <div>
-        <h2 id="installPromptTitle">Add to your phone</h2>
-        <p id="installPromptText">Open Family Activities from your home screen. It opens the latest version, or the last one you saw when there is little or no signal.</p>
-      </div>
-      <div class="install-prompt-actions">
-        <button type="button" id="installPromptClose">Not now</button>
-        <button class="primary" type="button" id="installPromptAction">Install app</button>
-      </div>
-    </section>
+<main id="main">
+  <!-- TODAY TAB -->
+  <section id="tab-today" class="tab-panel active" role="tabpanel" aria-label="Today" tabindex="0">
+    <div id="todayHeader"></div>
+    <div id="upNext"></div>
+    <div id="todayBands"></div>
+    <h2 class="band-heading">Free and easy</h2>
+    <div class="free-row" id="freeEasy"></div>
+  </section>
 
-    <main id="activities" tabindex="-1">
-    <section class="today-glance" aria-labelledby="todayGlanceTitle">
-      <h2 id="todayGlanceTitle">Today at a glance</h2>
-      <p id="todayGlanceText">Loading today’s activities…</p>
-    </section>
+  <!-- WEEK TAB -->
+  <section id="tab-week" class="tab-panel" role="tabpanel" aria-label="Week" tabindex="0">
+    <div class="chip-row" id="weekChips" role="toolbar" aria-label="Quick filters"></div>
+    <div class="day-chips" id="dayChips" role="toolbar" aria-label="Days"></div>
+    <div id="weekDays"></div>
+  </section>
 
-    <details class="travel-key" aria-label="Colour guide">
-      <summary class="travel-key-summary"><strong>Travel from the Marina area</strong><span class="travel-key-toggle-hint">Tap to see what the badges mean</span></summary>
-      <div class="travel-key-copy"><span>The exact home address stays private. Badges show whether each outing is walkable, straightforward by public transport, awkward without a car, or best driven.</span></div>
-      <div class="legend-group">
-        <strong>Travel colour</strong>
-        <div class="travel-key-items">
-          <span class="travel-pill walk">Walkable</span>
-          <span class="travel-pill transit">Easy public transport</span>
-          <span class="travel-pill awkward">Longer or needs a change</span>
-          <span class="travel-pill drive">Best by car</span>
-        </div>
-      </div>
-      <div class="legend-group">
-        <strong>Activity colour</strong>
-        <div class="category-key">
-          <span class="category-chip sports">Sports</span><span class="category-chip hubs">Family hubs</span><span class="category-chip music">Music &amp; movement</span><span class="category-chip play">Drop-in play</span><span class="category-chip library">Library</span><span class="category-chip events">Events</span>
-        </div>
-      </div>
-    </details>
+  <!-- PLAN AHEAD TAB -->
+  <section id="tab-ahead" class="tab-panel" role="tabpanel" aria-label="Plan ahead" tabindex="0">
+    <div class="chip-row" id="aheadChips" role="toolbar" aria-label="Quick filters"></div>
+    <div id="planGroups"></div>
+  </section>
 
-    <nav class="sticky-days" id="stickyDays" aria-label="Jump to a day"></nav>
+  <!-- SAVED TAB -->
+  <section id="tab-saved" class="tab-panel" role="tabpanel" aria-label="Saved" tabindex="0">
+    <div id="savedList"></div>
+  </section>
+</main>
 
-    <section class="calendar-overview" aria-labelledby="calendarTitle">
-      <div class="section-head week-heading">
-        <div>
-          <h2 id="calendarTitle">The next seven days</h2>
-          <p class="calendar-intro">Activities within each day are in start-time order. Prices, travel and booking details are shown together; details that still need a call are marked clearly.</p>
-        </div>
-        <div class="verification-key" role="group" aria-label="Verification status">
-          <span class="entry-verify verified">Verified for this date</span>
-          <span class="entry-verify check">Call to check</span>
-        </div>
-      </div>
-      <div class="filter-dock" id="filterDock">
-        <div class="filter-dock-head">
-          <button class="filter-toggle" id="filterToggle" type="button" aria-expanded="false" aria-controls="filterPanel">Filters <span id="activeFilterSummary">All activities</span></button>
-          <button class="filter-reset" id="filterReset" type="button" disabled>Reset</button>
-        </div>
-        <div class="filter-panel" id="filterPanel" hidden>
-          <details class="filter-group" name="filter-sections" aria-label="Activity category">
-            <summary class="filter-group-head"><span class="filter-group-label">Activity category</span><span class="filter-group-current" data-current-for="category">All</span></summary>
-            <div class="filter-group-options">
-            <button class="week-filter" type="button" data-category-filter="all" aria-pressed="true">All</button>
-            <button class="week-filter" type="button" data-category-filter="soft-play" aria-pressed="false">Soft play</button>
-            <button class="week-filter" type="button" data-category-filter="swimming" aria-pressed="false">Swimming</button>
-            <button class="week-filter" type="button" data-category-filter="music-rhyme" aria-pressed="false">Music and rhyme</button>
-            <button class="week-filter" type="button" data-category-filter="libraries-story" aria-pressed="false">Libraries and story</button>
-            <button class="week-filter" type="button" data-category-filter="outdoors" aria-pressed="false">Outdoors</button>
-            <button class="week-filter" type="button" data-category-filter="special" aria-pressed="false">Special events</button>
-            </div>
-          </details>
-          <details class="filter-group" name="filter-sections" aria-label="Travel from the Marina area">
-            <summary class="filter-group-head"><span class="filter-group-label">Travel</span><span class="filter-group-current" data-current-for="travel">All travel</span></summary>
-            <div class="filter-group-options">
-            <button class="week-filter" type="button" data-travel-filter="all" aria-pressed="true">All travel</button>
-            <button class="week-filter" type="button" data-travel-filter="walk" aria-pressed="false">Walkable</button>
-            <button class="week-filter" type="button" data-travel-filter="transit" aria-pressed="false">Easy public transport</button>
-            <button class="week-filter" type="button" data-travel-filter="awkward" aria-pressed="false">Longer or needs a change</button>
-            <button class="week-filter" type="button" data-travel-filter="drive" aria-pressed="false">Best by car</button>
-            </div>
-          </details>
-          <details class="filter-group" name="filter-sections" aria-label="Town">
-            <summary class="filter-group-head"><span class="filter-group-label">Town</span><span class="filter-group-current" data-current-for="town">All towns</span></summary>
-            <div class="filter-group-options">
-            <button class="week-filter" type="button" data-town-filter="all" aria-pressed="true">All towns</button>
-            <button class="week-filter" type="button" data-town-filter="bexhill" aria-pressed="false">Bexhill</button>
-            <button class="week-filter" type="button" data-town-filter="hastings" aria-pressed="false">Hastings</button>
-            <button class="week-filter" type="button" data-town-filter="st-leonards" aria-pressed="false">St Leonards</button>
-            <button class="week-filter" type="button" data-town-filter="eastbourne" aria-pressed="false">Eastbourne</button>
-            <button class="week-filter" type="button" data-town-filter="battle" aria-pressed="false">Battle</button>
-            <button class="week-filter" type="button" data-town-filter="hailsham" aria-pressed="false">Hailsham</button>
-            <button class="week-filter" type="button" data-town-filter="villages" aria-pressed="false">Nearby villages</button>
-            </div>
-          </details>
-          <details class="filter-group" name="filter-sections" aria-label="Useful filters">
-            <summary class="filter-group-head"><span class="filter-group-label">More filters</span><span class="filter-group-current" data-current-for="toggles">Off</span></summary>
-            <div class="filter-group-options">
-            <button class="week-filter" type="button" data-toggle-filter="napSafe" aria-pressed="false">Nap-safe <span class="visually-explained">(ends by 12:00)</span></button>
-            <button class="week-filter" type="button" data-toggle-filter="free" aria-pressed="false">Free</button>
-            <button class="week-filter" type="button" data-toggle-filter="dropIn" aria-pressed="false">Drop-in, no booking needed</button>
-            </div>
-          </details>
-          <p class="filter-status" id="filterStatus" aria-live="polite">Showing all activities.</p>
-          <button class="filter-done" id="filterDone" type="button">Done</button>
-        </div>
-      </div>
-      <div class="week-snapshot" id="weekSnapshot"></div>
-    </section>
+<nav class="tab-bar" role="tablist" aria-label="Sections">
+  <button role="tab" data-tab="today" aria-selected="true" aria-controls="tab-today"><span class="tab-icon" aria-hidden="true">☀️</span>Today</button>
+  <button role="tab" data-tab="week" aria-selected="false" aria-controls="tab-week"><span class="tab-icon" aria-hidden="true">📅</span>Week</button>
+  <button role="tab" data-tab="ahead" aria-selected="false" aria-controls="tab-ahead"><span class="tab-icon" aria-hidden="true">🔭</span>Plan ahead</button>
+  <button role="tab" data-tab="saved" aria-selected="false" aria-controls="tab-saved"><span class="tab-icon" aria-hidden="true">☆</span>Saved</button>
+</nav>
 
-    <section aria-labelledby="thisWeekTitle">
-      <div class="section-head">
-        <h2 id="thisWeekTitle">All researched activities</h2>
-        <p id="resultCount">Open a category to compare full details</p>
-      </div>
-      <div class="category-sections" id="activityGrid"></div>
-    </section>
+<div class="scrim" id="scrim"></div>
 
-    <section class="callout-grid" aria-label="Planning ahead and free ideas">
-      <div class="panel">
-        <h2>Book ahead</h2>
-        <!-- Filled by renderBookAhead() from the activities that carry a bookAhead sentence.
-             Write the reason to book on the activity, not here: the dates come from the
-             week's calendar entries and the price, link and phone from the activity. -->
-        <div class="ahead-list" id="aheadList"></div>
-      </div>
-      <div class="panel alt">
-        <h2>Free fallbacks</h2>
-        <ul class="fallbacks">
-          <li><span class="travel-pill walk">Walkable</span> Seafront promenade from De La Warr Pavilion</li>
-          <li><span class="travel-pill walk">Walkable</span> Egerton Park playground</li>
-          <li><span class="travel-pill walk">Walkable</span> Bexhill Museum plus Egerton Park (museum: <span data-price-of="Bexhill Museum">Adult £4 · under-5 free</span>)</li>
-        </ul>
-      </div>
-    </section>
+<!-- DETAIL SHEET -->
+<div class="sheet" id="detailSheet" role="dialog" aria-modal="true" aria-labelledby="detailTitle" hidden>
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div id="detailContent"></div>
+</div>
 
-    <section class="later-strip" aria-labelledby="laterTitle">
-      <div class="section-head"><h2 id="laterTitle">Later this month</h2><p>Notable dates beyond this seven-day view</p></div>
-      <div class="later-lines" id="laterLines"></div>
-    </section>
-
-    <p class="source-line"><strong>Research checked 15 October 2026.</strong> Confirm items marked “Call to check” before setting out. <strong>Travel from the Marina area:</strong> the badges give the practical mode without publishing the home address. Weekend public transport can be less frequent, so red badges mark outings best kept for a day with the car.</p>
-    <p class="source-line">Church-run and SEND-specific groups are excluded. Secular classes that only hire a church hall and general stay-and-plays open to everyone remain eligible.</p>
-    <footer class="footer"><span id="rollingWeekRange">Rolling week: Mon 12 – Sun 18 Oct 2026.</span><span>Check availability before travelling where a card says to call.</span></footer>
-    </main>
+<!-- FILTER SHEET -->
+<div class="sheet" id="filterSheet" role="dialog" aria-modal="true" aria-labelledby="filterTitle" hidden>
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <h2 id="filterTitle">Filters</h2>
+  <div id="filterGroups"></div>
+  <div style="display:flex;gap:0.75rem;margin-top:1rem;">
+    <button class="btn-secondary" id="clearFilters" style="flex:1;">Clear all</button>
+    <button class="btn-primary" id="applyFilters" style="flex:2;">Show activities</button>
   </div>
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <button class="back-to-top" id="backToTop" type="button" hidden aria-label="Back to top">Top <span aria-hidden="true">↑</span></button>
+</div>
 
-  <script>
+<!-- SETTINGS SHEET -->
+<div class="sheet" id="settingsSheet" role="dialog" aria-modal="true" aria-labelledby="settingsTitle" hidden>
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <h2 id="settingsTitle">Settings and info</h2>
+  <div class="set-row"><span>Dark mode</span><button class="chip" id="themeToggle" aria-pressed="false">Off</button></div>
+  <div class="set-row"><span>Install app</span><button class="chip" id="installBtn">Install</button></div>
+  <div class="set-row"><span>Show older-kids events</span><button class="chip" id="ageToggle" aria-pressed="false">Off</button></div>
+  <h3 style="font-size:1rem;margin:1rem 0 0.5rem;">What the badges mean</h3>
+  <p style="font-size:0.8125rem;color:var(--muted);margin:0 0 0.5rem;">Travel: 🚶 walk · 🚌 bus · 🚗 car. Status: <span class="fact-status-confirmed">Confirmed</span> = checked for this date · <span class="fact-status-call">Call first</span> = phone to confirm · <span class="fact-status-unconfirmed">grey</span> = price unconfirmed.</p>
+  <p style="font-size:0.8125rem;color:var(--muted);" id="checkedLine"></p>
+</div>
 
-    (function () {
-      const themeToggle = document.getElementById('themeToggle');
-      const themeColor = document.querySelector('meta[name="theme-color"]');
-      // Light stays the default; a reader who picks dark keeps it on their next visit.
-      let activeTheme = document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+<noscript><p style="padding:1rem;">This page needs JavaScript to show activities.</p></noscript>
 
-      function applyTheme(theme) {
-        activeTheme = theme;
-        document.documentElement.dataset.theme = theme;
-        themeToggle.setAttribute('aria-pressed', String(theme === 'dark'));
-        // The installed app's status bar follows the page instead of staying blue.
-        themeColor.setAttribute('content', theme === 'dark' ? '#071923' : '#0e6e8c');
-      }
-
-      applyTheme(activeTheme);
-      themeToggle.addEventListener('click', function () {
-        applyTheme(activeTheme === 'dark' ? 'light' : 'dark');
-        try { localStorage.setItem('fa-theme', activeTheme); } catch (e) {}
-      });
-
-      // Lets the installed app open with the last copy it saw when there is
-      // little or no signal; otherwise every launch fetches the latest page.
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function () {
-          navigator.serviceWorker.register('service-worker.js').catch(function () {});
-        });
-      }
-
-      const installApp = document.getElementById('installApp');
-      const installHint = document.getElementById('installHint');
-      const installPrompt = document.getElementById('installPrompt');
-      const installPromptText = document.getElementById('installPromptText');
-      const installPromptAction = document.getElementById('installPromptAction');
-      const installPromptClose = document.getElementById('installPromptClose');
-      const standalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
-      const isiOS = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-      const isAndroid = /android/i.test(navigator.userAgent);
-      let deferredInstallPrompt = null;
-
-      function updateInstallHelp() {
-        if (isiOS) {
-          installPromptText.textContent = 'In Safari, tap Share, choose Add to Home Screen, then tap Add.';
-        } else if (isAndroid && !deferredInstallPrompt) {
-          installPromptText.textContent = 'Tap Install app. If no window appears, open the browser menu (⋮) and choose Install app or Add to Home screen.';
-        } else if (!deferredInstallPrompt) {
-          installPromptText.textContent = 'On Android, use Install app in the browser menu. On iPhone, tap Share, then Add to Home Screen.';
-        } else {
-          installPromptText.textContent = 'Install Family Activities on your home screen. It opens the latest version, or the last one you saw when there is little or no signal.';
-        }
-      }
-
-      const installDismissKey = 'fa-install-dismissed';
-      function dismissedRecently() {
-        try { return Date.now() - Number(localStorage.getItem(installDismissKey) || 0) < 14 * 86400000; } catch (e) { return false; }
-      }
-
-      function showInstallPrompt() {
-        if (standalone) return;
-        updateInstallHelp();
-        installPrompt.hidden = false;
-      }
-      function offerInstallPrompt() {
-        if (!dismissedRecently()) showInstallPrompt();
-      }
-
-      if (!standalone) {
-        installApp.hidden = false;
-        if (isiOS) window.setTimeout(offerInstallPrompt, 450);
-      }
-
-      window.addEventListener('beforeinstallprompt', function (event) {
-        event.preventDefault();
-        if (standalone) return;
-        deferredInstallPrompt = event;
-        installApp.hidden = false;
-        offerInstallPrompt();
-      });
-
-      installApp.addEventListener('click', showInstallPrompt);
-      installPromptClose.addEventListener('click', function () {
-        installPrompt.hidden = true;
-        try { localStorage.setItem(installDismissKey, String(Date.now())); } catch (e) {}
-      });
-      installPromptAction.addEventListener('click', function () {
-        if (!deferredInstallPrompt) {
-          updateInstallHelp();
-          installHint.textContent = isiOS ? 'On iPhone: tap Share, then Add to Home Screen.' : 'Use the browser menu, then tap Install app or Add to Home screen.';
-          installHint.hidden = false;
-          return;
-        }
-        deferredInstallPrompt.prompt();
-        deferredInstallPrompt.userChoice.then(function (choice) {
-          deferredInstallPrompt = null;
-          if (choice.outcome === 'accepted') {
-            installPrompt.hidden = true;
-            installApp.hidden = true;
-            installHint.hidden = true;
-          } else {
-            updateInstallHelp();
-          }
-        });
-      });
-
-      window.addEventListener('appinstalled', function () {
-        deferredInstallPrompt = null;
-        installPrompt.hidden = true;
-        installApp.hidden = true;
-        installHint.hidden = true;
-      });
-
-      const calendarConfig = { weekDays: 8 };
-
-      // Dated snapshot shared by the coming-week and rolling-month views.
-      
-      function appendSemanticClockText(container, text, dateKey) {
-        const value = String(text);
-        const clockPattern = /\b([01]?\d|2[0-3]):([0-5]\d)\b/g;
-        let cursor = 0;
-        let match;
-        while ((match = clockPattern.exec(value))) {
-          if (match.index > cursor) container.appendChild(document.createTextNode(value.slice(cursor, match.index)));
-          const clock = document.createElement('time');
-          const hours = String(Number(match[1])).padStart(2, '0');
-          const minutes = match[2];
-          clock.dateTime = (dateKey ? dateKey + 'T' : '') + hours + ':' + minutes;
-          clock.textContent = match[0];
-          container.appendChild(clock);
-          cursor = match.index + match[0].length;
-        }
-        if (cursor < value.length) container.appendChild(document.createTextNode(value.slice(cursor)));
-        if (!container.childNodes.length) container.textContent = value;
-      }
-      function semanticizeClockText(root) {
-        const nodes = [];
-        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
-          acceptNode: function (node) {
-            if (!/\b(?:[01]?\d|2[0-3]):[0-5]\d\b/.test(node.nodeValue || '')) return NodeFilter.FILTER_REJECT;
-            return node.parentElement && node.parentElement.closest('time') ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
-          }
-        });
-        while (walker.nextNode()) nodes.push(walker.currentNode);
-        nodes.forEach(function (node) {
-          const fragment = document.createDocumentFragment();
-          appendSemanticClockText(fragment, node.nodeValue);
-          node.parentNode.replaceChild(fragment, node);
-        });
-      }
-      
-
-      function startMinutes(value) {
-        const match = String(value).match(/^(\d{1,2})(?::(\d{2}))?/);
-        return match ? Number(match[1]) * 60 + Number(match[2] || 0) : 2000;
-      }
-
-      const calendarMonths = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-      const calendarDays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-
-      function dateFromKey(key) { return new Date(key + 'T12:00:00'); }
-      function fullCalendarDate(key) {
-        const date = dateFromKey(key);
-        return calendarDays[date.getDay()] + ' ' + date.getDate() + ' ' + calendarMonths[date.getMonth()];
-      }
-      function shortCalendarDate(key) {
-        const date = dateFromKey(key);
-        return { day: calendarDays[date.getDay()].slice(0, 3), date: date.getDate(), month: calendarMonths[date.getMonth()].slice(0, 3) };
-      }
-      function entryStatusClass(entry) { return entry.verified ? '' : ' check'; }
-      function activityOptionCount(entries) {
-        return entries.filter(Boolean).length;
-      }
-
-      
-
-      const newlyAddedOn = {
-        'Tots Play Social Tots':'2026-10-09',
-        'Freedom Leisure Discovery Day':'2026-10-09',
-        'Hastings Aquarium':'2026-10-09',
-        'Bodiam Castle weekend':'2026-10-09',
-        'Hollington Library Rhymetime':'2026-10-10',
-        'Aquababes 0–2 years':'2026-10-10',
-        'Toddler Splash · Hailsham Leisure Centre':'2026-10-10',
-        'Tibbs Farm Pumpkin Fest':'2026-10-10',
-        'Scotney Castle Monsters around the Moat':'2026-10-10',
-        'Singing and Music Group 0–2':'2026-10-10',
-        'Battle Storytime':'2026-10-10',
-        '“Animals!” children’s show':'2026-10-10',
-        'Parent & Toddler Swim, Bexhill Leisure Pool':'2026-10-11',
-        'Hastings Museum Bayeux short-films trail':'2026-10-11',
-        'The Baby Fayre Hastings':'2026-10-11',
-        'Baby Feeding Group':'2026-10-10',
-        'Tots Play Family Tots':'2026-10-12',
-        'Petal & Pop role play':'2026-10-12',
-        'Polegate Miniature Railway':'2026-10-12',
-        'Hastings Town 0–2 Stay and Play':'2026-10-15',
-        'Pevensey Castle':'2026-10-15',
-        'DLWP Relaxed Morning Exhibition Visits':'2026-10-15',
-        'Battle Farmers’ Market':'2026-10-15',
-        'Hastings Library Rhymetime':'2026-10-15'
-      };
-      function londonTodayKey(instant) {
-        const parts = new Intl.DateTimeFormat('en-GB', {timeZone:'Europe/London', year:'numeric', month:'2-digit', day:'2-digit'}).formatToParts(instant || new Date());
-        const values = {}; parts.forEach(function (part) { if (part.type !== 'literal') values[part.type] = part.value; });
-        return values.year + '-' + values.month + '-' + values.day;
-      }
-      const pageTodayKey = londonTodayKey();
-
+<script>
 const ACTIVITIES = [
   {id:'tots-play-social-tots',title:'Tots Play Social Tots',category:'music',label:'MUSIC &amp; MOVEMENT · BOOK',venue:'Totsy’s Treehouse',address:'Totsy’s Treehouse, Unit 2 Keymer Buildings, Victoria Road, Bexhill TN39 3PD',town:'bexhill',price_child:9,price_adult:0,price_note:'£9–£59.50',under2_free:false,age_min_m:8,age_max_m:24,url:'https://www.totsplay.co.uk/bexhill',action:'Book',phone:'',source:'https://www.totsplay.co.uk/bexhill',verified:'2026-10-13',note:'For ages 8 months to 2 years. Fri/Tue 09:45 to 10:30; Mon 11:00 to 11:45. Booking required; no drop-ins. Mon to Fri only, no Saturday sessions. Sources: totsplay.co.uk and Happity, checked 13 Oct.',image:'',alt:'',travel:'About 25 to 30 minutes on foot from the seafront, or use a local bus.',travel_mode:'walk',travel_label:'Walkable',sessions:[{date:'2026-10-16',start:'09:45',end:'10:30'},{date:'2026-10-19',start:'11:00',end:'11:45'},{date:'2026-10-20',start:'09:45',end:'10:30'}],later:null,bookAhead:'Booking required; no drop-ins. You can also call 07739 362568.'},
   {id:'fort-fun-soft-play',title:'Fort Fun soft play',category:'play',label:'SOFT PLAY',venue:'Fort Fun',address:'Royal Parade, Eastbourne BN22 7LQ',town:'eastbourne',price_child:6.75,price_adult:2,price_note:'£6.75 (12–24 months) · £2 adults',under2_free:false,age_min_m:12,age_max_m:24,url:'https://www.fort-fun.co.uk/softplay.html',action:'Details',phone:'',source:'https://www.fort-fun.co.uk/softplay.html',verified:'2026-10-15',note:'Open Fri–Sun 10:00–18:00, verified on the venue site 15 Oct; venue site lists 12–24 months £6.75 and adults £2.00. No booking; just turn up.',image:'images/fort-fun.webp',alt:'Children playing in the soft-play area at Fort Fun',travel:'Stagecoach 98/99 from Bexhill to Eastbourne in about 40 minutes; seafront location.',travel_mode:'transit',travel_label:'Coast bus',sessions:[{date:'2026-10-16',start:'10:00',end:'18:00'},{date:'2026-10-17',start:'10:00',end:'18:00'},{date:'2026-10-18',start:'10:00',end:'18:00'}],later:null},
@@ -1420,7 +521,7 @@ const ACTIVITIES = [
   {id:'cherry-blossom-playcentre-open-play',title:'Cherry Blossom Playcentre open play',category:'play',label:'DROP-IN PLAY · BOOK',venue:'Cherry Blossom Playcentre',address:'8 London Road, Bexhill-on-Sea TN39 3JU · per provider booking page',town:'bexhill',price_child:0,price_adult:0,price_note:'£6 Wed booked online · £5 Fiver Fridays · Mon price unpublished',under2_free:false,age_min_m:0,age_max_m:60,url:'https://birkdale-playcentre.pembee.app',action:'Book',phone:'',source:'https://birkdale-playcentre.pembee.app',verified:'2026-10-15',note:'Rebranded Cherry Blossom Playcentre (formerly Birkdale Playcentre) at 8 London Road. Wed open play £6 booked online; Fiver Fridays £5 booked online; Monday price unpublished, call 01424 212545. Book via the provider booking page. Sources: birkdale-playcentre.pembee.app and venue site, checked 15 Oct.',image:'',alt:'',travel:'About 25 to 30 minutes on foot from the seafront, or take a short bus ride.',travel_mode:'walk',travel_label:'Walkable',sessions:[{date:'2026-10-16',start:'09:00',end:'10:30'},{date:'2026-10-16',start:'10:30',end:'12:00'},{date:'2026-10-16',start:'13:00',end:'14:30'},{date:'2026-10-19',start:'09:00',end:'15:00'},{date:'2026-10-20',start:'',end:'',time_text:'Timed 1.5h slots'},{date:'2026-10-21',start:'',end:'',time_text:'Timed 1.5h slots'}],later:{date:'2026-10-28',date_end:'2026-10-28',time_text:'Wed 28 Oct · 09:30 / 11:30',title:'Cherry Blossom Halloween Party',href:'https://birkdale-playcentre.pembee.app/',copy:'Cherry Blossom Playcentre, 8 London Road, Bexhill TN39 3JU (venue renamed from Birkdale Playcentre; booking at the legacy pembee subdomain) · sessions 9:30–11:00 and 11:30–13:00 · bookable on the provider booking page 13 Oct · price unpublished · call 01424 212545'},bookAhead:'Book via the provider booking page; prices differ by day.'},
   {id:'bexhill-library-rhymetime',title:'Bexhill Library Rhymetime',category:'library',label:'LIBRARY · RHYMETIME',venue:'Bexhill Library',address:'Bexhill Library, Western Road, Bexhill TN40 1DY',town:'bexhill',price_child:0,price_adult:0,price_note:'',under2_free:true,age_min_m:0,age_max_m:60,url:'',action:'',phone:'',source:'https://eastsussex.spydus.co.uk/cgi-bin/spydus.exe/ENQ/WPAC/EVSESENQ?SETLVL=&RNI=1743235',verified:'2026-10-10',note:'Spydus weekly series verified 10 Oct; free, no booking, nap-safe.',image:'images/bexhill-library.webp',alt:'Brick frontage and entrance of Bexhill Library',travel:'About 15 minutes on foot.',travel_mode:'walk',travel_label:'Walkable',sessions:[{date:'2026-10-20',start:'10:30',end:'11:00'}],later:null},
   {id:'bexhill-library-storytime',title:'Bexhill Library Storytime',category:'library',label:'LIBRARY · STORYTIME',venue:'Bexhill Library',address:'Bexhill Library, Western Road, Bexhill TN40 1DY',town:'bexhill',price_child:0,price_adult:0,price_note:'',under2_free:true,age_min_m:0,age_max_m:60,url:'',action:'',phone:'',source:'https://eastsussex.spydus.co.uk/cgi-bin/spydus.exe/ENQ/WPAC/EVSESENQ?SETLVL=&RNI=1746008',verified:'2026-10-09',note:'Series confirmed live on Spydus 9 Oct; dated occurrence carried from the 8 Oct check.',image:'images/bexhill-library.webp',alt:'Brick frontage and entrance of Bexhill Library',travel:'About 15 minutes on foot.',travel_mode:'walk',travel_label:'Walkable',recurrence:{freq:'weekly',weekday:4,start:'11:15',end:'11:45',until:'2026-12-31'},later:null},
-  {id:'aquababes-0-2-years',title:'Aquababes 0–2 years',category:'sports',label:'SWIMMING · CHECK DETAILS',venue:'Hastings',address:'Hastings · venue unpublished',town:'hastings',price_child:0,price_adult:0,price_note:'Price unpublished',under2_free:false,age_min_m:0,age_max_m:24,url:'tel:01323463204',action:'Call',phone:'01323 463204',source:'https://familyhubs.eastsussex.gov.uk/activities/hastings',verified:'',note:'Listed on the official Family Hubs Hastings page: 0 to 2 years, Thursday mornings, term-time only. Exact time, venue and price are unpublished. Call 01323 463204 or email esht.hv-duty@nhs.net. Source: familyhubs.eastsussex.gov.uk, checked 10 Oct.',image:'',alt:'',travel:'Stagecoach 98/99 from Bexhill to Hastings in about 25 minutes; call to confirm the venue.',travel_mode:'transit',travel_label:'Coast bus',sessions:[{date:'2026-10-15',start:'',end:'',time_text:'Thursday morning · exact time unpublished'},{date:'2026-10-22',start:'',end:'',time_text:'Thursday morning · exact time unpublished'}],later:null},
+  {id:'aquababes-0-2-years',title:'Aquababes 0–2 years',category:'sports',label:'SWIMMING · CHECK DETAILS',venue:'Hastings',address:'Hastings · venue unpublished',town:'hastings',price_child:-1,price_adult:0,price_note:'Price unpublished',under2_free:false,age_min_m:0,age_max_m:24,url:'tel:01323463204',action:'Call',phone:'01323 463204',source:'https://familyhubs.eastsussex.gov.uk/activities/hastings',verified:'',note:'Listed on the official Family Hubs Hastings page: 0 to 2 years, Thursday mornings, term-time only. Exact time, venue and price are unpublished. Call 01323 463204 or email esht.hv-duty@nhs.net. Source: familyhubs.eastsussex.gov.uk, checked 10 Oct.',image:'',alt:'',travel:'Stagecoach 98/99 from Bexhill to Hastings in about 25 minutes; call to confirm the venue.',travel_mode:'transit',travel_label:'Coast bus',sessions:[{date:'2026-10-15',start:'',end:'',time_text:'Thursday morning · exact time unpublished'},{date:'2026-10-22',start:'',end:'',time_text:'Thursday morning · exact time unpublished'}],later:null},
   {id:'parent-toddler-swim-bexhill-leisure-pool',title:'Parent & Toddler Swim, Bexhill Leisure Pool',category:'sports',label:'SWIMMING · CLOSED',venue:'Bexhill Leisure Pool',address:'Bexhill Leisure Pool, Hastings Road, Bexhill-on-Sea',town:'bexhill',price_child:6.7,price_adult:0,price_note:'£6.70 non-member (when running)',under2_free:false,age_min_m:0,age_max_m:60,url:'https://www.freedom-leisure.co.uk/centres/bexhill-leisure-pool/latest-news/essential-improvement-works-at-bexhill-leisure-centre-and-bexhill-leisure-pool/',action:'Details',phone:'',source:'https://www.freedom-leisure.co.uk/centres/bexhill-leisure-pool/latest-news/essential-improvement-works-at-bexhill-leisure-centre-and-bexhill-leisure-pool/',verified:'2026-10-15',note:'Closed 1 Sep 2026 for 12–16 weeks of improvement works; reopening in the New Year. No swimming here this window: try Hailsham Toddler Splash or Blue Lagoon Eastbourne. Source: Freedom Leisure news page, checked 15 Oct.',image:'',alt:'',travel:'Local journey within Bexhill.',travel_mode:'transit',travel_label:'Local Bexhill',sessions:[],later:null,calendar:true},
   {id:'petal-pop-role-play',title:'Petal & Pop role play',category:'play',label:'ROLE PLAY · BOOK',venue:'BodiBlossom Studio',address:'BodiBlossom Studio, 15b Maple Road, Eastbourne BN23 6NY',town:'eastbourne',price_child:7,price_adult:0,price_note:'£7 (1–3yrs) · £3 (6–12m)',under2_free:false,age_min_m:0,age_max_m:60,url:'https://www.bodiblossom.com/booking-calendar/mini-sussex-pop-up-role-play-thursday',action:'Book',phone:'',source:'https://www.bodiblossom.com/booking-calendar/mini-sussex-pop-up-role-play-thursday',verified:'2026-10-13',note:'Mini Sussex pop-up role play for ages 0 to 5. Under-6 months and adults go free. Regular Thursdays verified on the provider page 13 Oct. Book via the provider’s booking page. Source: petalandpop.co.uk.',image:'',alt:'',travel:'Train from Bexhill to Eastbourne in about 25 to 30 minutes, then a local connection.',travel_mode:'transit',travel_label:'Train to Eastbourne',recurrence:{freq:'weekly',weekday:4,start:'10:30',end:'12:00',until:'2026-12-31'},later:null},
   {id:'pevensey-castle',title:'Pevensey Castle',category:'events',label:'CASTLE · ENGLISH HERITAGE · NEW',venue:'Pevensey Castle',address:'English Heritage, Castle Road, Pevensey BN24 5LE',town:'villages',price_child:0,price_adult:10,price_note:'Under-5s free · adult £10 (£8.50 advance)',under2_free:true,age_min_m:0,age_max_m:60,url:'https://www.english-heritage.org.uk/visit/places/pevensey-castle/prices-and-opening-times/',action:'Plan visit',phone:'',source:'https://www.english-heritage.org.uk/visit/places/pevensey-castle/prices-and-opening-times/',verified:'2026-10-15',note:'Open Wed–Sun 10:00–17:00; closed Mon/Tue. Under-5s free; adult £10 on the day / £8.50 in advance (date bands may vary). Book Bunker family event Sat 17–Sun 18, 10:00–16:00. Sunday 99 bus runs reduced: check bustimes.org. Source: english-heritage.org.uk prices-and-opening-times page, checked 15 Oct.',image:'images/pevensey-castle.webp',alt:'Medieval stone walls and moat of Pevensey Castle on a sunny day',travel:'Stagecoach 99 (“The Wave”) from Bexhill to Pevensey, about 20 to 25 minutes.',travel_mode:'transit',travel_label:'Stagecoach 99',sessions:[{date:'2026-10-15',start:'10:00',end:'17:00'},{date:'2026-10-17',start:'10:00',end:'17:00'},{date:'2026-10-17',start:'10:00',end:'16:00'},{date:'2026-10-18',start:'10:00',end:'17:00'},{date:'2026-10-18',start:'10:00',end:'16:00'},{date:'2026-10-21',start:'10:00',end:'17:00'},{date:'2026-10-22',start:'10:00',end:'17:00'}],later:null,calendar:true},
@@ -1490,919 +591,661 @@ const ACTIVITIES = [
   {id:'wadhurst-bonfire-and-fireworks',title:'Wadhurst Bonfire and Fireworks',category:'events',label:'EVENT',venue:'Stone Cross Farm, Wadhurst TN5 6LS',address:'Stone Cross Farm, Wadhurst TN5 6LS',town:'villages',price_child:0,price_adult:0,price_note:'Stone Cross Farm, Wadhurst TN5 6LS · Adult £10–£12 / Child 6–16 £5 / under-5s free · TicketTailor · gates 5.30pm, bonfire 6.30pm, fireworks 7.30pm · verified 14 Oct',under2_free:false,age_min_m:0,age_max_m:60,url:'https://www.tickettailor.com/events/wadhurstwarriors/2397904',action:'Details',phone:'',source:'https://www.tickettailor.com/events/wadhurstwarriors/2397904',verified:'',note:'Stone Cross Farm, Wadhurst TN5 6LS · Adult £10–£12 / Child 6–16 £5 / under-5s free · TicketTailor · gates 5.30pm, bonfire 6.30pm, fireworks 7.30pm · verified 14 Oct',image:'',alt:'',travel:'',travel_mode:'drive',travel_label:'Best by car',sessions:[],later:{date:'2026-11-07',date_end:'2026-11-07',time_text:'Sat 7 Nov · 17:30–21:00',title:'Wadhurst Bonfire and Fireworks',href:'https://www.tickettailor.com/events/wadhurstwarriors/2397904',copy:'Stone Cross Farm, Wadhurst TN5 6LS · Adult £10–£12 / Child 6–16 £5 / under-5s free · TicketTailor · gates 5.30pm, bonfire 6.30pm, fireworks 7.30pm · verified 14 Oct'}},
   {id:'christmas-gift-market',title:'Christmas Gift Market',category:'events',label:'EVENT',venue:'The Manor Barn & Gardens, 4 De La Warr Road, Bexhill TN40 2JA',address:'The Manor Barn & Gardens, 4 De La Warr Road, Bexhill TN40 2JA',town:'villages',price_child:0,price_adult:0,price_note:'The Manor Barn & Gardens, 4 De La Warr Road, Bexhill TN40 2JA · free entry; paid car park · Eventbrite · verified',under2_free:false,age_min_m:0,age_max_m:60,url:'https://www.eventbrite.com/e/christmas-gift-market-tickets-1988028021328',action:'Details',phone:'',source:'https://www.eventbrite.com/e/christmas-gift-market-tickets-1988028021328',verified:'',note:'The Manor Barn & Gardens, 4 De La Warr Road, Bexhill TN40 2JA · free entry; paid car park · Eventbrite · verified',image:'',alt:'',travel:'',travel_mode:'drive',travel_label:'Best by car',sessions:[],later:{date:'2026-11-07',date_end:'2026-11-08',time_text:'7–8 Nov · 10:30–14:30',title:'Christmas Gift Market',href:'https://www.eventbrite.com/e/christmas-gift-market-tickets-1988028021328',copy:'The Manor Barn & Gardens, 4 De La Warr Road, Bexhill TN40 2JA · free entry; paid car park · Eventbrite · verified'}}
 ];
-
-/* ---- Single-source data layer: ACTIVITIES is the only store.
-   Cards, week view and later strip are all generated from it. ---- */
-
-function nextDateKey(key) {
-  const d = dateFromKey(key);
-  d.setDate(d.getDate() + 1);
-  const m = String(d.getMonth() + 1).padStart(2, '0');
-  const day = String(d.getDate()).padStart(2, '0');
-  return d.getFullYear() + '-' + m + '-' + day;
+</script>
+<script>
+'use strict';
+/* ============ Date utilities ============ */
+function todayKey() {
+  const p = new Intl.DateTimeFormat('en-CA', {timeZone:'Europe/London', year:'numeric', month:'2-digit', day:'2-digit'}).formatToParts(new Date());
+  const o = {}; p.forEach(x => o[x.type] = x.value);
+  return `${o.year}-${o.month}-${o.day}`;
 }
+function nowHM() {
+  const p = new Intl.DateTimeFormat('en-GB', {timeZone:'Europe/London', hour:'2-digit', minute:'2-digit', hour12:false}).formatToParts(new Date());
+  const o = {}; p.forEach(x => o[x.type] = x.value);
+  return `${o.hour}:${o.minute}`;
+}
+function addDays(key, n) {
+  const d = new Date(key + 'T12:00:00');
+  d.setDate(d.getDate() + n);
+  return d.toISOString().slice(0, 10);
+}
+function dateLabel(key) {
+  const d = new Date(key + 'T12:00:00');
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return { dow: days[d.getDay()], dom: d.getDate(), mon: months[d.getMonth()],
+           full: `${days[d.getDay()]} ${d.getDate()} ${months[d.getMonth()]}` };
+}
+function hmToMin(hm) { if (!hm) return null; const [h, m] = hm.split(':').map(Number); return h * 60 + m; }
 
+/* ============ Session expansion ============ */
 function expandSessions(a, fromKey, toKey) {
   const out = [];
-  const push = function (date, start, end) {
-    if (!date || date < fromKey || date > toKey || date < pageTodayKey) return;
-    out.push({ date: date, start: start || '', end: end || '' });
-  };
-  (a.sessions || []).forEach(function (s) { push(s.date, s.start, s.end); });
+  (a.sessions || []).forEach(s => {
+    if (s.date >= fromKey && s.date <= toKey) out.push({ date: s.date, start: s.start || '', end: s.end || '', time_text: s.time_text || '' });
+  });
   const r = a.recurrence;
   if (r && r.freq === 'weekly') {
-    const end = r.until && r.until < toKey ? r.until : toKey;
-    let d = fromKey, guard = 0;
-    while (d <= end && guard++ < 500) {
-      if (dateFromKey(d).getDay() === r.weekday && (r.skip || []).indexOf(d) === -1) {
-        push(d, r.start, r.end);
+    let d = fromKey;
+    const until = r.until || toKey;
+    const endKey = until < toKey ? until : toKey;
+    while (d <= endKey) {
+      const dt = new Date(d + 'T12:00:00');
+      if (dt.getDay() === r.weekday && !(r.skip || []).includes(d)) {
+        out.push({ date: d, start: r.start || '', end: r.end || '', time_text: '' });
       }
-      d = nextDateKey(d);
+      d = addDays(d, 1);
     }
   }
   return out;
 }
-
-function fmtPrice(n) {
-  return (Math.round(n * 100) / 100).toString();
-}
-
-function priceText(a) {
-  if (a.price_note) return a.price_note;
-  const parts = [];
-  if (a.price_child > 0) parts.push('£' + fmtPrice(a.price_child) + ' per child');
-  if (a.price_adult > 0) parts.push('£' + fmtPrice(a.price_adult) + ' adult');
-  if (a.under2_free && a.price_child > 0) parts.push('under-2s free');
-  if (!parts.length) return 'Free';
-  return parts.join(' · ');
-}
-
 function sessionTimeText(s) {
   if (s.time_text) return s.time_text;
   if (s.start && s.end) return s.start + '–' + s.end;
   if (s.start) return s.start;
   return 'Time tbc';
 }
-
-/* Nap window 12:00–14:00. Nap-safe = ends by 12:00 or starts at/after 14:00. */
-function isNapSafe(start, end) {
-  if (!start || !end) return false;
-  return end <= '12:00' || start >= '14:00';
+function isNapSafe(s) {
+  if (!s.start || !s.end) return false;
+  return s.end <= '12:00' || s.start >= '14:00';
+}
+function clashesNap(s) {
+  if (!s.start) return false;
+  const st = hmToMin(s.start), en = s.end ? hmToMin(s.end) : null;
+  // clashes if it overlaps 12:00-14:00
+  if (st < 14 * 60 && (en === null || en > 12 * 60)) return true;
+  return false;
+}
+function isFinished(dateKey, s, tk, hm) {
+  if (dateKey < tk) return true;
+  if (dateKey > tk) return false;
+  if (!s.end) return false;
+  return s.end <= hm;
 }
 
-function sessionOverlapsNap(start, end) {
-  if (!start || !end) return true;
-  return start < '14:00' && end > '12:00';
+/* ============ Helpers ============ */
+const TOWN_NAMES = { bexhill:'Bexhill', hastings:'Hastings', 'st-leonards':'St Leonards', eastbourne:'Eastbourne', battle:'Battle', hailsham:'Hailsham', villages:'Nearby villages' };
+function townName(t) { return TOWN_NAMES[t] || t; }
+function priceText(a) {
+  if (a.price_child === 0) return 'Free';
+  if (a.price_child > 0) return '£' + a.price_child;
+  return '';
 }
-
-function isFree(a) {
-  return a.price_child === 0;
-}
-
-/* Next upcoming session text for cards, e.g. "Tue 20 Oct · 10:30–11:00". */
-function nextSessionText(a) {
-  const ss = expandSessions(a, pageTodayKey, '2099-12-31')
-    .sort(function (x, y) {
-      if (x.date !== y.date) return x.date < y.date ? -1 : 1;
-      return (x.start || '') < (y.start || '') ? -1 : 1;
-    });
-  if (!ss.length) return 'No upcoming sessions in the researched window';
-  const s = ss[0];
-  const parts = shortCalendarDate(s.date);
-  return parts.day + ' ' + parts.date + ' ' + parts.month + ' · ' + sessionTimeText(s);
-}
-
-/* Compatibility: the card renderer reads a.price / a.when / a.where / a.travel / a.verified. */
-ACTIVITIES.forEach(function (a) {
-  a.price = priceText(a);
-  a.when = nextSessionText(a);
-  a.where = a.address;
-  a.travel = [a.travel_mode, a.travel_label, a.travel];
-  a._verifiedDate = a.verified;
-  a.verified = a.verified !== '';
-  a.cat = a.category;
-});
-/* Legacy alias: existing render code uses `activities`. */
-const activities = ACTIVITIES;
-
-/* Virtual calendarData generated from ACTIVITIES (replaces the hand-written one). */
-const calendarData = (function buildCalendarData() {
-  const data = {};
-  let d = pageTodayKey, guard = 0;
-  while (guard++ < 8) {
-    data[d] = [];
-    d = nextDateKey(d);
+function priceLong(a) {
+  const parts = [];
+  if (a.price_child === 0) {
+    parts.push('Free');
+    // Don't append "unpublished" note if price is confirmed free
+    if (a.price_note && !/unpublished/i.test(a.price_note)) parts.push(a.price_note);
   }
-  const keys = Object.keys(data).sort();
-  const fromKey = keys[0], toKey = keys[keys.length - 1];
-  ACTIVITIES.forEach(function (a) {
-    expandSessions(a, fromKey, toKey).forEach(function (s) {
-      data[s.date].push({
-        time: sessionTimeText(s),
-        activity: a.title,
-        venue: a.venue,
-        price: priceText(a),
-        verified: a.verified,
-        napOverlap: sessionOverlapsNap(s.start, s.end),
-        status: a.verified ? 'Verified' : 'Check before going',
-        _activity: a,
-        _date: s.date,
-        _start: s.start,
-        _end: s.end
-      });
+  else if (a.price_child > 0) {
+    parts.push('£' + a.price_child + ' per child');
+    if (a.price_adult > 0) parts.push('£' + a.price_adult + ' adult');
+    else parts.push(a.under2_free ? 'under-2s free' : 'adults free');
+    if (a.price_note) parts.push(a.price_note);
+  }
+  else {
+    parts.push('Price unconfirmed');
+    if (a.price_note) parts.push(a.price_note);
+  }
+  return parts.join(' · ');
+}
+// Status: green=confirmed, amber=call first, grey=unconfirmed price
+function activityStatus(a) {
+  if (a.price_child === -1) return { key: 'unconfirmed', label: 'Price unconfirmed', cls: 'fact-status-unconfirmed' };
+  if (!a.verified) return { key: 'call', label: 'Call first', cls: 'fact-status-call' };
+  return { key: 'confirmed', label: 'Confirmed', cls: 'fact-status-confirmed' };
+}
+function travelFact(a) {
+  const m = a.travel_mode;
+  const icon = m === 'walk' ? '🚶' : m === 'transit' ? '🚌' : '🚗';
+  // Extract minutes from travel text
+  const mm = (a.travel || '').match(/(\d+)\s*(?:-|–)?\s*(\d+)?\s*min/);
+  const mins = mm ? (mm[2] ? mm[1] + '–' + mm[2] : mm[1]) + ' min' : (m === 'walk' ? 'walk' : m === 'transit' ? 'bus' : 'car');
+  return { icon, text: mins };
+}
+function ageFit(a) {
+  // Son is 23 months; returns {ok, label}
+  const max = a.age_max_m;
+  if (max <= 36) return { ok: true, label: `Ages 0–${Math.round(max / 12)} ✓` };
+  if (max <= 60) return { ok: true, label: `Ages 0–${Math.round(max / 12)} ✓` };
+  return { ok: false, label: `Ages 5+ · too old for now` };
+}
+function bookingStatus(a) {
+  const t = (a.bookAhead || '').toLowerCase();
+  const n = (a.note || '').toLowerCase();
+  if (/book ahead|booking required|pre-book|advance booking/.test(t + ' ' + n)) return 'Book ahead';
+  if (/drop-in|drop in|no booking/.test(t + ' ' + n)) return 'Drop-in';
+  if (!a.verified || a.phone) return 'Call first';
+  return '';
+}
+
+/* ============ Starred (localStorage) ============ */
+let starred = {};
+try { starred = JSON.parse(localStorage.getItem('bex-starred') || '{}'); } catch (e) { starred = {}; }
+function isStarred(id) { return !!starred[id]; }
+function toggleStar(id) {
+  if (starred[id]) delete starred[id]; else starred[id] = 1;
+  try { localStorage.setItem('bex-starred', JSON.stringify(starred)); } catch (e) {}
+}
+
+/* ============ Filters ============ */
+const filters = { freeU2: false, walkable: false, napSafe: false, dropIn: false, indoor: false, needsBooking: false, category: 'all', town: 'all', travel: 'all', showOlder: false };
+function sessionMatches(s, a) {
+  if (filters.freeU2 && !(a.under2_free || a.price_child === 0)) return false;
+  if (filters.walkable && a.travel_mode !== 'walk') return false;
+  if (filters.napSafe && !isNapSafe(s)) return false;
+  if (filters.dropIn && bookingStatus(a) !== 'Drop-in') return false;
+  if (filters.needsBooking && bookingStatus(a) !== 'Book ahead') return false;
+  if (filters.category !== 'all' && a.category !== filters.category) return false;
+  if (filters.town !== 'all' && a.town !== filters.town) return false;
+  if (filters.travel !== 'all' && a.travel_mode !== filters.travel) return false;
+  if (!filters.showOlder && !ageFit(a).ok) return false;
+  return true;
+}
+function activeFilterCount() {
+  let n = 0;
+  if (filters.freeU2) n++; if (filters.walkable) n++; if (filters.napSafe) n++;
+  if (filters.dropIn) n++; if (filters.indoor) n++; if (filters.needsBooking) n++;
+  if (filters.category !== 'all') n++; if (filters.town !== 'all') n++; if (filters.travel !== 'all') n++;
+  return n;
+}
+
+/* ============ Card renderer ============ */
+function esc(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+function cardHTML(a, s, dateKey) {
+  const st = activityStatus(a);
+  const tf = travelFact(a);
+  const price = priceText(a);
+  const bs = bookingStatus(a);
+  // Venue line: drop if venue same as title OR venue same as town name
+  const townN = townName(a.town);
+  let venueLine;
+  if (a.venue && a.venue !== a.title && a.venue.toLowerCase() !== townN.toLowerCase()) {
+    venueLine = `<p class="card-venue">${esc(a.venue)} · ${esc(townN)}</p>`;
+  } else {
+    venueLine = `<p class="card-venue">${esc(townN)}</p>`;
+  }
+  const facts = [];
+  facts.push(`<span class="fact">${tf.icon} ${esc(tf.text)}</span>`);
+  if (price) facts.push(`<span class="fact ${a.price_child === 0 ? 'fact-price-free' : ''}">${esc(price)}</span>`);
+  // ONE status: prefer booking status, else verification status (dedupe)
+  const statusLabel = bs || st.label;
+  const statusCls = bs === 'Call first' ? 'fact-status-call' : st.cls;
+  facts.push(`<span class="fact ${statusCls}">${esc(statusLabel)}</span>`);
+  if (clashesNap(s)) facts.push(`<span class="fact fact-nap">Nap clash</span>`);
+  // Short time for card column: truncate long time_text
+  let timeHtml = esc(sessionTimeText(s));
+  if (s.time_text && s.time_text.length > 20) {
+    // Use a shortened version for the narrow column
+    timeHtml = esc(s.time_text.split('·')[0].trim());
+  }
+  const isNew = a.verified && (new Date(todayKey()) - new Date(a.verified)) / 86400000 < 7;
+  return `<button class="card" data-id="${esc(a.id)}" data-date="${esc(dateKey || '')}" data-category="${esc(a.category)}" aria-label="${esc(a.title)}, ${esc(sessionTimeText(s))}">
+    <span class="card-time">${timeHtml}</span>
+    <span class="card-main">
+      <span class="card-title">${isNew ? '<span class="new-dot" aria-label="New"></span>' : ''}${esc(a.title)}</span>
+      ${venueLine}
+      <span class="card-facts">${facts.slice(0, 4).join('')}</span>
+    </span>
+    <span class="card-star" data-star="${esc(a.id)}" role="button" tabindex="0" aria-pressed="${isStarred(a.id)}" aria-label="Save ${esc(a.title)}">${isStarred(a.id) ? '★' : '☆'}</span>
+  </button>`;
+}
+
+/* ============ TODAY TAB ============ */
+function renderToday() {
+  const tk = todayKey(), hm = nowHM();
+  const dl = dateLabel(tk);
+  document.getElementById('todayHeader').innerHTML =
+    `<h2 class="day-heading">${dl.dow} ${dl.dom} ${dl.mon}</h2><p class="day-sub">Nap 12:00–14:00</p>`;
+
+  // Collect today's sessions
+  let sessions = [];
+  ACTIVITIES.forEach(a => {
+    expandSessions(a, tk, tk).forEach(s => {
+      if (sessionMatches(s, a)) sessions.push({ a, s });
     });
   });
-  keys.forEach(function (key) {
-    data[key].sort(function (x, y) {
-      const sx = x._start || '99', sy = y._start || '99';
-      return sx < sy ? -1 : sx > sy ? 1 : 0;
+  sessions.sort((x, y) => (x.s.start || '') < (y.s.start || '') ? -1 : 1);
+
+  const upcoming = sessions.filter(x => !isFinished(tk, x.s, tk, hm));
+  const earlier = sessions.filter(x => isFinished(tk, x.s, tk, hm));
+
+  // Up next: first upcoming not clashing nap; if clashes, first after 14:00 labelled "After nap"
+  let upNext = null, afterNap = false;
+  for (const x of upcoming) {
+    if (!clashesNap(x.s)) { upNext = x; break; }
+  }
+  if (!upNext && upcoming.length) {
+    // all clash; find first after 14:00
+    upNext = upcoming.find(x => x.s.start >= '14:00') || upcoming[0];
+    afterNap = true;
+  }
+  const upEl = document.getElementById('upNext');
+  if (upNext) {
+    const townN = townName(upNext.a.town);
+    const venueTxt = (upNext.a.venue && upNext.a.venue.toLowerCase() !== townN.toLowerCase()) ? upNext.a.venue + ' · ' + townN : townN;
+    upEl.innerHTML = `<button class="upnext" data-id="${esc(upNext.a.id)}" data-date="${tk}">
+      <div class="upnext-label">${afterNap ? 'After nap · Up next' : 'Up next'}</div>
+      <div class="upnext-title">${esc(upNext.a.title)}</div>
+      <div class="upnext-meta">${esc(sessionTimeText(upNext.s))} · ${esc(venueTxt)}</div>
+    </button>`;
+  } else {
+    upEl.innerHTML = `<div class="empty">Nothing else today.<br>Try the Week tab for tomorrow.</div>`;
+  }
+
+  // Bands
+  const morning = upcoming.filter(x => x.s.start < '12:00');
+  const nap = upcoming.filter(x => clashesNap(x.s));
+  const afternoon = upcoming.filter(x => x.s.start >= '14:00' && !clashesNap(x.s));
+  let html = '';
+  if (earlier.length) html += `<button class="text-btn" id="showEarlier">Show earlier today (${earlier.length})</button><div id="earlierList" hidden></div>`;
+  html += `<h3 class="band-heading">Morning</h3>`;
+  html += morning.length ? morning.map(x => cardHTML(x.a, x.s, tk)).join('') : `<div class="empty">Nothing this morning.</div>`;
+  html += `<div class="nap-divider">Nap 12:00–14:00</div>`;
+  if (nap.length) html += `<button class="collapsed-row" id="napToggle" aria-expanded="false"><span>During nap (${nap.length})</span><span aria-hidden="true">+</span></button><div id="napList" hidden>${nap.map(x => cardHTML(x.a, x.s, tk)).join('')}</div>`;
+  html += `<h3 class="band-heading">Afternoon</h3>`;
+  html += afternoon.length ? afternoon.map(x => cardHTML(x.a, x.s, tk)).join('') : `<div class="empty">Nothing this afternoon.</div>`;
+  document.getElementById('todayBands').innerHTML = html;
+
+  // Wire up toggles
+  const se = document.getElementById('showEarlier');
+  if (se) se.addEventListener('click', () => {
+    const el = document.getElementById('earlierList');
+    el.hidden = !el.hidden;
+    if (!el.innerHTML) el.innerHTML = earlier.map(x => cardHTML(x.a, x.s, tk)).join('');
+    se.textContent = el.hidden ? `Show earlier today (${earlier.length})` : 'Hide earlier today';
+    wireCards(el);
+  });
+  const nt = document.getElementById('napToggle');
+  if (nt) nt.addEventListener('click', () => {
+    const el = document.getElementById('napList');
+    el.hidden = !el.hidden;
+    nt.setAttribute('aria-expanded', String(!el.hidden));
+    wireCards(el);
+  });
+  wireCards(document.getElementById('todayBands'));
+  wireCards(upEl);
+
+  // Free and easy
+  const freebies = [
+    { t: 'Seafront promenade', m: '🚶 Walkable · Free' },
+    { t: 'Egerton Park', m: '🚶 Walkable · Free' },
+    { t: 'Bexhill Museum', m: '🚶 Walkable · £4 adult' },
+  ];
+  document.getElementById('freeEasy').innerHTML = freebies.map(f =>
+    `<button class="free-card" data-free="1"><strong>${esc(f.t)}</strong>${esc(f.m)}</button>`).join('');
+}
+
+/* ============ WEEK TAB ============ */
+let weekExpanded = {};
+function renderWeek() {
+  const tk = todayKey();
+  renderChips('weekChips');
+  // Day chips
+  let chips = '';
+  for (let i = 0; i < 7; i++) {
+    const dk = addDays(tk, i);
+    const dl = dateLabel(dk);
+    chips += `<button class="day-chip" data-day="${dk}" aria-current="${i === 0}"><span class="dow">${i === 0 ? 'Today' : dl.dow}</span><span class="dom">${dl.dom}</span></button>`;
+  }
+  document.getElementById('dayChips').innerHTML = chips;
+  document.querySelectorAll('#dayChips .day-chip').forEach(c => {
+    c.addEventListener('click', () => {
+      document.querySelectorAll('#dayChips .day-chip').forEach(x => x.setAttribute('aria-current', 'false'));
+      c.setAttribute('aria-current', 'true');
+      const el = document.getElementById('day-' + c.dataset.day);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
-  return data;
-})();
 
-/* Stale-data banner: if the newest session anywhere is >7 days past, warn. */
-function latestSessionDate() {
-  let latest = '';
-  ACTIVITIES.forEach(function (a) {
-    expandSessions(a, '2000-01-01', '2099-12-31').forEach(function (s) {
-      if (s.date > latest) latest = s.date;
+  let html = '';
+  for (let i = 0; i < 7; i++) {
+    const dk = addDays(tk, i);
+    const dl = dateLabel(dk);
+    let sessions = [];
+    ACTIVITIES.forEach(a => {
+      expandSessions(a, dk, dk).forEach(s => {
+        if (sessionMatches(s, a)) sessions.push({ a, s });
+      });
+    });
+    sessions.sort((x, y) => (x.s.start || '') < (y.s.start || '') ? -1 : 1);
+    const morning = sessions.filter(x => x.s.start < '12:00');
+    const nap = sessions.filter(x => clashesNap(x.s));
+    const afternoon = sessions.filter(x => x.s.start >= '14:00' && !clashesNap(x.s));
+    const total = sessions.length;
+    html += `<div id="day-${dk}"><h2 class="day-heading">${dl.dow} ${dl.dom} ${dl.mon} <span style="font-size:1rem;color:var(--muted);font-family:'DM Sans';">· ${total} thing${total === 1 ? '' : 's'}</span></h2>`;
+    html += bandHTML('Morning', morning, dk, 'm' + i);
+    if (nap.length) html += `<button class="collapsed-row" data-nap="${dk}" aria-expanded="false"><span>During nap (${nap.length})</span><span aria-hidden="true">+</span></button><div id="nap-${dk}" hidden>${nap.map(x => cardHTML(x.a, x.s, dk)).join('')}</div>`;
+    else html += `<div class="nap-divider">Nap 12:00–14:00</div>`;
+    html += bandHTML('Afternoon', afternoon, dk, 'a' + i);
+    html += `</div>`;
+  }
+  document.getElementById('weekDays').innerHTML = html || `<div class="empty">Nothing matches. <button class="text-btn" id="clearF">Clear filters</button></div>`;
+  document.querySelectorAll('[data-nap]').forEach(b => {
+    b.addEventListener('click', () => {
+      const el = document.getElementById('nap-' + b.dataset.nap);
+      el.hidden = !el.hidden;
+      b.setAttribute('aria-expanded', String(!el.hidden));
+      wireCards(el);
     });
   });
-  return latest;
+  wireCards(document.getElementById('weekDays'));
+  const cf = document.getElementById('clearF');
+  if (cf) cf.addEventListener('click', clearFilters);
 }
-function maybeShowStaleBanner() {
-  const latest = latestSessionDate();
-  if (!latest) return;
-  const dLatest = dateFromKey(latest), dToday = dateFromKey(pageTodayKey);
-  const daysPast = Math.floor((dToday - dLatest) / 86400000);
-  if (daysPast <= 7) return;
-  let checked = '';
-  ACTIVITIES.forEach(function (a) {
-    if (a._verifiedDate && a._verifiedDate > checked) checked = a._verifiedDate;
-  });
-  const bar = document.getElementById('filterDock');
-  if (!bar) return;
-  const banner = document.createElement('p');
-  banner.className = 'stale-banner';
-  banner.setAttribute('role', 'status');
-  banner.textContent = 'Listings last checked ' + checked + ' — they may be out of date.';
-  bar.parentNode.insertBefore(banner, bar);
+function bandHTML(name, items, dk, key) {
+  const expanded = weekExpanded[key];
+  const show = expanded ? items : items.slice(0, 3);
+  let html = `<h3 class="band-heading">${name}</h3>`;
+  if (!items.length) return html + `<div class="empty" style="padding:0.5rem;">Nothing.</div>`;
+  html += show.map(x => cardHTML(x.a, x.s, dk)).join('');
+  if (items.length > 3) html += `<button class="text-btn" data-expand="${key}">${expanded ? 'Show fewer' : `Show all ${items.length}`}</button>`;
+  return html;
 }
 
-      // The researched days are the days calendarData has. A separate hand-typed list fell a day
-      // behind on 11 Oct and hid every session on Sunday 18.
-      /* ---- Patched functions for the single-source model. ---- */
-
-function activityMetaFor(entry) {
-  return (entry && entry._activity) || null;
-}
-
-function entryFacets(entry, meta) {
-  const a = (entry && entry._activity) || meta;
-  const text = [entry.activity, entry.venue, entry.status, a && a.note, a && a.label].join(' ').toLowerCase();
-  const categories = [];
-  if (/soft play|playcentre|play den|stay and play|stay & play|let’s go play|fort fun|clambers|treasure island|catkins|tots play soft/.test(text)) categories.push('soft-play');
-  if (/water babies|swim/.test(text)) categories.push('swimming');
-  if (/babyballet|rhymetime|storytime|social tots|music|rhyme|dance/.test(text)) categories.push('music-rhyme');
-  if (/library|storytime|rhymetime/.test(text)) categories.push('libraries-story');
-  if (/pumpkin|reenactment|park|farm|bonfire|trail|drusillas|sharnfold|tibbs|outdoor/.test(text)) categories.push('outdoors');
-  if (/reenactment|opening party|baby fayre|storytime at hastings aquarium|halloween|bonfire|pumpkin fest|shriek week|spooktacular|event/.test(text)) categories.push('special');
-  /* Nap-safe is computed from the session's structured start/end, not regex. */
-  const napSafe = isNapSafe(entry._start, entry._end);
-  /* Free filter matches genuinely free for the child (price_child === 0). */
-  const free = !!a && a.price_child === 0;
-  const dropIn = /drop[ -]?in|no pre-booking|no booking|turn up|not strictly necessary/i.test(text);
-  return { categories: categories, napSafe: napSafe, free: free, dropIn: dropIn };
-}
-
-function townForEntry(meta, entry) {
-  return (meta && meta.town) || 'villages';
-}
-function townDisplayName(slug) {
-  var names = {bexhill:'Bexhill', hastings:'Hastings', 'st-leonards':'St Leonards', eastbourne:'Eastbourne', battle:'Battle', hailsham:'Hailsham', villages:'Nearby villages', all:'All towns'};
-  return names[slug] || slug;
-}
-
-
-const embeddedWeekDates = Object.keys(calendarData).sort();
-      const visibleWindowDates = embeddedWeekDates.filter(function (key) { return key >= pageTodayKey; }).slice(0, calendarConfig.weekDays);
-      function isNewTitle(title) {
-        const added = newlyAddedOn[title]; if (!added) return false;
-        const days = Math.floor((dateFromKey(pageTodayKey) - dateFromKey(added)) / 86400000);
-        return days >= 0 && days < 7;
-      }
-      function googleCalendarUrl(event) {
-        const params = new URLSearchParams({action:'TEMPLATE', text:event.title, dates:event.start + '/' + event.end, ctz:'Europe/London', location:event.location || '', details:event.details || 'Details checked on the Family Activities page.'});
-        return 'https://calendar.google.com/calendar/render?' + params.toString();
-      }
-      // "Add to calendar" is built from data already on the page, so a time is never typed twice.
-      // A week entry gets one when its activity has calendar:true and its time is a single range
-      // such as 10:00–17:00; the place is the activity's where. "Later this month" items carry
-      // their end time and place on the link itself (see below).
-      function compactStamp(key, hhmm) { return key.replace(/-/g, '') + 'T' + hhmm.replace(':', '') + '00'; }
-      function calendarEventFor(key, entry) {
-        const meta = activityMetaFor(entry);
-        if (!meta || !meta.calendar) return null;
-        const pad = function (hour) { return String(hour).padStart(2, '0'); };
-        let sh, sm, eh, em;
-        if (entry._start && entry._end) {
-          const sp = entry._start.split(':'), ep = entry._end.split(':');
-          sh = sp[0]; sm = sp[1]; eh = ep[0]; em = ep[1];
-        } else {
-          const range = String(entry.time).match(/^(\d{1,2}):(\d{2})\s*[–-]\s*(\d{1,2}):(\d{2})$/);
-          if (!range) return null;
-          sh = range[1]; sm = range[2]; eh = range[3]; em = range[4];
-        }
-        return { title: meta.title, start: compactStamp(key, pad(sh) + ':' + sm), end: compactStamp(key, pad(eh) + ':' + em), location: meta.where };
-      }
-      function shortTravelLine(meta, entry) {
-        if (meta && meta.travel) {
-          const detail = meta.travel[2] || '';
-          const range = detail.match(/(?:about |allow )?(\d+)(?: to |–|-)(\d+) minutes/i);
-          if (range) return range[1] + '–' + range[2] + ' min ' + (meta.travel[0] === 'walk' ? 'walk' : meta.travel[0] === 'drive' ? 'drive' : 'journey');
-          if (/15 minutes by train/i.test(detail)) return 'About 15 min by train';
-          if (/short town-centre walk/i.test(detail)) return 'Short walk from town';
-          if (/few minutes on foot/i.test(detail)) return 'A few minutes’ walk';
-          if (/5-minute walk/i.test(detail)) return 'Bus 98 + 5 min walk';
-          return meta.travel[1];
-        }
-        const place = (entry.venue || '').toLowerCase();
-        if (/bexhill|wallis hall|sidley|pebsham/.test(place)) return 'Local Bexhill journey';
-        if (/hastings|st leonards/.test(place)) return 'Train or coast bus';
-        if (/eastbourne/.test(place)) return 'Train + local connection';
-        if (/battle/.test(place)) return 'About 15 min by train';
-        if (/hailsham/.test(place)) return 'Longer bus journey';
-        if (/pevensey|sharnfold/.test(place)) return 'Best by car';
-        return 'Check route before leaving';
-      }
-      function travelForEntry(meta, entry) {
-        if (meta && meta.travel) return meta.travel;
-        const place = (entry.venue || '').toLowerCase();
-        if (/bexhill|wallis hall|sidley|pebsham/.test(place)) return ['walk','Local'];
-        if (/hastings|st leonards/.test(place)) return ['transit','Public transport'];
-        if (/eastbourne|hailsham/.test(place)) return ['awkward','Longer journey'];
-        if (/battle/.test(place)) return ['transit','Easy train'];
-        if (/pevensey|sharnfold/.test(place)) return ['drive','Best by car'];
-        return ['awkward','Route check'];
-      }
-      
-
-      function appendSourceTitle(heading, titleText, sourceUrl) {
-        if (!sourceUrl) {
-          heading.textContent = titleText;
-          return;
-        }
-        const link = document.createElement('a');
-        link.className = 'source-title-link';
-        link.href = sourceUrl;
-        link.target = '_blank';
-        link.rel = 'noopener';
-        // The last word and the arrow wrap together, so the arrow never sits on a line of its own.
-        const words = String(titleText).split(' ');
-        const tail = document.createElement('span'); tail.className = 'title-tail'; tail.textContent = words.pop();
-        if (words.length) link.appendChild(document.createTextNode(words.join(' ') + ' '));
-        link.appendChild(tail);
-        link.setAttribute('aria-label', titleText + ', opens provider website');
-        heading.appendChild(link);
-      }
-
-      
-      function buildSnapshotEntry(entry, key) {
-        const meta = activityMetaFor(entry);
-        const facets = entryFacets(entry, meta);
-        const travelInfo = travelForEntry(meta, entry);
-        const line = document.createElement('article');
-        line.className = 'snapshot-entry' + entryStatusClass(entry);
-        line.dataset.categories = facets.categories.join(' ');
-        line.dataset.travel = travelInfo[0];
-        line.dataset.town = townForEntry(meta, entry);
-        line.dataset.napSafe = String(facets.napSafe); line.dataset.free = String(facets.free); line.dataset.dropIn = String(facets.dropIn);
-        const time = document.createElement('span'); time.className = 'entry-time'; appendSemanticClockText(time, entry.time, key);
-        if (!time.querySelector('time')) { const datedLabel = document.createElement('time'); datedLabel.dateTime = key; datedLabel.textContent = entry.time; time.textContent = ''; time.appendChild(datedLabel); }
-        const body = document.createElement('div'); body.className = 'entry-body';
-        const title = document.createElement('h4'); appendSourceTitle(title, entry.activity, meta && meta.source);
-        const facts = document.createElement('div'); facts.className = 'entry-facts';
-        const travel = document.createElement('span'); travel.className = 'travel-pill ' + travelInfo[0]; travel.textContent = travelInfo[1]; facts.appendChild(travel);
-        const townPill = document.createElement('span'); townPill.className = 'town-pill'; townPill.textContent = townDisplayName(townForEntry(meta, entry)); facts.appendChild(townPill);
-        const travelText = shortTravelLine(meta, entry); if (travelText !== travelInfo[1]) { const travelLine = document.createElement('span'); travelLine.className = 'entry-travel'; travelLine.textContent = travelText; facts.appendChild(travelLine); }
-        const price = document.createElement('span'); price.className = 'entry-price'; price.textContent = entry.price; facts.appendChild(price);
-        const verify = document.createElement('span'); verify.className = 'entry-verify ' + (entry.verified ? 'verified' : 'check'); verify.textContent = entry.verified ? 'Verified for this date' : 'Call to check'; facts.appendChild(verify);
-        if (isNewTitle(entry.activity)) { const fresh = document.createElement('span'); fresh.className = 'new-tag'; fresh.textContent = 'New'; fresh.title = 'Added within the last 7 days'; facts.appendChild(fresh); }
-        const details = document.createElement('p'); details.textContent = entry.venue + (entry.status ? ' · ' + entry.status : '');
-        body.appendChild(title); body.appendChild(facts); body.appendChild(details);
-        const entryActions = document.createElement('div'); entryActions.className = 'entry-actions';
-        if (meta && meta.url) {
-          const link = document.createElement('a');
-          const isPrimaryAction = meta.action === 'Book' || meta.action === 'Check slots' || meta.action === 'Event page';
-          link.className = 'action' + (isPrimaryAction ? '' : ' secondary');
-          link.href = meta.url;
-          link.textContent = meta.action || 'Details';
-          link.setAttribute('aria-label', (meta.action || 'Details') + ' for ' + entry.activity);
-          if (meta.url.indexOf('http') === 0) { link.target = '_blank'; link.rel = 'noopener'; }
-          entryActions.appendChild(link);
-        }
-        const calendarEvent = calendarEventFor(key, entry);
-        if (calendarEvent) {
-          const cal = document.createElement('a');
-          cal.className = 'action secondary calendar-action';
-          cal.href = googleCalendarUrl(calendarEvent);
-          cal.target = '_blank';
-          cal.rel = 'noopener';
-          cal.textContent = 'Add to calendar';
-          cal.setAttribute('aria-label', 'Add ' + entry.activity + ' to calendar');
-          entryActions.appendChild(cal);
-        }
-        if (entryActions.childNodes.length) body.appendChild(entryActions);
-        line.appendChild(time); line.appendChild(body);
-        return line;
-      }
-
-      function appendCalendarEntries(list, entries, visibleCount, key, viewName) {
-        entries.slice(0, visibleCount).forEach(function (entry) { list.appendChild(buildSnapshotEntry(entry, key)); });
-        if (entries.length <= visibleCount) return;
-
-        const hiddenCount = entries.length - visibleCount;
-        const extra = document.createElement('div');
-        extra.className = 'calendar-extra';
-        extra.id = viewName + '-extra-' + key;
-        extra.hidden = true;
-        entries.slice(visibleCount).forEach(function (entry) { extra.appendChild(buildSnapshotEntry(entry, key)); });
-
-        const more = document.createElement('button');
-        more.className = 'snapshot-more';
-        more.type = 'button';
-        more.dataset.hiddenCount = String(hiddenCount);
-        more.textContent = 'Show ' + hiddenCount + ' more';
-        more.setAttribute('aria-expanded', 'false');
-        more.setAttribute('aria-controls', extra.id);
-        more.setAttribute('aria-label', 'Show ' + hiddenCount + ' more ' + (hiddenCount === 1 ? 'activity' : 'activities') + ' for ' + fullCalendarDate(key));
-        more.addEventListener('click', function (event) {
-          event.stopPropagation();
-          const expanding = extra.hidden;
-          const currentHiddenCount = Number(more.dataset.hiddenCount || 0);
-          extra.hidden = !expanding;
-          more.setAttribute('aria-expanded', String(expanding));
-          more.textContent = expanding ? 'Show less' : 'Show ' + currentHiddenCount + ' more';
-          more.setAttribute('aria-label', expanding ? 'Show fewer activities for ' + fullCalendarDate(key) : 'Show ' + currentHiddenCount + ' more ' + (currentHiddenCount === 1 ? 'activity' : 'activities') + ' for ' + fullCalendarDate(key));
-        });
-        list.appendChild(more);
-        list.appendChild(extra);
-      }
-
-      function renderWeekSnapshot() {
-        const container = document.getElementById('weekSnapshot');
-        container.innerHTML = '';
-        if (!visibleWindowDates.length) {
-          const stale = document.createElement('p'); stale.className = 'snapshot-empty stale-note';
-          stale.textContent = 'No activities are researched for today onwards yet. The latest research ends on ' + fullCalendarDate(embeddedWeekDates[embeddedWeekDates.length - 1]) + '.';
-          container.appendChild(stale);
-        }
-        visibleWindowDates.forEach(function (key) {
-          const entries = calendarData[key] || [];
-          const parts = shortCalendarDate(key);
-          const isToday = key === pageTodayKey;
-          const cell = document.createElement('section'); cell.className = 'snapshot-day'; cell.id = 'day-' + key;
-          const headingId = 'day-heading-' + key; cell.setAttribute('aria-labelledby', headingId);
-          if (isToday) cell.setAttribute('aria-current', 'date');
-          const date = document.createElement('header'); date.className = 'snapshot-date';
-          const nap = document.createElement('div'); nap.className = 'nap-band'; nap.innerHTML = '<strong><time datetime="' + key + 'T12:00">12:00</time>–<time datetime="' + key + 'T14:00">14:00</time></strong><span>Usual nap window · timing may shift</span>';
-          const list = document.createElement('div'); list.className = 'calendar-day-list';
-          if (entries.length) appendCalendarEntries(list, entries, 3, key, 'week');
-          else { const empty = document.createElement('span'); empty.className = 'snapshot-empty'; empty.textContent = 'No researched activities for this day.'; list.appendChild(empty); }
-          cell._allEntries = Array.from(list.querySelectorAll('.snapshot-entry'));
-          const optionCount = cell._allEntries.length;
-          date.innerHTML = '<span>' + (isToday ? 'Today · ' : '') + parts.day + '</span><h3 id="' + headingId + '"><time datetime="' + key + '">' + parts.date + ' ' + parts.month + '</time></h3><small class="day-count" data-original-count="' + optionCount + '">' + optionCount + (optionCount === 1 ? ' option' : ' options') + '</small>';
-          cell.appendChild(date); cell.appendChild(nap); cell.appendChild(list);
-          container.appendChild(cell);
-        });
-      }
-
-      function renderSlidingWindowChrome() {
-        const nav = document.getElementById('stickyDays');
-        nav.innerHTML = '';
-        nav.style.setProperty('--visible-days', String(Math.max(visibleWindowDates.length, 1)));
-        nav.style.display = visibleWindowDates.length ? '' : 'none';
-        visibleWindowDates.forEach(function (key) {
-          const parts = shortCalendarDate(key);
-          const button = document.createElement('button');
-          button.type = 'button';
-          button.dataset.dayTarget = 'day-' + key;
-          button.appendChild(document.createTextNode(parts.day + ' '));
-          const date = document.createElement('span'); date.textContent = parts.date; button.appendChild(date);
-          nav.appendChild(button);
-        });
-
-        let range = 'No upcoming researched dates';
-        if (visibleWindowDates.length) {
-          const firstKey = visibleWindowDates[0];
-          const lastKey = visibleWindowDates[visibleWindowDates.length - 1];
-          const first = dateFromKey(firstKey); const last = dateFromKey(lastKey);
-          const firstParts = shortCalendarDate(firstKey); const lastParts = shortCalendarDate(lastKey);
-          if (firstKey === lastKey) {
-            range = firstParts.day + ' ' + firstParts.date + ' ' + firstParts.month + ' ' + first.getFullYear();
-          } else if (first.getFullYear() === last.getFullYear() && first.getMonth() === last.getMonth()) {
-            range = firstParts.day + ' ' + firstParts.date + ' – ' + lastParts.day + ' ' + lastParts.date + ' ' + lastParts.month + ' ' + last.getFullYear();
-          } else if (first.getFullYear() === last.getFullYear()) {
-            range = firstParts.day + ' ' + firstParts.date + ' ' + firstParts.month + ' – ' + lastParts.day + ' ' + lastParts.date + ' ' + lastParts.month + ' ' + last.getFullYear();
-          } else {
-            range = firstParts.day + ' ' + firstParts.date + ' ' + firstParts.month + ' ' + first.getFullYear() + ' – ' + lastParts.day + ' ' + lastParts.date + ' ' + lastParts.month + ' ' + last.getFullYear();
-          }
-        }
-        document.getElementById('visibleWeekRange').textContent = range;
-        document.getElementById('rollingWeekRange').textContent = 'Rolling week: ' + range + '.';
-      }
-
-      
-
-
-      const grid = document.getElementById('activityGrid');
-      const categoryOrder = [
-        ['sports','Sports'], ['hubs','Family hubs'], ['music','Music & movement'],
-        ['play','Drop-in play'], ['library','Library'], ['events','Events']
-      ];
-      // A category missing from the list above goes under "Other". Without this one mistyped
-      // record stops the script and every activity disappears, as on 10 Oct.
-      const knownCategories = categoryOrder.map(function (category) { return category[0]; });
-      function sectionFor(a) {
-        const category = String(a.cat || '').split(' ')[0];
-        if (knownCategories.indexOf(category) !== -1) return category;
-        console.error('Unknown category "' + a.cat + '" on ' + a.title + '; shown under Other.');
-        return 'other';
-      }
-      const activitySections = activities.map(sectionFor);
-      if (activitySections.indexOf('other') !== -1) categoryOrder.push(['other', 'Other']);
-      const sectionGrids = {};
-      categoryOrder.forEach(function (category) {
-        const section = document.createElement('section');
-        section.className = 'category-section'; section.dataset.category = category[0];
-        const count = activitySections.filter(function (section) { return section === category[0]; }).length;
-        const heading = document.createElement('h3'); heading.className = 'category-heading';
-        const toggle = document.createElement('button'); toggle.className = 'category-toggle'; toggle.type = 'button';
-        const contentId = 'category-content-' + category[0]; toggle.setAttribute('aria-controls', contentId);
-        const expanded = window.matchMedia('(min-width: 761px)').matches; toggle.setAttribute('aria-expanded', String(expanded));
-        toggle.innerHTML = '<span>' + category[1] + '</span><small>' + count + (count === 1 ? ' option' : ' options') + '</small>';
-        const inner = document.createElement('div'); inner.className = 'activity-grid category-content'; inner.id = contentId; inner.hidden = !expanded;
-        toggle.addEventListener('click', function () { const opening = toggle.getAttribute('aria-expanded') !== 'true'; toggle.setAttribute('aria-expanded', String(opening)); inner.hidden = !opening; });
-        heading.appendChild(toggle); section.appendChild(heading); section.appendChild(inner); grid.appendChild(section); sectionGrids[category[0]] = inner;
-      });
-
-      activities.forEach(function (a, index) {
-        const primaryCategory = activitySections[index];
-        const card = document.createElement('article'); card.className = 'card'; card.dataset.category = primaryCategory;
-        if (a.image) { const img=document.createElement('img'); img.className='card-photo'; img.loading='lazy'; img.decoding='async'; img.src=a.image; img.alt=a.alt || ''; card.appendChild(img); }
-        const top = document.createElement('div'); top.className = 'card-top';
-        const heading = document.createElement('div');
-        const cat = document.createElement('div'); cat.className = 'category'; cat.innerHTML = a.label;
-        const h4 = document.createElement('h4'); h4.className = 'card-title'; appendSourceTitle(h4, a.title, a.source);
-        heading.appendChild(cat);
-        if (a.town) { const townPill = document.createElement('span'); townPill.className = 'town-pill'; townPill.textContent = townDisplayName(a.town); heading.appendChild(townPill); }
-        heading.appendChild(h4);
-        if (isNewTitle(a.title)) { const tags = document.createElement('div'); tags.className = 'title-tags'; const fresh = document.createElement('span'); fresh.className = 'new-tag'; fresh.textContent = 'New'; fresh.title = 'Added within the last 7 days'; tags.appendChild(fresh); heading.appendChild(tags); }
-        const price = document.createElement('div'); price.className = 'price'; price.textContent = a.price; top.appendChild(heading); top.appendChild(price); card.appendChild(top);
-        const meta = document.createElement('div'); meta.className = 'meta';
-        [['When',a.when],['Where',a.where]].forEach(function (pair) { const row=document.createElement('div'); row.className='meta-row'; const label=document.createElement('span'); label.className='meta-label'; label.textContent=pair[0]; const value=document.createElement('span'); value.className='meta-value'; if (pair[0] === 'When') appendSemanticClockText(value, pair[1]); else value.textContent=pair[1]; row.appendChild(label); row.appendChild(value); meta.appendChild(row); });
-        const travelRow=document.createElement('div'); travelRow.className='meta-row'; const travelLabel=document.createElement('span'); travelLabel.className='meta-label'; travelLabel.textContent='Travel'; const travelValue=document.createElement('span'); travelValue.className='meta-value'; const pill=document.createElement('span'); pill.className='travel-pill '+a.travel[0]; pill.textContent=a.travel[1]; const detail=document.createElement('span'); detail.className='travel-detail'; detail.textContent=a.travel[2]; travelValue.appendChild(pill); travelValue.appendChild(detail); travelRow.appendChild(travelLabel); travelRow.appendChild(travelValue); meta.appendChild(travelRow); card.appendChild(meta);
-        const note=document.createElement('p'); note.className='note' + (a.verified === false ? ' warn' : ''); note.textContent=(a.verified === false ? 'Call to check. ' : '') + a.note; card.appendChild(note);
-        const actions=document.createElement('div'); actions.className='actions';
-        if(a.url){
-          const link=document.createElement('a');
-          const isPrimaryAction = a.action === 'Book' || a.action === 'Check slots' || a.action === 'Event page';
-          link.className='action' + (isPrimaryAction ? '' : ' secondary');
-          link.href=a.url;
-          link.textContent=a.action;
-          link.setAttribute('aria-label', a.action + ' ' + a.title);
-          if(a.url.indexOf('http')===0){link.target='_blank';link.rel='noopener';}
-          actions.appendChild(link);
-        }
-        // One button per session still to come, from the same calendar entries as the week view.
-        if (a.calendar) upcomingDates(a).forEach(function (key) {
-          const entry = (calendarData[key] || []).find(function (item) { return activityMetaFor(item) === a; });
-          const event = entry && calendarEventFor(key, entry);
-          if (!event) return;
-          const parts = shortCalendarDate(key);
-          const cal = document.createElement('a');
-          cal.className = 'action secondary calendar-action';
-          cal.href = googleCalendarUrl(event);
-          cal.target = '_blank';
-          cal.rel = 'noopener';
-          cal.textContent = 'Add ' + parts.date + ' ' + parts.month + ' to calendar';
-          cal.setAttribute('aria-label', 'Add ' + a.title + ' on ' + parts.date + ' ' + calendarMonths[dateFromKey(key).getMonth()] + ' to calendar');
-          actions.appendChild(cal);
-        });
-        const copy=document.createElement('button');
-        copy.className='action secondary copy-btn';
-        copy.type='button';
-        copy.textContent='Copy details';
-        copy.setAttribute('aria-label', 'Copy details for ' + a.title);
-        actions.appendChild(copy);
-        if (actions.childNodes.length > 3) actions.classList.add('actions-many');
-        card.appendChild(actions);
-        sectionGrids[primaryCategory].appendChild(card);
-      });
-
-      // "Book ahead" is built from the activities that carry a bookAhead sentence. Its dates
-      // are the researched days from today on whose calendar entries are that activity (every
-      // embedded day, one more than the week view, since booking is about looking ahead), and
-      // its price and booking link or phone come from the activity, so it cannot disagree with
-      // the cards and the week view (a hand-written copy had lost babyballet's Saturday).
-      function upcomingDates(activity) {
-        const nowParts = new Intl.DateTimeFormat('en-GB', {timeZone:'Europe/London', hour:'2-digit', minute:'2-digit', hour12:false}).formatToParts(new Date());
-        const clock = {}; nowParts.forEach(function (part) { if (part.type !== 'literal') clock[part.type] = Number(part.value); });
-        const nowMinutes = (clock.hour % 24) * 60 + (clock.minute || 0);
-        return embeddedWeekDates.filter(function (key) {
-          if (key < pageTodayKey) return false;
-          return (calendarData[key] || []).some(function (entry) {
-            if (activityMetaFor(entry) !== activity) return false;
-            // Today counts only while a session is still to start (an untimed one always counts).
-            const start = startMinutes(entry.time);
-            return key !== pageTodayKey || start === 2000 || start > nowMinutes;
-          });
-        });
-      }
-      function appendDateList(container, keys) {
-        keys.forEach(function (key, index) {
-          if (index) container.appendChild(document.createTextNode(index === keys.length - 1 ? ' and ' : ', '));
-          const parts = shortCalendarDate(key);
-          const next = keys[index + 1];
-          const time = document.createElement('time'); time.dateTime = key;
-          time.textContent = parts.day + ' ' + parts.date + (!next || shortCalendarDate(next).month !== parts.month ? ' ' + parts.month : '');
-          container.appendChild(time);
-        });
-      }
-      function formatPhone(digits) {
-        if (/^02\d{9}$/.test(digits)) return digits.replace(/^(\d{3})(\d{4})(\d{4})$/, '$1 $2 $3');
-        if (/^0[389]\d{9}$/.test(digits)) return digits.replace(/^(\d{4})(\d{3})(\d{4})$/, '$1 $2 $3');
-        if (/^0\d{10}$/.test(digits)) return digits.replace(/^(\d{5})(\d{6})$/, '$1 $2');
-        return digits;
-      }
-      function renderBookAhead() {
-        const list = document.getElementById('aheadList');
-        const marked = activities.filter(function (a) { return a.bookAhead; });
-        // A page whose items were written by hand marks nothing; leave those items alone.
-        if (!list || !marked.length) return;
-        const items = marked.map(function (a) { return { activity: a, keys: upcomingDates(a) }; })
-          .filter(function (item) { return item.keys.length; })
-          .sort(function (x, y) { return x.keys[0] < y.keys[0] ? -1 : x.keys[0] > y.keys[0] ? 1 : 0; });
-        list.textContent = '';
-        if (!items.length) {
-          const none = document.createElement('p'); none.className = 'ahead-empty'; none.textContent = 'Nothing coming up needs booking ahead.';
-          list.appendChild(none);
-          return;
-        }
-        items.forEach(function (item) {
-          const a = item.activity;
-          const row = document.createElement('div'); row.className = 'ahead-item';
-          const name = document.createElement('strong'); name.textContent = a.title; row.appendChild(name);
-          const when = document.createElement('span'); when.className = 'ahead-when';
-          appendDateList(when, item.keys);
-          if (a.price) when.appendChild(document.createTextNode(' · ' + a.price.replace(/([–-])/g, '$1\u2060')));
-          row.appendChild(when);
-          const advice = document.createElement('span'); advice.textContent = a.bookAhead;
-          if (a.url) {
-            const link = document.createElement('a'); link.href = a.url;
-            if (a.url.indexOf('tel:') === 0) {
-              link.textContent = 'Call ' + formatPhone(a.url.slice(4));
-              link.setAttribute('aria-label', link.textContent + ' for ' + a.title);
-            } else if (a.url.indexOf('mailto:') === 0) {
-              link.textContent = 'Email';
-              link.setAttribute('aria-label', 'Email ' + a.title);
-            } else {
-              link.textContent = a.action || 'Details';
-              link.setAttribute('aria-label', link.textContent + ' for ' + a.title);
-              link.target = '_blank'; link.rel = 'noopener';
-            }
-            advice.appendChild(document.createTextNode(' ')); advice.appendChild(link);
-          }
-          row.appendChild(advice);
-          list.appendChild(row);
-        });
-      }
-
-      // A price shown outside its card is read from the card's record, so the two cannot differ.
-      // The text written in the page stays if no activity has that title, and the console says so.
-      document.querySelectorAll('[data-price-of]').forEach(function (el) {
-        const a = activities.find(function (item) { return item.title === el.dataset.priceOf; });
-        if (a && a.price) el.textContent = a.price;
-        else console.warn('No activity titled "' + el.dataset.priceOf + '" for a price');
-      });
-
-      const cards = Array.from(document.querySelectorAll('.card'));
-      document.getElementById('resultCount').textContent = cards.length + ' options in ' + categoryOrder.length + ' categories';
-      renderWeekSnapshot();
-      renderSlidingWindowChrome();
-      renderBookAhead();
-
-      document.querySelectorAll('.sticky-days [data-day-target]').forEach(function (button) {
-        const key = button.dataset.dayTarget.replace('day-', '');
-        const parts = shortCalendarDate(key);
-        const isToday = key === pageTodayKey;
-        button.childNodes[0].nodeValue = (isToday ? 'Today' : parts.day) + ' ';
-        if (isToday) button.setAttribute('aria-label', 'Today, ' + fullCalendarDate(key));
-        else button.removeAttribute('aria-label');
-      });
-
-      // Day jumps are buttons rather than hash links, so in-page navigation never
-      // adds a browser-history entry. The selected day updates immediately and
-      // then follows the section nearest the sticky controls while scrolling.
-      function setupDayNavigation() {
-        const nav = document.querySelector('.sticky-days');
-        const buttons = Array.from(nav.querySelectorAll('[data-day-target]'));
-        const sections = buttons.map(function (button) { return document.getElementById(button.dataset.dayTarget); }).filter(Boolean);
-        const dock = document.getElementById('filterDock');
-        let scrollFrame = 0;
-        let programmaticTarget = null;
-        let scrollEndTimer = 0;
-
-        function setActiveDay(button) {
-          buttons.forEach(function (item) { item.removeAttribute('aria-current'); });
-          if (button) button.setAttribute('aria-current', 'true');
-        }
-
-        function stickyOffset() {
-          return nav.offsetHeight + (dock ? dock.offsetHeight : 0) + 10;
-        }
-
-        buttons.forEach(function (button) {
-          button.addEventListener('click', function () {
-            const target = document.getElementById(button.dataset.dayTarget);
-            if (!target) return;
-            programmaticTarget = button.dataset.dayTarget;
-            setActiveDay(button);
-            const top = Math.max(0, target.getBoundingClientRect().top + window.scrollY - stickyOffset());
-            if (Math.abs(window.scrollY - top) < 2) programmaticTarget = null;
-            window.scrollTo({
-              top: top,
-              behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
-            });
-          });
-        });
-
-        function updateActiveDay() {
-          scrollFrame = 0;
-          if (programmaticTarget) {
-            setActiveDay(buttons.find(function (button) { return button.dataset.dayTarget === programmaticTarget; }));
-            return;
-          }
-          const marker = stickyOffset() + 4;
-          let activeSection = document.getElementById('day-' + pageTodayKey) || sections[0];
-          sections.forEach(function (section) {
-            if (section.getBoundingClientRect().top <= marker) activeSection = section;
-          });
-          const activeButton = buttons.find(function (button) { return button.dataset.dayTarget === activeSection.id; });
-          setActiveDay(activeButton);
-        }
-
-        function requestDayUpdate() {
-          if (!scrollFrame) scrollFrame = window.requestAnimationFrame(updateActiveDay);
-          if (programmaticTarget) {
-            window.clearTimeout(scrollEndTimer);
-            scrollEndTimer = window.setTimeout(function () {
-              programmaticTarget = null;
-              updateActiveDay();
-            }, 160);
-          }
-        }
-
-        window.addEventListener('scroll', requestDayUpdate, {passive:true});
-        window.addEventListener('resize', requestDayUpdate);
-        updateActiveDay();
-      }
-      setupDayNavigation();
-
-      // Calendar links in the later-this-month strip.
-      // The start is the item's own <time datetime>; the link carries the end and the place. A
-      // link that cannot be built is removed rather than left pointing at "#".
-      document.querySelectorAll('.later-item .calendar-link').forEach(function (link) {
-        const item = link.closest('.later-item');
-        const start = ((item.querySelector('time') || {}).dateTime || '').match(/^(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2})$/);
-        const end = link.dataset.calendarEnd || '';
-        if (!start || !/^\d{2}:\d{2}$/.test(end)) { link.remove(); return; }
-        const title = item.querySelector('.later-main-link').textContent.trim();
-        link.href = googleCalendarUrl({ title: title, start: compactStamp(start[1], start[2]), end: compactStamp(start[1], end), location: link.dataset.calendarWhere || '', details: link.dataset.calendarDetails });
-        link.setAttribute('aria-label', 'Add ' + title + ' to calendar');
-      });
-
-      // Compact, instant filters for every activity in the seven-day view, including overflow entries.
-      const filterState = {category:'all', travel:'all', town:'all', napSafe:false, free:false, dropIn:false};
-      const filterToggle = document.getElementById('filterToggle'); const filterPanel = document.getElementById('filterPanel');
-      const filterInitiallyOpen = window.matchMedia('(min-width: 761px)').matches; filterToggle.setAttribute('aria-expanded', String(filterInitiallyOpen)); filterPanel.hidden = !filterInitiallyOpen;
-      filterToggle.addEventListener('click', function () { const opening = filterToggle.getAttribute('aria-expanded') !== 'true'; filterToggle.setAttribute('aria-expanded', String(opening)); filterPanel.hidden = !opening; });
-      document.getElementById('filterDone').addEventListener('click', function () {
-        filterToggle.setAttribute('aria-expanded', 'false'); filterPanel.hidden = true; filterToggle.focus();
-      });
-      function filtersActive() { return filterState.category !== 'all' || filterState.travel !== 'all' || filterState.town !== 'all' || filterState.napSafe || filterState.free || filterState.dropIn; }
-      function setGroupCurrent(key, text) { var el = document.querySelector('[data-current-for="' + key + '"]'); if (el) el.textContent = text; }
-      function labelFor(selectorPrefix, value, allLabel) { if (value === 'all') return allLabel; var b = document.querySelector(selectorPrefix + value + '"]'); return b ? b.textContent.trim() : allLabel; }
-      function applyWeekFilters() {
-        const active = filtersActive(); let totalVisible = 0;
-        document.querySelectorAll('.snapshot-day').forEach(function (day) {
-          const allEntries = day._allEntries || Array.from(day.querySelectorAll('.snapshot-entry'));
-          const matchingEntries = allEntries.filter(function (entry) {
-            const categories = (entry.dataset.categories || '').split(' ');
-            return (filterState.category === 'all' || categories.indexOf(filterState.category) !== -1) &&
-              (filterState.travel === 'all' || entry.dataset.travel === filterState.travel) &&
-              (filterState.town === 'all' || entry.dataset.town === filterState.town) &&
-              (!filterState.napSafe || entry.dataset.napSafe === 'true') &&
-              (!filterState.free || entry.dataset.free === 'true') &&
-              (!filterState.dropIn || entry.dataset.dropIn === 'true');
-          });
-          allEntries.forEach(function (entry) { entry.classList.toggle('entry-filtered-out', active && matchingEntries.indexOf(entry) === -1); });
-
-          const list = day.querySelector('.calendar-day-list');
-          const extra = day.querySelector('.calendar-extra');
-          const control = extra ? day.querySelector('[aria-controls="' + extra.id + '"]') : null;
-          const entriesToShowFirst = (active ? matchingEntries : allEntries).slice(0, 3);
-          if (extra && control) {
-            entriesToShowFirst.forEach(function (entry) { list.insertBefore(entry, control); });
-            allEntries.forEach(function (entry) { if (entriesToShowFirst.indexOf(entry) === -1) extra.appendChild(entry); });
-            const hiddenCount = active ? Math.max(0, matchingEntries.length - 3) : Math.max(0, allEntries.length - 3);
-            control.dataset.hiddenCount = String(hiddenCount);
-            control.hidden = hiddenCount === 0;
-            control.setAttribute('aria-expanded', 'false');
-            control.textContent = 'Show ' + hiddenCount + ' more';
-            control.setAttribute('aria-label', 'Show ' + hiddenCount + ' more ' + (hiddenCount === 1 ? 'activity' : 'activities') + ' for ' + day.querySelector('.snapshot-date time').textContent);
-            extra.hidden = true;
-          }
-
-          const visible = active ? matchingEntries.length : allEntries.length;
-          let empty = day.querySelector('.filter-empty');
-          if (active && visible === 0) {
-            if (!empty) { empty = document.createElement('div'); empty.className = 'filter-empty'; empty.textContent = 'No activities match these filters.'; list.appendChild(empty); }
-          } else if (empty) empty.remove();
-          const count = day.querySelector('.day-count');
-          const displayedCount = active ? visible : allEntries.length;
-          if (count) {
-            count.dataset.originalCount = String(allEntries.length);
-            count.textContent = displayedCount + (displayedCount === 1 ? ' option' : ' options');
-          }
-          totalVisible += visible;
-        });
-        const activeNames = [];
-        if (filterState.category !== 'all') { const button = document.querySelector('[data-category-filter="' + filterState.category + '"]'); activeNames.push(button.textContent.trim()); }
-        if (filterState.travel !== 'all') { const button = document.querySelector('[data-travel-filter="' + filterState.travel + '"]'); activeNames.push(button.textContent.trim()); }
-        if (filterState.town !== 'all') { const button = document.querySelector('[data-town-filter="' + filterState.town + '"]'); activeNames.push(button.textContent.trim()); }
-        if (filterState.napSafe) activeNames.push('Nap-safe'); if (filterState.free) activeNames.push('Free'); if (filterState.dropIn) activeNames.push('Drop-in');
-        setGroupCurrent('category', labelFor('[data-category-filter="', filterState.category, 'All'));
-        setGroupCurrent('travel', labelFor('[data-travel-filter="', filterState.travel, 'All travel'));
-        setGroupCurrent('town', labelFor('[data-town-filter="', filterState.town, 'All towns'));
-        var togglesOn = (filterState.napSafe ? 1 : 0) + (filterState.free ? 1 : 0) + (filterState.dropIn ? 1 : 0);
-        setGroupCurrent('toggles', togglesOn ? togglesOn + ' on' : 'Off');
-        document.getElementById('activeFilterSummary').textContent = activeNames.length ? activeNames.join(', ') : 'All activities';
-        document.getElementById('filterStatus').textContent = active ? 'Showing ' + totalVisible + (totalVisible === 1 ? ' matching activity.' : ' matching activities.') : 'Showing all activities.';
-        document.getElementById('filterReset').disabled = !active;
-      }
-      document.querySelectorAll('[data-category-filter]').forEach(function (button) { button.addEventListener('click', function () { filterState.category = button.dataset.categoryFilter; document.querySelectorAll('[data-category-filter]').forEach(function (item) { item.setAttribute('aria-pressed', String(item === button)); }); applyWeekFilters(); }); });
-      document.querySelectorAll('[data-travel-filter]').forEach(function (button) { button.addEventListener('click', function () { filterState.travel = button.dataset.travelFilter; document.querySelectorAll('[data-travel-filter]').forEach(function (item) { item.setAttribute('aria-pressed', String(item === button)); }); applyWeekFilters(); }); });
-      document.querySelectorAll('[data-town-filter]').forEach(function (button) { button.addEventListener('click', function () { filterState.town = button.dataset.townFilter; document.querySelectorAll('[data-town-filter]').forEach(function (item) { item.setAttribute('aria-pressed', String(item === button)); }); applyWeekFilters(); }); });
-      document.querySelectorAll('[data-toggle-filter]').forEach(function (button) { button.addEventListener('click', function () { const key = button.dataset.toggleFilter; filterState[key] = !filterState[key]; button.setAttribute('aria-pressed', String(filterState[key])); applyWeekFilters(); }); });
-      document.getElementById('filterReset').addEventListener('click', function () { filterState.category = 'all'; filterState.travel = 'all'; filterState.town = 'all'; filterState.napSafe = false; filterState.free = false; filterState.dropIn = false; document.querySelectorAll('[data-category-filter]').forEach(function (button) { button.setAttribute('aria-pressed', String(button.dataset.categoryFilter === 'all')); }); document.querySelectorAll('[data-travel-filter]').forEach(function (button) { button.setAttribute('aria-pressed', String(button.dataset.travelFilter === 'all')); }); document.querySelectorAll('[data-town-filter]').forEach(function (button) { button.setAttribute('aria-pressed', String(button.dataset.townFilter === 'all')); }); document.querySelectorAll('[data-toggle-filter]').forEach(function (button) { button.setAttribute('aria-pressed', 'false'); }); applyWeekFilters(); });
-      applyWeekFilters();
-
-      // One-line summary uses Europe/London for both date and the next session.
-      function updateTodayGlance() {
-        const today = pageTodayKey; const entries = calendarData[today] || []; const count = activityOptionCount(entries);
-        const nowParts = new Intl.DateTimeFormat('en-GB', {timeZone:'Europe/London', hour:'2-digit', minute:'2-digit', hour12:false}).formatToParts(new Date()); const clock = {}; nowParts.forEach(function (part) { if (part.type !== 'literal') clock[part.type] = Number(part.value); }); const nowMinutes = (clock.hour || 0) * 60 + (clock.minute || 0);
-        const upcoming = entries.find(function (entry) { const minutes = startMinutes(entry.time); return minutes < 2000 && minutes >= nowMinutes; });
-        const dayLabel = fullCalendarDate(today);
-        let nextText = 'No more sessions today'; if (upcoming) nextText = 'Next: ' + upcoming.activity + ' at ' + upcoming.time.split(/[–-]| to /)[0];
-        if (!entries.length) nextText = 'No activities currently listed';
-        const glance = document.getElementById('todayGlanceText');
-        glance.textContent = '';
-        const day = document.createElement('strong'); day.textContent = dayLabel; glance.appendChild(day);
-        [count + (count === 1 ? ' activity' : ' activities'), nextText].forEach(function (part) {
-          const divider = document.createElement('span'); divider.className = 'glance-divider'; divider.setAttribute('aria-hidden', 'true'); divider.textContent = ' · ';
-          glance.appendChild(divider); glance.appendChild(document.createTextNode(part));
-        });
-      }
-      updateTodayGlance();
-      document.querySelectorAll('.ahead-list, .later-lines, #todayGlanceText').forEach(semanticizeClockText);
-
-      // Phone numbers written in the text become tappable, so "call 01424 212545" can be called.
-      // Only UK numbers in their usual written forms (01424 212545, 0345 6080196) match;
-      // links, buttons and anything already linked are left alone.
-      function linkifyPhones(root) {
-        const pattern = /(^|[^\d\/])(0\d{3,4} \d{6,7})(?!\d)/g;
-        const nodes = [];
-        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
-          acceptNode: function (node) {
-            if (!/0\d{3,4} \d{6,7}/.test(node.nodeValue)) return NodeFilter.FILTER_REJECT;
-            return node.parentElement.closest('a, button, script, style') ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
-          }
-        });
-        while (walker.nextNode()) nodes.push(walker.currentNode);
-        nodes.forEach(function (node) {
-          const text = node.nodeValue; const fragment = document.createDocumentFragment();
-          let last = 0; let match;
-          pattern.lastIndex = 0;
-          while ((match = pattern.exec(text))) {
-            const number = match[2]; const digits = number.replace(/ /g, '');
-            if (digits.length !== 11) continue;
-            const at = match.index + match[1].length;
-            fragment.appendChild(document.createTextNode(text.slice(last, at)));
-            const link = document.createElement('a'); link.className = 'phone-link'; link.href = 'tel:' + digits; link.textContent = number;
-            fragment.appendChild(link);
-            last = at + number.length;
-          }
-          if (!last) return;
-          fragment.appendChild(document.createTextNode(text.slice(last)));
-          node.parentNode.replaceChild(fragment, node);
-        });
-      }
-      /* ---- Later strip generated from ACTIVITIES (replaces hardcoded HTML). ---- */
-function renderLaterStrip() {
-  const container = document.querySelector('.later-lines');
-  if (!container) return;
-  container.innerHTML = '';
+/* ============ PLAN AHEAD TAB ============ */
+function renderAhead() {
+  const tk = todayKey();
+  renderChips('aheadChips');
+  // Collect later items
   const items = [];
-  ACTIVITIES.forEach(function (a) {
+  ACTIVITIES.forEach(a => {
     const laters = a.later_items || (a.later ? [a.later] : []);
-    laters.forEach(function (L) {
+    laters.forEach(L => {
       if (!L || !L.date) return;
       const end = L.date_end || L.date;
-      if (end < pageTodayKey) return;  // auto-expire past items
-      items.push({ a: a, L: L });
+      if (end < tk) return;
+      if (!sessionMatches({ date: L.date, start: '', end: '' }, a)) return;
+      items.push({ a, L });
     });
   });
-  items.sort(function (x, y) {
-    if (x.L.date !== y.L.date) return x.L.date < y.L.date ? -1 : 1;
-    return (x.L.time_text || '') < (y.L.time_text || '') ? -1 : 1;
+  items.sort((x, y) => x.L.date < y.L.date ? -1 : 1);
+  // Group by week (using max(start, today) so ongoing events appear in current week)
+  const groups = {};
+  items.forEach(it => {
+    const startKey = it.L.date < tk ? tk : it.L.date;
+    const d = new Date(startKey + 'T12:00:00');
+    // Week starting Monday
+    const mon = new Date(d);
+    mon.setDate(d.getDate() - ((d.getDay() + 6) % 7));
+    const key = mon.toISOString().slice(0, 10);
+    if (!groups[key]) groups[key] = [];
+    groups[key].push(it);
   });
-  items.forEach(function (it) {
-    const L = it.L, a = it.a;
-    const div = document.createElement('div');
-    div.className = 'later-item';
-    const time = document.createElement('time');
-    time.setAttribute('datetime', L.date);
-    time.textContent = L.time_text || L.date;
-    div.appendChild(time);
-    let titleEl;
-    if (L.href) {
-      titleEl = document.createElement('a');
-      titleEl.className = 'later-main-link';
-      titleEl.href = L.href;
-      titleEl.target = '_blank';
-      titleEl.rel = 'noopener';
-    } else {
-      titleEl = document.createElement('span');
-      titleEl.className = 'later-main-link';
-    }
-    titleEl.textContent = L.title || a.title;
-    div.appendChild(titleEl);
-    const copy = document.createElement('span');
-    copy.className = 'later-copy';
-    copy.textContent = L.copy || '';
-    div.appendChild(copy);
-    // Add-to-calendar link for timed one-offs (same Google Calendar route as before)
-    if (L.date && L.time_text && /(\d{1,2}):(\d{2})\s*[–-]\s*(\d{1,2}):(\d{2})/.test(L.time_text)) {
-      const m = L.time_text.match(/(\d{1,2}):(\d{2})\s*[–-]\s*(\d{1,2}):(\d{2})/);
-      const pad = function (h) { return String(h).padStart(2, '0'); };
-      const ev = {
-        title: L.title || a.title,
-        start: compactStamp(L.date, pad(m[1]) + ':' + m[2]),
-        end: compactStamp(L.date, pad(m[3]) + ':' + m[4]),
-        location: a.address
-      };
-      const cal = document.createElement('a');
-      cal.className = 'calendar-link';
-      cal.href = googleCalendarUrl(ev);
-      cal.target = '_blank';
-      cal.rel = 'noopener';
-      cal.textContent = 'Add to calendar';
-      div.appendChild(cal);
-    }
-    container.appendChild(div);
+  let html = '';
+  Object.keys(groups).sort().forEach(wk => {
+    const dl = dateLabel(wk);
+    const endDl = dateLabel(addDays(wk, 6));
+    html += `<h2 class="week-group">${dl.dom} ${dl.mon} – ${endDl.dom} ${endDl.mon}</h2>`;
+    groups[wk].forEach(it => {
+      const L = it.L, a = it.a;
+      const d = dateLabel(L.date);
+      const multi = L.date_end && L.date_end !== L.date;
+      html += `<button class="plan-row" data-id="${esc(a.id)}" data-date="${esc(L.date)}">
+        <span class="date-tile"><span class="d">${d.dom}</span><br><span class="m">${d.mon}</span></span>
+        <span><strong style="font-size:1.0625rem;">${esc(L.title || a.title)}</strong><br>
+        <span class="plan-meta">${multi ? 'Daily until ' + dateLabel(L.date_end).dom + ' ' + dateLabel(L.date_end).mon + ' · ' : ''}${esc(L.time_text || '')} · ${esc(townName(a.town))}</span></span>
+        <span class="card-star" data-star="${esc(a.id)}" role="button" tabindex="0" aria-pressed="${isStarred(a.id)}" aria-label="Save">${isStarred(a.id) ? '★' : '☆'}</span>
+      </button>`;
+    });
   });
-  if (!items.length) {
-    const p = document.createElement('p');
-    p.className = 'snapshot-empty';
-    p.textContent = 'Nothing coming up beyond this week yet.';
-    container.appendChild(p);
-  }
+  document.getElementById('planGroups').innerHTML = html || `<div class="empty">Nothing planned yet.</div>`;
+  wireCards(document.getElementById('planGroups'));
 }
 
+/* ============ SAVED TAB ============ */
+function renderSaved() {
+  const ids = Object.keys(starred);
+  const items = ids.map(id => ACTIVITIES.find(a => a.id === id)).filter(Boolean);
+  document.getElementById('savedList').innerHTML = items.length
+    ? `<h2 class="day-heading">Saved</h2>` + items.map(a => cardHTML(a, { date: '', start: '', end: '', time_text: 'Saved' }, '')).join('')
+    : `<div class="empty"><p>No saved activities yet.</p><p>Tap the ☆ on any activity to save it here.</p></div>`;
+  wireCards(document.getElementById('savedList'));
+}
 
-      linkifyPhones(document.getElementById('activities'));
-      renderLaterStrip();
-      maybeShowStaleBanner();
+/* ============ FILTER CHIPS ============ */
+const QUICK_FILTERS = [
+  { key: 'freeU2', label: 'Free for under-2s' },
+  { key: 'walkable', label: 'Walkable' },
+  { key: 'napSafe', label: 'Nap-safe' },
+  { key: 'dropIn', label: 'Drop-in' },
+  { key: 'needsBooking', label: 'Needs booking' },
+];
+function renderChips(elId) {
+  const el = document.getElementById(elId);
+  let html = QUICK_FILTERS.map(f =>
+    `<button class="chip" data-f="${f.key}" aria-pressed="${filters[f.key]}">${esc(f.label)}${filters[f.key] ? ' <span class="chip-x" aria-hidden="true">×</span>' : ''}</button>`).join('');
+  const n = activeFilterCount();
+  html += `<button class="chip" id="${elId}-more">Filters${n ? ` (${n})` : ''}</button>`;
+  el.innerHTML = html;
+  el.querySelectorAll('[data-f]').forEach(c => {
+    c.addEventListener('click', () => {
+      filters[c.dataset.f] = !filters[c.dataset.f];
+      refresh();
+    });
+  });
+  document.getElementById(elId + '-more').addEventListener('click', openFilterSheet);
+}
+function clearFilters() {
+  Object.keys(filters).forEach(k => { filters[k] = (k === 'category' || k === 'town' || k === 'travel') ? 'all' : false; });
+  refresh();
+}
 
+/* ============ DETAIL SHEET ============ */
+let lastFocus = null;
+function openSheet(id) {
+  lastFocus = document.activeElement;
+  document.getElementById('scrim').classList.add('open');
+  const sh = document.getElementById(id);
+  sh.hidden = false;
+  requestAnimationFrame(() => sh.classList.add('open'));
+  const f = sh.querySelector('button, a');
+  if (f) f.focus();
+}
+function closeSheets() {
+  document.getElementById('scrim').classList.remove('open');
+  document.querySelectorAll('.sheet.open').forEach(s => { s.classList.remove('open'); s.hidden = true; });
+  if (lastFocus && lastFocus.focus) lastFocus.focus();
+}
+function openDetail(id, dateKey) {
+  const a = ACTIVITIES.find(x => x.id === id);
+  if (!a) return;
+  const st = activityStatus(a);
+  const af = ageFit(a);
+  const sessions = dateKey ? expandSessions(a, dateKey, dateKey) : [];
+  const s = sessions[0] || { date: dateKey || '', start: '', end: '', time_text: '' };
+  const dl = s.date ? dateLabel(s.date) : null;
+  let html = `<h2 id="detailTitle">${esc(a.title)}</h2>`;
+  html += `<p style="color:var(--muted);font-size:0.9375rem;margin:0 0 0.5rem;">${dl ? esc(dl.full) + ' · ' : ''}${esc(sessionTimeText(s))}</p>`;
+  html += `<div class="sheet-row"><span class="k">Venue</span><span>${esc(a.venue)}<br><a href="https://www.google.com/maps/search/${encodeURIComponent(a.address)}" target="_blank" rel="noopener" style="color:var(--accent);">Directions</a></span></div>`;
+  html += `<div class="sheet-row"><span class="k">Travel</span><span>${esc(a.travel)}</span></div>`;
+  html += `<div class="sheet-row"><span class="k">Price</span><span>${esc(priceLong(a))}</span></div>`;
+  html += `<div class="sheet-row"><span class="k">Ages</span><span class="${af.ok ? '' : 'fact-status-call'}">${esc(af.label)}</span></div>`;
+  const bsDetail = bookingStatus(a);
+  const statusParts = [];
+  if (st.label && !statusParts.includes(st.label)) statusParts.push(st.label);
+  if (bsDetail && !statusParts.includes(bsDetail)) statusParts.push(bsDetail);
+  const statusText = statusParts.join(' · ') || st.label;
+  const statusCls = /call first/i.test(statusText) ? 'fact-status-call' : st.cls;
+  html += `<div class="sheet-row"><span class="k">Status</span><span class="${statusCls}">${esc(statusText)}</span></div>`;
+  if (a.note) html += `<p style="font-size:0.9375rem;">${esc(a.note)}</p>`;
+  if (a.url && (a.action === 'Book' || a.action === 'Check slots' || a.action === 'Event page' || a.action === 'Tickets')) {
+    html += `<a class="btn-primary" href="${esc(a.url)}" target="_blank" rel="noopener">${esc(a.action || 'Book')}</a>`;
+  }
+  if (a.phone) html += `<a class="btn-secondary" href="tel:${esc(a.phone.replace(/\s/g, ''))}">Call ${esc(a.phone)}</a>`;
+  // Add to calendar
+  if (s.date && s.start && s.end) {
+    const ev = { title: a.title, start: s.date.replace(/-/g, '') + 'T' + s.start.replace(':', '') + '00', end: s.date.replace(/-/g, '') + 'T' + s.end.replace(':', '') + '00', location: a.address };
+    const url = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent(ev.title) + '&dates=' + ev.start + '/' + ev.end + '&ctz=Europe/London&location=' + encodeURIComponent(ev.location);
+    html += `<a class="btn-secondary" href="${url}" target="_blank" rel="noopener">Add to calendar</a>`;
+  }
+  html += `<button class="btn-secondary" id="detailSave">${isStarred(a.id) ? '★ Saved' : '☆ Save'}</button>`;
+  html += `<p class="sheet-footer">Checked ${esc(a.verified || 'unverified')}${a.source ? ` · <a href="${esc(a.source)}" target="_blank" rel="noopener" style="color:var(--muted);">source</a>` : ''}</p>`;
+  document.getElementById('detailContent').innerHTML = html;
+  openSheet('detailSheet');
+  document.getElementById('detailSave').addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleStar(a.id);
+    e.target.textContent = isStarred(a.id) ? '★ Saved' : '☆ Save';
+    document.querySelectorAll(`[data-star="${CSS.escape(a.id)}"]`).forEach(el => {
+      el.setAttribute('aria-pressed', String(isStarred(a.id)));
+      el.textContent = isStarred(a.id) ? '★' : '☆';
+    });
+  });
+}
 
-      const backToTop = document.getElementById('backToTop');
-      window.addEventListener('scroll', function () { backToTop.hidden = window.scrollY < 650; }, {passive:true});
-      backToTop.addEventListener('click', function () { window.scrollTo({top:0, behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'}); });
+/* ============ FILTER SHEET ============ */
+function openFilterSheet() {
+  const cats = ['all', 'sports', 'hubs', 'music', 'play', 'library', 'events'];
+  const towns = ['all', 'bexhill', 'hastings', 'st-leonards', 'eastbourne', 'battle', 'hailsham', 'villages'];
+  const travels = ['all', 'walk', 'transit', 'drive'];
+  let html = '<h3 style="font-size:1rem;">Category</h3><div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1rem;">';
+  cats.forEach(c => { html += `<button class="chip" data-g="category" data-v="${c}" aria-pressed="${filters.category === c}">${c === 'all' ? 'All' : c}</button>`; });
+  html += '</div><h3 style="font-size:1rem;">Town</h3><div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1rem;">';
+  towns.forEach(t => { html += `<button class="chip" data-g="town" data-v="${t}" aria-pressed="${filters.town === t}">${townName(t)}</button>`; });
+  html += '</div><h3 style="font-size:1rem;">Travel</h3><div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1rem;">';
+  travels.forEach(t => { html += `<button class="chip" data-g="travel" data-v="${t}" aria-pressed="${filters.travel === t}">${t === 'all' ? 'All' : t}</button>`; });
+  html += '</div>';
+  document.getElementById('filterGroups').innerHTML = html;
+  updateFilterCount();
+  document.querySelectorAll('#filterGroups [data-g]').forEach(b => {
+    b.addEventListener('click', () => {
+      filters[b.dataset.g] = b.dataset.v;
+      document.querySelectorAll(`#filterGroups [data-g="${b.dataset.g}"]`).forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+      updateFilterCount();
+    });
+  });
+  openSheet('filterSheet');
+}
+function updateFilterCount() {
+  // Count matching sessions across all tabs roughly
+  const tk = todayKey();
+  let n = 0;
+  ACTIVITIES.forEach(a => {
+    expandSessions(a, tk, addDays(tk, 6)).forEach(s => { if (sessionMatches(s, a)) n++; });
+  });
+  document.getElementById('applyFilters').textContent = `Show ${n} activities`;
+}
+function wireFilterSheet() {
+  document.getElementById('clearFilters').addEventListener('click', () => { clearFilters(); closeSheets(); });
+  document.getElementById('applyFilters').addEventListener('click', () => { closeSheets(); refresh(); });
+}
 
-      const toast = document.getElementById('toast'); let toastTimer;
-      function showToast(message) { toast.textContent = message; toast.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(function () { toast.classList.remove('show'); }, 1800); }
-      document.addEventListener('click', function (event) {
-        const button = event.target.closest('.copy-btn'); if (!button) return; const card = button.closest('.card');
-        const lines = [card.querySelector('.card-title').textContent, 'Price: ' + card.querySelector('.price').textContent.trim()];
-        card.querySelectorAll('.meta-row').forEach(function (row) { lines.push(row.querySelector('.meta-label').textContent + ': ' + row.querySelector('.meta-value').textContent.trim()); });
-        const note = card.querySelector('.note'); if (note) lines.push(note.textContent.trim()); const link = card.querySelector('a.action'); if (link) lines.push(link.href); const text = lines.join('\n');
-        if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(text).then(function () { showToast('Details copied'); }).catch(function () { showToast('Could not copy'); }); }
-        else { const area = document.createElement('textarea'); area.value=text; area.style.position='fixed'; area.style.opacity='0'; document.body.appendChild(area); area.select(); try { document.execCommand('copy'); showToast('Details copied'); } catch (e) { showToast('Could not copy'); } document.body.removeChild(area); }
+/* ============ WIRING ============ */
+function wireCards(root) {
+  if (!root) return;
+  root.querySelectorAll('.card[data-id], .upnext[data-id], .plan-row[data-id]').forEach(el => {
+    if (el.dataset.wired) return;
+    el.dataset.wired = '1';
+    el.addEventListener('click', (e) => {
+      if (e.target.closest('[data-star]')) return;
+      openDetail(el.dataset.id, el.dataset.date);
+    });
+  });
+  root.querySelectorAll('[data-star]').forEach(st => {
+    if (st.dataset.swired) return;
+    st.dataset.swired = '1';
+    const toggle = (e) => {
+      e.stopPropagation(); e.preventDefault();
+      toggleStar(st.dataset.star);
+      document.querySelectorAll(`[data-star="${CSS.escape(st.dataset.star)}"]`).forEach(el => {
+        el.setAttribute('aria-pressed', String(isStarred(st.dataset.star)));
+        el.textContent = isStarred(st.dataset.star) ? '★' : '☆';
       });
-    }());
-  
+    };
+    st.addEventListener('click', toggle);
+    st.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') toggle(e); });
+  });
+}
+function switchTab(name) {
+  document.querySelectorAll('.tab-bar [role="tab"]').forEach(b => {
+    b.setAttribute('aria-selected', String(b.dataset.tab === name));
+  });
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  window.scrollTo(0, 0);
+}
+function refresh() {
+  const active = document.querySelector('.tab-bar [aria-selected="true"]').dataset.tab;
+  if (active === 'today') renderToday();
+  else if (active === 'week') renderWeek();
+  else if (active === 'ahead') renderAhead();
+  else renderSaved();
+  renderChips('weekChips'); renderChips('aheadChips');
+}
+
+/* ============ SETTINGS ============ */
+function initSettings() {
+  document.getElementById('settingsBtn').addEventListener('click', () => {
+    const tk = todayKey();
+    document.getElementById('checkedLine').textContent = 'Listings checked ' + tk.split('-').reverse().join(' ') + '. Data: provider websites.';
+    openSheet('settingsSheet');
+  });
+  const tt = document.getElementById('themeToggle');
+  const cur = (() => { try { return localStorage.getItem('bex-theme'); } catch (e) { return null; } })();
+  if (cur) { document.documentElement.dataset.theme = cur; tt.setAttribute('aria-pressed', String(cur === 'dark')); tt.textContent = cur === 'dark' ? 'On' : 'Off'; }
+  tt.addEventListener('click', () => {
+    const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    document.documentElement.dataset.theme = next;
+    try { localStorage.setItem('bex-theme', next); } catch (e) {}
+    tt.setAttribute('aria-pressed', String(next === 'dark'));
+    tt.textContent = next === 'dark' ? 'On' : 'Off';
+  });
+  const at = document.getElementById('ageToggle');
+  at.setAttribute('aria-pressed', String(filters.showOlder));
+  at.textContent = filters.showOlder ? 'On' : 'Off';
+  at.addEventListener('click', () => {
+    filters.showOlder = !filters.showOlder;
+    at.setAttribute('aria-pressed', String(filters.showOlder));
+    at.textContent = filters.showOlder ? 'On' : 'Off';
+    refresh();
+  });
+  document.getElementById('installBtn').addEventListener('click', () => {
+    alert('Use your browser\'s "Add to Home screen" / "Install app" option.');
+  });
+}
+
+/* ============ INIT ============ */
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.tab-bar [role="tab"]').forEach(b => {
+    b.addEventListener('click', () => { switchTab(b.dataset.tab); refresh(); });
+  });
+  document.getElementById('scrim').addEventListener('click', closeSheets);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSheets(); });
+  // Drag to close sheets
+  document.querySelectorAll('.sheet').forEach(sh => {
+    let startY = 0;
+    sh.addEventListener('touchstart', (e) => { startY = e.touches[0].clientY; }, { passive: true });
+    sh.addEventListener('touchend', (e) => {
+      const dy = e.changedTouches[0].clientY - startY;
+      if (dy > 120) closeSheets();
+    }, { passive: true });
+  });
+  wireFilterSheet();
+  initSettings();
+  // Expand buttons in week
+  document.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-expand]');
+    if (b) {
+      weekExpanded[b.dataset.expand] = !weekExpanded[b.dataset.expand];
+      renderWeek();
+    }
+  });
+  renderToday();
+  renderWeek();
+  renderAhead();
+  renderSaved();
+});
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('service-worker.js').catch(function(){});
+  });
+}
 </script>
 </body>
 </html>
