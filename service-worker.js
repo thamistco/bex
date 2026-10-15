@@ -10,7 +10,7 @@
    next time. Icons and photos come from the cache and are refreshed in the
    background. Requests to other sites (fonts, provider pages) are left to
    the browser. */
-const CACHE = 'family-activities-v3';
+const CACHE = 'family-activities-v4';
 const NETWORK_TIMEOUT_MS = 4000;
 const RECENT_MS = 24 * 60 * 60 * 1000;
 // Saved when the worker installs, so the very first visit already works offline.
@@ -65,20 +65,19 @@ async function networkFirst(event) {
       })
       .catch(() => {})
   );
-  const saved = () =>
-    caches.open(CACHE).then((cache) => cache.match(key).then((hit) => hit || cache.match('./')));
-  const slow = new Promise((resolve) => setTimeout(resolve, NETWORK_TIMEOUT_MS, 'slow'));
-  // A 404 counts as an answer: it means the page has gone, and an old copy would hide that.
-  const answered = (reply) => reply instanceof Response && reply.status < 500;
-  const recent = (copy) => Date.now() - Date.parse(copy.headers.get('date')) < RECENT_MS;
-  const first = await Promise.race([network.catch(() => 'offline'), slow]);
-  if (answered(first)) return first;
-  const copy = await saved();
-  if (first === 'slow' && !(copy && recent(copy))) {
-    const late = await network.catch(() => 'offline');
-    if (answered(late)) return late;
+  // Always wait for the network. Only use the saved copy if truly offline.
+  // (Wali's request 2026-10-15: force refresh on every launch.)
+  try {
+    const response = await network;
+    if (response.ok || response.status === 404) return response;
+  } catch (e) {
+    // Network failed, fall through to cache
   }
-  return copy || network;
+  const cache = await caches.open(CACHE);
+  const hit = await cache.match(key).then((h) => h || cache.match('./'));
+  if (hit) return hit;
+  // No cache, rethrow the network error
+  return network;
 }
 
 function staleWhileRevalidate(event, request) {
