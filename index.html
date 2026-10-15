@@ -256,7 +256,6 @@ body {
 .fact-status-confirmed { color: var(--green); font-weight: 600; }
 .fact-status-call { color: var(--amber); font-weight: 600; }
 .fact-status-unconfirmed { color: var(--grey); font-weight: 600; }
-.fact-nap { color: var(--amber); font-weight: 600; }
 .card-star {
   display: flex; align-items: flex-start; justify-content: center;
   font-size: 1.375rem; color: var(--muted);
@@ -774,7 +773,6 @@ function cardHTML(a, s, dateKey) {
   const statusLabel = bs || st.label;
   const statusCls = bs === 'Call first' ? 'fact-status-call' : st.cls;
   facts.push(`<span class="fact ${statusCls}">${esc(statusLabel)}</span>`);
-  if (clashesNap(s)) facts.push(`<span class="fact fact-nap">Nap clash</span>`);
   // Short time for card column: truncate long time_text
   let timeHtml = esc(sessionTimeText(s));
   if (s.time_text && s.time_text.length > 20) {
