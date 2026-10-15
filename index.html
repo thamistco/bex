@@ -299,6 +299,30 @@
       border: 1px solid var(--line);
       border-radius: 14px;
     }
+    details.travel-key { display: block; }
+    .travel-key-summary {
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 2px 0;
+    }
+    .travel-key-summary::-webkit-details-marker { display: none; }
+    .travel-key-summary::after {
+      content: "+";
+      font-weight: 700;
+      color: var(--accent-strong);
+      flex: 0 0 auto;
+    }
+    details.travel-key[open] .travel-key-summary::after { content: "−"; }
+    .travel-key-toggle-hint {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 400;
+    }
+    details.travel-key .travel-key-copy { margin-top: 12px; }
     .travel-key-copy { grid-column: 1 / -1; }
     .travel-key-copy strong { display: block; font-size: 14px; }
     .travel-key-copy span { display: block; margin-top: 2px; color: var(--muted); font-size: 12px; }
@@ -1048,8 +1072,9 @@
       <p id="todayGlanceText">Loading today’s activities…</p>
     </section>
 
-    <aside class="travel-key" aria-label="Colour guide">
-      <div class="travel-key-copy"><strong>Travel from the Marina area</strong><span>The exact home address stays private. Badges show whether each outing is walkable, straightforward by public transport, awkward without a car, or best driven.</span></div>
+    <details class="travel-key" aria-label="Colour guide">
+      <summary class="travel-key-summary"><strong>Travel from the Marina area</strong><span class="travel-key-toggle-hint">Tap to see what the badges mean</span></summary>
+      <div class="travel-key-copy"><span>The exact home address stays private. Badges show whether each outing is walkable, straightforward by public transport, awkward without a car, or best driven.</span></div>
       <div class="legend-group">
         <strong>Travel colour</strong>
         <div class="travel-key-items">
@@ -1065,7 +1090,7 @@
           <span class="category-chip sports">Sports</span><span class="category-chip hubs">Family hubs</span><span class="category-chip music">Music &amp; movement</span><span class="category-chip play">Drop-in play</span><span class="category-chip library">Library</span><span class="category-chip events">Events</span>
         </div>
       </div>
-    </aside>
+    </details>
 
     <nav class="sticky-days" id="stickyDays" aria-label="Jump to a day"></nav>
 
