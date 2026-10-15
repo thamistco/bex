@@ -981,8 +981,12 @@ function renderAhead() {
       const L = it.L, a = it.a;
       const d = dateLabel(L.date);
       const multi = L.date_end && L.date_end !== L.date;
+      const started = L.date < tk;
+      const tileDate = started
+        ? `<span class="d">Now</span><br><span class="m">on</span>`
+        : `<span class="d">${d.dom}</span><br><span class="m">${d.mon}</span>`;
       html += `<button class="plan-row" data-id="${esc(a.id)}" data-date="${esc(L.date)}">
-        <span class="date-tile"><span class="d">${d.dom}</span><br><span class="m">${d.mon}</span></span>
+        <span class="date-tile">${tileDate}</span>
         <span><strong style="font-size:1.0625rem;">${esc(L.title || a.title)}</strong><br>
         <span class="plan-meta">${multi ? 'Daily until ' + dateLabel(L.date_end).dom + ' ' + dateLabel(L.date_end).mon + ' · ' : ''}${esc(L.time_text || '')} · ${esc(townName(a.town))}</span></span>
         <span class="card-star" data-star="${esc(a.id)}" role="button" tabindex="0" aria-pressed="${isStarred(a.id)}" aria-label="Save">${isStarred(a.id) ? '★' : '☆'}</span>
