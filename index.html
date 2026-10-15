@@ -1058,7 +1058,7 @@ function renderToday() {
     { t: 'Bexhill Museum', m: ICONS.walk + ' Walkable · £4 adult' },
   ];
   document.getElementById('freeEasy').innerHTML = freebies.map(f =>
-    `<button class="free-card" data-free="1"><strong>${esc(f.t)}</strong>${esc(f.m)}</button>`).join('');
+    `<button class="free-card" data-free="1"><strong>${esc(f.t)}</strong><span>${f.m}</span></button>`).join('');
 }
 
 /* ============ WEEK TAB ============ */
