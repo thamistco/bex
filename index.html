@@ -421,6 +421,7 @@ body {
   padding: 0.75rem 1rem; margin: 0 -1rem;
   position: sticky; top: 3.5rem; z-index: 15; background: var(--bg);
 }
+[id^="day-"] { scroll-margin-top: 8.5rem; }
 .day-chip {
   flex: 0 0 auto; min-width: 3.5rem; min-height: 2.75rem;
   border: 1px solid var(--line); border-radius: 0.625rem;
@@ -1022,16 +1023,14 @@ function renderToday() {
     upEl.innerHTML = `<div class="empty">Nothing else today.${tm ? `<br>Tomorrow: ${esc(tm)}` : '<br>Try the Week tab for tomorrow.'}</div>`;
   }
 
-  // Bands (each activity appears once: clashers live only in the During-nap row)
-  const morning = upcoming.filter(x => (!x.s.start || x.s.start < '12:00') && !clashesNap(x.s, x.a));
-  const nap = upcoming.filter(x => clashesNap(x.s, x.a));
-  const afternoon = upcoming.filter(x => x.s.start >= '14:00' && !clashesNap(x.s, x.a));
+  // Bands: morning before 12:00, afternoon from 12:00 (nap-time events list chronologically)
+  const morning = upcoming.filter(x => (!x.s.start || x.s.start < '12:00'));
+  const afternoon = upcoming.filter(x => x.s.start >= '12:00');
   let html = '';
   if (earlier.length) html += `<button class="text-btn" id="showEarlier">Show earlier today (${earlier.length})</button><div id="earlierList" hidden></div>`;
   html += `<h3 class="band-heading">Morning</h3>`;
   html += morning.length ? morning.map(x => cardHTML(x.a, x.s, tk)).join('') : `<div class="empty">Nothing this morning.</div>`;
   html += `<div class="nap-divider">Nap 12:00–14:00</div>`;
-  if (nap.length) html += `<button class="collapsed-row" id="napToggle" aria-expanded="false"><span>During nap (${nap.length})</span><span aria-hidden="true">+</span></button><div id="napList" hidden>${nap.map(x => cardHTML(x.a, x.s, tk)).join('')}</div>`;
   html += `<h3 class="band-heading">Afternoon</h3>`;
   html += afternoon.length ? afternoon.map(x => cardHTML(x.a, x.s, tk)).join('') : `<div class="empty">Nothing this afternoon.</div>`;
   document.getElementById('todayBands').innerHTML = html;
@@ -1043,13 +1042,6 @@ function renderToday() {
     el.hidden = !el.hidden;
     if (!el.innerHTML) el.innerHTML = earlier.map(x => cardHTML(x.a, x.s, tk)).join('');
     se.textContent = el.hidden ? `Show earlier today (${earlier.length})` : 'Hide earlier today';
-    wireCards(el);
-  });
-  const nt = document.getElementById('napToggle');
-  if (nt) nt.addEventListener('click', () => {
-    const el = document.getElementById('napList');
-    el.hidden = !el.hidden;
-    nt.setAttribute('aria-expanded', String(!el.hidden));
     wireCards(el);
   });
   wireCards(document.getElementById('todayBands'));
@@ -1103,26 +1095,16 @@ function renderWeek() {
       });
     });
     sessions.sort(untimedLast);
-    const morning = sessions.filter(x => (!x.s.start || x.s.start < '12:00') && !clashesNap(x.s, x.a));
-    const nap = sessions.filter(x => clashesNap(x.s, x.a));
-    const afternoon = sessions.filter(x => x.s.start >= '14:00' && !clashesNap(x.s, x.a));
+    const morning = sessions.filter(x => (!x.s.start || x.s.start < '12:00'));
+    const afternoon = sessions.filter(x => x.s.start >= '12:00');
     const total = sessions.length;
     html += `<div id="day-${dk}"><h2 class="day-heading">${dl.dow} ${dl.dom} ${dl.mon} <span style="font-size:1rem;color:var(--muted);font-family:'DM Sans';">· ${total} thing${total === 1 ? '' : 's'}</span></h2>`;
     html += bandHTML('Morning', morning, dk, 'm' + i);
-    if (nap.length) html += `<button class="collapsed-row" data-nap="${dk}" aria-expanded="false"><span>During nap (${nap.length})</span><span aria-hidden="true">+</span></button><div id="nap-${dk}" hidden>${nap.map(x => cardHTML(x.a, x.s, dk)).join('')}</div>`;
-    else html += `<div class="nap-divider">Nap 12:00–14:00</div>`;
+    html += `<div class="nap-divider">Nap 12:00–14:00</div>`;
     html += bandHTML('Afternoon', afternoon, dk, 'a' + i);
     html += `</div>`;
   }
   document.getElementById('weekDays').innerHTML = stale + (html || `<div class="empty">Nothing matches. <button class="text-btn" id="clearF">Clear filters</button></div>`);
-  document.querySelectorAll('[data-nap]').forEach(b => {
-    b.addEventListener('click', () => {
-      const el = document.getElementById('nap-' + b.dataset.nap);
-      el.hidden = !el.hidden;
-      b.setAttribute('aria-expanded', String(!el.hidden));
-      wireCards(el);
-    });
-  });
   wireCards(document.getElementById('weekDays'));
   const cf = document.getElementById('clearF');
   if (cf) cf.addEventListener('click', clearFilters);
