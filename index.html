@@ -98,6 +98,30 @@ html[data-theme="dark"] {
   --green: #5fce8a; --green-bg: #123a22; --amber: #f0b429; --amber-bg: #3d2c0e;
   --grey: #9aa8ae; --grey-bg: #1c2b32; color-scheme: dark;
 }
+/* Town divider colours, dark scheme (lighter tints for the dark background) */
+@media (prefers-color-scheme: dark) {
+  .town-divider[data-town="bexhill"] { --town-color: #4db3d9; }
+  .town-divider[data-town="st-leonards"] { --town-color: #a79bfa; }
+  .town-divider[data-town="hastings"] { --town-color: #f27ba7; }
+  .town-divider[data-town="villages"] { --town-color: #5fce8a; }
+  .town-divider[data-town="eastbourne"] { --town-color: #6cb2f5; }
+  .town-divider[data-town="battle"] { --town-color: #d9a05b; }
+  .town-divider[data-town="hailsham"] { --town-color: #e3b341; }
+}
+html[data-theme="light"] .town-divider[data-town="bexhill"] { --town-color: #056b91; }
+html[data-theme="light"] .town-divider[data-town="st-leonards"] { --town-color: #6558c5; }
+html[data-theme="light"] .town-divider[data-town="hastings"] { --town-color: #c2185b; }
+html[data-theme="light"] .town-divider[data-town="villages"] { --town-color: #2e7d4f; }
+html[data-theme="light"] .town-divider[data-town="eastbourne"] { --town-color: #1d6fd1; }
+html[data-theme="light"] .town-divider[data-town="battle"] { --town-color: #8d5a2b; }
+html[data-theme="light"] .town-divider[data-town="hailsham"] { --town-color: #a16207; }
+html[data-theme="dark"] .town-divider[data-town="bexhill"] { --town-color: #4db3d9; }
+html[data-theme="dark"] .town-divider[data-town="st-leonards"] { --town-color: #a79bfa; }
+html[data-theme="dark"] .town-divider[data-town="hastings"] { --town-color: #f27ba7; }
+html[data-theme="dark"] .town-divider[data-town="villages"] { --town-color: #5fce8a; }
+html[data-theme="dark"] .town-divider[data-town="eastbourne"] { --town-color: #6cb2f5; }
+html[data-theme="dark"] .town-divider[data-town="battle"] { --town-color: #d9a05b; }
+html[data-theme="dark"] .town-divider[data-town="hailsham"] { --town-color: #e3b341; }
 
 * { box-sizing: border-box; }
 html { font-size: 100%; }
@@ -198,6 +222,35 @@ body {
   border-top: 1px dashed var(--line);
   border-bottom: 1px dashed var(--line);
 }
+
+/* Town dividers: coloured separator labelling each location group within a day list (Wali, 22 Oct 2026) */
+.town-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  margin: 0.875rem 0 0.625rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--town-color, var(--accent));
+}
+.town-divider::before,
+.town-divider::after {
+  content: '';
+  flex: 1;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--town-color, var(--accent));
+  opacity: 0.5;
+}
+.town-divider[data-town="bexhill"] { --town-color: #056b91; }
+.town-divider[data-town="st-leonards"] { --town-color: #6558c5; }
+.town-divider[data-town="hastings"] { --town-color: #c2185b; }
+.town-divider[data-town="villages"] { --town-color: #2e7d4f; }
+.town-divider[data-town="eastbourne"] { --town-color: #1d6fd1; }
+.town-divider[data-town="battle"] { --town-color: #8d5a2b; }
+.town-divider[data-town="hailsham"] { --town-color: #a16207; }
 
 /* Compact cards */
 .card {
@@ -791,6 +844,18 @@ function listingOrder(x, y) {
   const ta = x.s.title || x.a.title || '', tb = y.s.title || y.a.title || '';
   return ta < tb ? -1 : ta > tb ? 1 : 0;
 }
+/* Render a town-sorted day list with a coloured divider wherever the town changes */
+function cardsWithDividers(items, dk) {
+  let html = '', lastTown = null;
+  items.forEach(x => {
+    if (x.a.town !== lastTown) {
+      lastTown = x.a.town;
+      html += `<div class="town-divider" data-town="${esc(lastTown)}" role="separator" aria-label="${esc(townName(lastTown))}"><span>${esc(townName(lastTown))}</span></div>`;
+    }
+    html += cardHTML(x.a, x.s, dk);
+  });
+  return html;
+}
 /* Parse "10:00–16:00" from a later item's time_text */
 function parseLaterHours(timeText) {
   const m = (timeText || '').match(/(\d{1,2}:\d{2})\s*[\u2013\u2014-]\s*(\d{1,2}:\d{2})/);
@@ -1057,10 +1122,10 @@ function renderToday() {
   let html = '';
   if (earlier.length) html += `<button class="text-btn" id="showEarlier">Show earlier today (${earlier.length})</button><div id="earlierList" hidden></div>`;
   html += `<h3 class="band-heading">Morning</h3>`;
-  html += morning.length ? morning.map(x => cardHTML(x.a, x.s, tk)).join('') : `<div class="empty">Nothing this morning.</div>`;
+  html += morning.length ? cardsWithDividers(morning, tk) : `<div class="empty">Nothing this morning.</div>`;
   html += `<div class="nap-divider">Nap 12:00–14:00</div>`;
   html += `<h3 class="band-heading">Afternoon</h3>`;
-  html += afternoon.length ? afternoon.map(x => cardHTML(x.a, x.s, tk)).join('') : `<div class="empty">Nothing this afternoon.</div>`;
+  html += afternoon.length ? cardsWithDividers(afternoon, tk) : `<div class="empty">Nothing this afternoon.</div>`;
   document.getElementById('todayBands').innerHTML = html;
 
   // Wire up toggles
@@ -1068,7 +1133,7 @@ function renderToday() {
   if (se) se.addEventListener('click', () => {
     const el = document.getElementById('earlierList');
     el.hidden = !el.hidden;
-    if (!el.innerHTML) el.innerHTML = earlier.map(x => cardHTML(x.a, x.s, tk)).join('');
+    if (!el.innerHTML) el.innerHTML = cardsWithDividers(earlier, tk);
     se.textContent = el.hidden ? `Show earlier today (${earlier.length})` : 'Hide earlier today';
     wireCards(el);
   });
@@ -1141,7 +1206,7 @@ function bandHTML(name, items, dk, key) {
   const show = expanded ? items : items.slice(0, 3);
   let html = `<h3 class="band-heading">${name}</h3>`;
   if (!items.length) return html + `<div class="empty" style="padding:0.5rem;">Nothing this ${name.toLowerCase()}.</div>`;
-  html += show.map(x => cardHTML(x.a, x.s, dk)).join('');
+  html += cardsWithDividers(show, dk);
   if (items.length > 3) html += `<button class="text-btn" data-expand="${key}">${expanded ? 'Show fewer' : `Show all ${items.length}`}</button>`;
   return html;
 }
