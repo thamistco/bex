@@ -777,6 +777,20 @@ function untimedLast(x, y) {
   const a = x.s.start || '99:99', b = y.s.start || '99:99';
   return a < b ? -1 : a > b ? 1 : 0;
 }
+/* Day-list order (Wali, 22 Oct 2026): group by town in bus-ease order from Bexhill;
+   within a town, timed sessions by start time, then Open all day, then untimed. */
+const TOWN_ORDER = { bexhill: 0, 'st-leonards': 1, hastings: 2, villages: 3, eastbourne: 4, battle: 5, hailsham: 6 };
+function listingOrder(x, y) {
+  const td = (TOWN_ORDER[x.a.town] ?? 99) - (TOWN_ORDER[y.a.town] ?? 99);
+  if (td) return td;
+  const rank = (z) => !z.s.start ? 2 : (isAllDay(z.s, z.a) ? 1 : 0);
+  const rd = rank(x) - rank(y);
+  if (rd) return rd;
+  const a = x.s.start || '99:99', b = y.s.start || '99:99';
+  if (a !== b) return a < b ? -1 : 1;
+  const ta = x.s.title || x.a.title || '', tb = y.s.title || y.a.title || '';
+  return ta < tb ? -1 : ta > tb ? 1 : 0;
+}
 /* Parse "10:00–16:00" from a later item's time_text */
 function parseLaterHours(timeText) {
   const m = (timeText || '').match(/(\d{1,2}:\d{2})\s*[\u2013\u2014-]\s*(\d{1,2}:\d{2})/);
@@ -1013,7 +1027,7 @@ function renderToday() {
       if (sessionMatches(s, a)) sessions.push({ a, s });
     });
   });
-  sessions.sort(untimedLast);
+  sessions.sort(listingOrder);
 
   const upcoming = sessions.filter(x => !isFinished(tk, x.s, x.a, tk, hm));
   // "Earlier" only for sessions with a real or computed end (untimed morning items just drop off)
@@ -1107,7 +1121,7 @@ function renderWeek() {
         if (sessionMatches(s, a)) sessions.push({ a, s });
       });
     });
-    sessions.sort(untimedLast);
+    sessions.sort(listingOrder);
     const morning = sessions.filter(x => (!x.s.start || x.s.start < '12:00'));
     const afternoon = sessions.filter(x => x.s.start >= '12:00');
     const total = sessions.length;
