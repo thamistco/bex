@@ -5246,6 +5246,7 @@ function renderToday() {
 
 /* ============ WEEK TAB ============ */
 let weekExpanded = {};
+let weekSpy = null;
 function renderWeek() {
   const tk = todayKey();
   renderChips('weekChips');
@@ -5289,6 +5290,34 @@ function renderWeek() {
   }
   document.getElementById('weekDays').innerHTML = stale + (html || `<div class="empty">Nothing matches. <button class="text-btn" id="clearF">Clear filters</button></div>`);
   wireCards(document.getElementById('weekDays'));
+  // Scrollspy: highlight the chip for the day currently under the sticky strip.
+  // (Previously the highlight only changed on tap, never on scroll.)
+  if (weekSpy) weekSpy.disconnect();
+  const setCurrentDay = (dk) => {
+    const bar = document.getElementById('dayChips');
+    document.querySelectorAll('#dayChips .day-chip').forEach(x => x.setAttribute('aria-current', x.dataset.day === dk ? 'true' : 'false'));
+    const chip = bar && bar.querySelector('.day-chip[data-day="' + dk + '"]');
+    if (chip && bar) {
+      const left = chip.offsetLeft, right = left + chip.offsetWidth;
+      if (left < bar.scrollLeft) bar.scrollLeft = left;
+      else if (right > bar.scrollLeft + bar.clientWidth) bar.scrollLeft = right - bar.clientWidth;
+    }
+  };
+  if ('IntersectionObserver' in window) {
+    const visible = new Map();
+    // rootMargin takes px/% only, so convert the 8.5rem scroll-margin to px at runtime.
+    const remPx = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+    weekSpy = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) visible.set(e.target.id, e.boundingClientRect.top);
+        else visible.delete(e.target.id);
+      });
+      let current = null, top = Infinity;
+      visible.forEach((t, id) => { if (t < top) { top = t; current = id; } });
+      if (current) setCurrentDay(current.slice(4));
+    }, { rootMargin: '-' + Math.round(remPx * 8.5) + 'px 0px -55% 0px' });
+    document.querySelectorAll('#weekDays [id^="day-"]').forEach(el => weekSpy.observe(el));
+  }
   const cf = document.getElementById('clearF');
   if (cf) cf.addEventListener('click', clearFilters);
 }
