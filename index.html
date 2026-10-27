@@ -5247,6 +5247,30 @@ function renderToday() {
 /* ============ WEEK TAB ============ */
 let weekExpanded = {};
 let weekSpy = null;
+let dayScrollToken = 0;
+// Eased scroll to a day section. The browser's built-in smooth scroll stutters
+// over long jumps on this heavy page, so animate it ourselves: duration grows
+// with distance (capped), ease in and out, and any manual scroll or new tap cancels.
+function smoothScrollToDay(el) {
+  const remPx = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+  const target = Math.max(0, el.getBoundingClientRect().top + window.scrollY - remPx * 8.5);
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { window.scrollTo(0, target); return; }
+  const start = window.scrollY, dist = target - start;
+  if (!dist) return;
+  const dur = Math.min(1000, Math.max(350, Math.abs(dist) * 0.3));
+  const token = ++dayScrollToken;
+  const cancel = () => { dayScrollToken++; };
+  window.addEventListener('wheel', cancel, { once: true, passive: true });
+  window.addEventListener('touchmove', cancel, { once: true, passive: true });
+  const t0 = performance.now();
+  (function step(now) {
+    if (token !== dayScrollToken) return;
+    const p = Math.min(1, (now - t0) / dur);
+    const e = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+    window.scrollTo(0, start + dist * e);
+    if (p < 1) requestAnimationFrame(step);
+  })(t0);
+}
 function renderWeek() {
   const tk = todayKey();
   renderChips('weekChips');
@@ -5264,7 +5288,7 @@ function renderWeek() {
       document.querySelectorAll('#dayChips .day-chip').forEach(x => x.setAttribute('aria-current', 'false'));
       c.setAttribute('aria-current', 'true');
       const el = document.getElementById('day-' + c.dataset.day);
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (el) smoothScrollToDay(el);
     });
   });
 
