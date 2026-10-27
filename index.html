@@ -5252,8 +5252,9 @@ let weekExpanded = {};
 let weekSpy = null;
 let dayScrollToken = 0;
 // Eased scroll to a day section. The browser's built-in smooth scroll stutters
-// over long jumps on this heavy page, so animate it ourselves: duration grows
-// with distance (capped), ease in and out, and any manual scroll or new tap cancels.
+// over long jumps on this heavy page, so animate it ourselves: slow and gentle,
+// duration grows with distance (capped), sine ease in and out, and any manual
+// scroll or new tap cancels.
 function clearDayPending() {
   document.querySelectorAll('#dayChips .day-chip[data-pending="true"]').forEach(x => x.removeAttribute('data-pending'));
 }
@@ -5268,7 +5269,7 @@ function smoothScrollToDay(el, dk) {
   }
   const start = window.scrollY, dist = target - start;
   if (!dist) return;
-  const dur = Math.min(1000, Math.max(350, Math.abs(dist) * 0.3));
+  const dur = Math.min(1600, Math.max(450, Math.abs(dist) * 0.4));
   const token = ++dayScrollToken;
   const cancel = () => { dayScrollToken++; clearDayPending(); };
   window.addEventListener('wheel', cancel, { once: true, passive: true });
@@ -5277,7 +5278,7 @@ function smoothScrollToDay(el, dk) {
   (function step(now) {
     if (token !== dayScrollToken) return;
     const p = Math.min(1, (now - t0) / dur);
-    const e = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+    const e = -(Math.cos(Math.PI * p) - 1) / 2;
     window.scrollTo(0, start + dist * e);
     if (p < 1) requestAnimationFrame(step);
     else {
