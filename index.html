@@ -486,6 +486,9 @@ body {
 .day-chip .dom { font-size: 1rem; font-weight: 700; }
 .day-chip[aria-current="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
 .day-chip[aria-current="true"] .dow { color: var(--on-accent); opacity: 0.85; }
+/* Tapped-but-not-yet-reached day: border highlight only, fills in on arrival. */
+.day-chip[data-pending="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); color: var(--accent); }
+.day-chip[data-pending="true"] .dow { color: var(--accent); opacity: 0.85; }
 
 /* Empty states */
 .empty { text-align: center; color: var(--muted); padding: 2rem 1rem; }
@@ -5226,18 +5229,30 @@ function renderToday() {
 let weekExpanded = {};
 let weekSpy = null;
 let dayScrollToken = 0;
+let dayScrollActive = false;
 // Eased scroll to a day section. The browser's built-in smooth scroll stutters
 // over long jumps on this heavy page, so animate it ourselves: duration grows
-// with distance (capped), ease in and out, and any manual scroll or new tap cancels.
-function smoothScrollToDay(el) {
+// with distance (capped), cubic ease in and out, and any manual scroll or new
+// tap cancels. While a tap animation runs, the tapped day keeps only its border
+// highlight; the fill lands exactly on arrival, never mid-flight.
+function clearDayPending() {
+  document.querySelectorAll('#dayChips .day-chip[data-pending="true"]').forEach(x => x.removeAttribute('data-pending'));
+}
+function smoothScrollToDay(el, dk) {
   const remPx = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
   const target = Math.max(0, el.getBoundingClientRect().top + window.scrollY - remPx * 8.5);
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { window.scrollTo(0, target); return; }
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    window.scrollTo(0, target);
+    clearDayPending();
+    document.querySelectorAll('#dayChips .day-chip').forEach(x => x.setAttribute('aria-current', x.dataset.day === dk ? 'true' : 'false'));
+    return;
+  }
   const start = window.scrollY, dist = target - start;
   if (!dist) return;
   const dur = Math.min(1000, Math.max(350, Math.abs(dist) * 0.3));
   const token = ++dayScrollToken;
-  const cancel = () => { dayScrollToken++; };
+  dayScrollActive = true;
+  const cancel = () => { dayScrollToken++; dayScrollActive = false; clearDayPending(); };
   window.addEventListener('wheel', cancel, { once: true, passive: true });
   window.addEventListener('touchmove', cancel, { once: true, passive: true });
   const t0 = performance.now();
@@ -5247,6 +5262,11 @@ function smoothScrollToDay(el) {
     const e = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
     window.scrollTo(0, start + dist * e);
     if (p < 1) requestAnimationFrame(step);
+    else {
+      dayScrollActive = false;
+      clearDayPending();
+      document.querySelectorAll('#dayChips .day-chip').forEach(x => x.setAttribute('aria-current', x.dataset.day === dk ? 'true' : 'false'));
+    }
   })(t0);
 }
 function renderWeek() {
@@ -5263,10 +5283,18 @@ function renderWeek() {
   document.getElementById('dayChips').innerHTML = chips;
   document.querySelectorAll('#dayChips .day-chip').forEach(c => {
     c.addEventListener('click', () => {
-      document.querySelectorAll('#dayChips .day-chip').forEach(x => x.setAttribute('aria-current', 'false'));
-      c.setAttribute('aria-current', 'true');
+      clearDayPending();
       const el = document.getElementById('day-' + c.dataset.day);
-      if (el) smoothScrollToDay(el);
+      if (!el) return;
+      const remPx = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+      if (Math.abs(el.getBoundingClientRect().top - remPx * 8.5) < 4) {
+        // Already there: fill at once, no pending state.
+        document.querySelectorAll('#dayChips .day-chip').forEach(x => x.setAttribute('aria-current', x.dataset.day === c.dataset.day ? 'true' : 'false'));
+      } else {
+        // Travelling: border highlight only until the scroll arrives.
+        c.setAttribute('data-pending', 'true');
+        smoothScrollToDay(el, c.dataset.day);
+      }
     });
   });
 
@@ -5296,6 +5324,14 @@ function renderWeek() {
   // (Previously the highlight only changed on tap, never on scroll.)
   if (weekSpy) weekSpy.disconnect();
   const setCurrentDay = (dk) => {
+    const p = document.querySelector('#dayChips .day-chip[data-pending="true"]');
+    if (p && p.dataset.day === dk) {
+      // Tapped day, still travelling: keep the border highlight only. The fill
+      // lands on arrival via the animation, never early mid-flight. If no
+      // animation is running (manual scroll), fill it as normal.
+      if (dayScrollActive) return;
+      p.removeAttribute('data-pending');
+    }
     document.querySelectorAll('#dayChips .day-chip').forEach(x => x.setAttribute('aria-current', x.dataset.day === dk ? 'true' : 'false'));
   };
   if ('IntersectionObserver' in window) {
