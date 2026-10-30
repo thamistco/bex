@@ -4763,7 +4763,7 @@ function cardHTML(a, s, dateKey) {
   const timeHtml = esc(cardTimeText(a, s));
   const isNew = a.verified && (new Date(todayKey()) - new Date(a.verified)) / 86400000 < 7;
   return `<article class="card" data-category="${esc(a.category)}">
-    <button class="card-hit" data-id="${esc(a.id)}" data-date="${esc(dateKey || '')}" aria-label="${esc(displayTitle)}, ${esc(cardTimeText(a, s))}"></button>
+    <button class="card-hit" data-id="${esc(a.id)}" data-date="${esc(dateKey || '')}" data-start="${esc((s && s.start) || '')}" aria-label="${esc(displayTitle)}, ${esc(cardTimeText(a, s))}"></button>
     <span class="card-time" aria-hidden="true">${timeHtml}</span>
     <span class="card-main" aria-hidden="true">
       <span class="card-title">${isNew ? '<span class="new-dot"></span>' : ''}${esc(displayTitle)}</span>
@@ -4816,7 +4816,7 @@ function renderToday() {
   if (upNext) {
     const townN = townName(upNext.a.town);
     const venueTxt = (upNext.a.venue && upNext.a.venue.toLowerCase() !== townN.toLowerCase()) ? upNext.a.venue + ' · ' + townN : townN;
-    upEl.innerHTML = `<button class="upnext" data-id="${esc(upNext.a.id)}" data-date="${tk}">
+    upEl.innerHTML = `<button class="upnext" data-id="${esc(upNext.a.id)}" data-date="${tk}" data-start="${esc(upNext.s.start || '')}">
       <div class="upnext-label">Up next</div>
       <div class="upnext-title">${esc(upNext.s.title || upNext.a.title)}</div>
       <div class="upnext-meta">${esc(cardTimeText(upNext.a, upNext.s))} · ${esc(venueTxt)}</div>
@@ -5125,13 +5125,17 @@ function closeSheets() {
   document.querySelectorAll('.sheet.open').forEach(s => { s.classList.remove('open'); s.hidden = true; });
   if (lastFocus && lastFocus.focus) lastFocus.focus();
 }
-function openDetail(id, dateKey) {
+function openDetail(id, dateKey, startKey) {
   const a = ACTIVITIES.find(x => x.id === id);
   if (!a) return;
   const st = activityStatus(a);
   const af = ageFit(a);
   const sessions = dateKey ? expandSessions(a, dateKey, dateKey) : [];
-  const s = sessions[0] || { date: dateKey || '', start: '', end: '', time_text: '' };
+  // The tapped card is one session of the day; show that session, not just
+  // the day's first (a multi-session day used to open the first session's
+  // times and calendar link whatever card was tapped). Fall back to the
+  // first session for cards with no start time (Plan ahead rows, Saved).
+  const s = (startKey ? sessions.find(x => x.start === startKey) : null) || sessions[0] || { date: dateKey || '', start: '', end: '', time_text: '' };
   const dl = s.date ? dateLabel(s.date) : null;
   const displayTitle = s.title || a.title;
   let html = `<h2 id="detailTitle">${esc(displayTitle)}</h2>`;
@@ -5220,7 +5224,7 @@ function wireCards(root) {
     if (el.dataset.wired) return;
     el.dataset.wired = '1';
     el.addEventListener('click', () => {
-      openDetail(el.dataset.id, el.dataset.date);
+      openDetail(el.dataset.id, el.dataset.date, el.dataset.start);
     });
   });
   root.querySelectorAll('[data-star]').forEach(st => {
