@@ -558,6 +558,11 @@ body {
   <section id="tab-saved" class="tab-panel" role="tabpanel" aria-label="Saved" tabindex="0">
     <div id="savedList"></div>
   </section>
+
+  <!-- PARKS TAB -->
+  <section id="tab-parks" class="tab-panel" role="tabpanel" aria-label="Parks" tabindex="0">
+    <div id="parksList"></div>
+  </section>
 </main>
 
 <nav class="tab-bar" aria-label="Main">
@@ -566,6 +571,7 @@ body {
     <button role="tab" data-tab="week" aria-selected="false" aria-controls="tab-week"><span class="tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4M3 9h18"/></svg></span><span class="tab-label">Week</span></button>
     <button role="tab" data-tab="ahead" aria-selected="false" aria-controls="tab-ahead"><span class="tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20L9 15"/><path d="M8.5 13.5l5-5 4 4-5 5z"/><path d="M13.5 8.5l3.5-3.5 2.5 2.5-3.5 3.5"/></svg></span><span class="tab-label">Plan ahead</span></button>
     <button role="tab" data-tab="saved" aria-selected="false" aria-controls="tab-saved"><span class="tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.2 1.1 6-5.4-3-5.4 3 1.1-6L3.2 9.4l6.1-.8z"/></svg></span><span class="tab-label">Saved</span></button>
+    <button role="tab" data-tab="parks" aria-selected="false" aria-controls="tab-parks"><span class="tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L7 10h3l-4 6h12l-4-6h3z"/><path d="M12 16v6"/></svg></span><span class="tab-label">Parks</span></button>
   </div>
 </nav>
 
@@ -5902,6 +5908,7 @@ const ACTIVITIES = [
     "title": "Egerton Park Play-Zone",
     "category": "play",
     "label": "FREE OUTDOOR · PLAY AREA",
+    "play_area": true,
     "venue": "Egerton Park Play-Zone",
     "address": "Egerton Park, Egerton Road, Bexhill TN39 3HL",
     "town": "bexhill",
@@ -5960,6 +5967,7 @@ const ACTIVITIES = [
     "title": "Sidley House play area",
     "category": "play",
     "label": "FREE OUTDOOR · PLAY AREA",
+    "play_area": true,
     "venue": "Sidley House play area",
     "address": "Sidley House, Turkey Road, Bexhill TN39 5BD",
     "town": "bexhill",
@@ -6018,6 +6026,7 @@ const ACTIVITIES = [
     "title": "Barrack Hall play area",
     "category": "play",
     "label": "FREE OUTDOOR · PLAY AREA",
+    "play_area": true,
     "venue": "Barrack Hall play area",
     "address": "Barrack Hall, Belle Hill, Bexhill TN40 2AP",
     "town": "bexhill",
@@ -6076,6 +6085,7 @@ const ACTIVITIES = [
     "title": "Galley Hill play area",
     "category": "play",
     "label": "FREE OUTDOOR · PLAY AREA",
+    "play_area": true,
     "venue": "Galley Hill play area",
     "address": "Galley Hill, East Parade, Bexhill TN40 1PQ",
     "town": "bexhill",
@@ -6134,6 +6144,7 @@ const ACTIVITIES = [
     "title": "Crowhurst Lane play area",
     "category": "play",
     "label": "FREE OUTDOOR · PLAY AREA",
+    "play_area": true,
     "venue": "Crowhurst Lane play area",
     "address": "Crowhurst Lane, Bexhill TN39 5AS",
     "town": "bexhill",
@@ -6192,6 +6203,7 @@ const ACTIVITIES = [
     "title": "Levetts Field play area",
     "category": "play",
     "label": "FREE OUTDOOR · PLAY AREA",
+    "play_area": true,
     "venue": "Levetts Field play area",
     "address": "Levetts Field, Carfax Close, Bexhill TN39 5BZ",
     "town": "bexhill",
@@ -6250,6 +6262,7 @@ const ACTIVITIES = [
     "title": "Preston Road play area",
     "category": "play",
     "label": "FREE OUTDOOR · PLAY AREA",
+    "play_area": true,
     "venue": "Preston Road play area",
     "address": "Preston Road, Bexhill TN39 5BN",
     "town": "bexhill",
@@ -6308,6 +6321,7 @@ const ACTIVITIES = [
     "title": "Jubilee Road play area",
     "category": "play",
     "label": "FREE OUTDOOR · PLAY AREA",
+    "play_area": true,
     "venue": "Jubilee Road play area",
     "address": "Jubilee Road, Bexhill TN39 5DR",
     "town": "bexhill",
@@ -6366,6 +6380,7 @@ const ACTIVITIES = [
     "title": "Sidley Recreation Ground play area",
     "category": "play",
     "label": "FREE OUTDOOR · PLAY AREA",
+    "play_area": true,
     "venue": "Sidley Recreation Ground play area",
     "address": "Sidley Recreation Ground, Canada Way, Bexhill TN39 4BL",
     "town": "bexhill",
@@ -6424,6 +6439,7 @@ const ACTIVITIES = [
     "title": "Seabourne Road Play Area",
     "category": "play",
     "label": "FREE OUTDOOR · PLAY AREA",
+    "play_area": true,
     "venue": "Seabourne Road Play Area",
     "address": "Seabourne Road Play Area, Bexhill TN40 2SW",
     "town": "bexhill",
@@ -6482,6 +6498,7 @@ const ACTIVITIES = [
     "title": "Bexhill Down Lower play area",
     "category": "play",
     "label": "FREE OUTDOOR · PLAY AREA",
+    "play_area": true,
     "venue": "Bexhill Down Lower play area",
     "address": "Bexhill Down Lower, Little Common Road, Bexhill TN39 4JA",
     "town": "bexhill",
@@ -6540,6 +6557,7 @@ const ACTIVITIES = [
     "title": "Bending Crescent play area",
     "category": "play",
     "label": "FREE OUTDOOR · PLAY AREA",
+    "play_area": true,
     "venue": "Bending Crescent play area",
     "address": "Bending Crescent, Bexhill TN40 2BG",
     "town": "bexhill",
@@ -6598,6 +6616,7 @@ const ACTIVITIES = [
     "title": "Little Common Recreation Ground play area",
     "category": "play",
     "label": "FREE OUTDOOR · PLAY AREA",
+    "play_area": true,
     "venue": "Little Common Recreation Ground play area",
     "address": "Little Common Recreation Ground, Green Lane, Bexhill TN39 4PH",
     "town": "bexhill",
@@ -7372,6 +7391,17 @@ function renderSaved() {
   wireCards(document.getElementById('savedList'));
 }
 
+/* ============ PARKS TAB ============ */
+function renderParks() {
+  const items = ACTIVITIES.filter(a => a.play_area && !isStaleHidden(a))
+    .map(a => ({ a, s: { date: '', start: '', end: '', time_text: 'Open all day' } }));
+  items.sort(listingOrder);
+  document.getElementById('parksList').innerHTML = items.length
+    ? `<h2 class="day-heading">Parks</h2><p class="day-sub">Free play areas, open all day</p>` + cardsWithDividers(items, '')
+    : `<div class="empty"><p>No play areas listed yet.</p></div>`;
+  wireCards(document.getElementById('parksList'));
+}
+
 /* ============ FILTER CHIPS ============ */
 const QUICK_FILTERS = [
   { key: 'freeU2', label: 'Free for under-2s' },
@@ -7543,6 +7573,7 @@ function refresh() {
   if (active === 'today') renderToday();
   else if (active === 'week') renderWeek();
   else if (active === 'ahead') renderAhead();
+  else if (active === 'parks') renderParks();
   else renderSaved();
   renderChips('todayChips'); renderChips('weekChips'); renderChips('aheadChips');
 }
@@ -7608,6 +7639,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderWeek();
   renderAhead();
   renderSaved();
+  renderParks();
 });
 </script>
 
