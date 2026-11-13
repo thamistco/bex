@@ -7021,6 +7021,8 @@ function toggleStar(id) {
 /* ============ Filters ============ */
 const filters = { freeU2: false, walkable: false, napSafe: false, dropIn: false, indoor: false, needsBooking: false, category: 'all', town: 'all', travel: 'all', showOlder: false };
 function sessionMatches(s, a) {
+  // Play areas live in the Parks tab only, never in Today/Week/Plan ahead.
+  if (a.play_area) return false;
   if (filters.freeU2 && !(a.under2_free || a.price_child === 0)) return false;
   if (filters.walkable && a.travel_mode !== 'walk') return false;
   if (filters.napSafe && !isNapSafe(s, a)) return false;
@@ -7161,7 +7163,6 @@ function renderToday() {
   // Free and easy
   const freebies = [
     { t: 'Seafront promenade', m: ICONS.walk + ' Walkable · Free', d: 'Flat paved promenade from the Marina to the town centre. Good for prams, scooters and toddlers. Free.' },
-    { t: 'Egerton Park', m: ICONS.walk + ' Walkable · Free', d: 'Large park with playground, tennis courts and a cafe. About 15 minutes walk from the seafront. Free entry.' },
     { t: 'Bexhill Museum', m: ICONS.walk + ' Walkable · £4 adult', d: 'Egerton Road, Bexhill. Adult £4, children (5-16) £2, under-5s free. Open Tue-Sun. Check opening hours before going.' }];
   document.getElementById('freeEasy').innerHTML = freebies.map((f, i) =>
     `<button class="free-card" data-free="${i}" aria-expanded="false"><strong>${esc(f.t)}</strong><span>${f.m}</span><span class="free-detail">${esc(f.d)}</span></button>`).join('');
