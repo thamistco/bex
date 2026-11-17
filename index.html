@@ -189,7 +189,7 @@ body {
 }
 .tab-bar [role="tab"] .tab-icon { display: inline-flex; line-height: 1; }
 .tab-bar [role="tab"][aria-selected="true"] { color: var(--accent); font-weight: 700; }
-/* Temporary Lublin trip side button (20-29 Nov 2026) — remove after the trip */
+/* Temporary Lublin trip side button (21-29 Nov 2026) — remove after the trip */
 #lublinBtn {
   position: fixed; right: 0; top: 42%;
   z-index: 40;
@@ -574,13 +574,13 @@ body {
   <section id="tab-parks" class="tab-panel" role="tabpanel" aria-label="Parks" tabindex="0">
     <div id="parksList"></div>
   </section>
-  <!-- LUBLIN TRIP TAB (temporary, 20-29 Nov 2026) -->
+  <!-- LUBLIN TRIP TAB (temporary, 21-29 Nov 2026) -->
   <section id="tab-lublin" class="tab-panel" role="tabpanel" aria-label="Lublin" tabindex="0">
     <div id="lublinList"></div>
   </section>
 </main>
 
-<!-- Temporary Lublin trip button (20-29 Nov 2026) — remove after the trip -->
+<!-- Temporary Lublin trip button (21-29 Nov 2026) — remove after the trip -->
 <button id="lublinBtn" aria-label="Show Lublin activities">Lublin</button>
 
 <nav class="tab-bar" aria-label="Main">
@@ -8073,11 +8073,7 @@ const ACTIVITIES = [
     "travel_mode": "drive",
     "travel_label": "Drive",
     "sessions": [
-      {
-        "date": "2026-11-20",
-        "start": "09:00",
-        "end": "21:00"
-      },
+      
       {
         "date": "2026-11-21",
         "start": "09:00",
@@ -8154,11 +8150,7 @@ const ACTIVITIES = [
     "travel_mode": "drive",
     "travel_label": "Drive",
     "sessions": [
-      {
-        "date": "2026-11-20",
-        "start": "12:00",
-        "end": "20:00"
-      },
+      
       {
         "date": "2026-11-21",
         "start": "10:00",
@@ -8235,11 +8227,7 @@ const ACTIVITIES = [
     "travel_mode": "drive",
     "travel_label": "Drive",
     "sessions": [
-      {
-        "date": "2026-11-20",
-        "start": "12:00",
-        "end": "20:00"
-      },
+      
       {
         "date": "2026-11-21",
         "start": "10:00",
@@ -8316,11 +8304,7 @@ const ACTIVITIES = [
     "travel_mode": "drive",
     "travel_label": "Drive",
     "sessions": [
-      {
-        "date": "2026-11-20",
-        "start": "12:30",
-        "end": "19:00"
-      },
+      
       {
         "date": "2026-11-21",
         "start": "11:00",
@@ -8387,21 +8371,9 @@ const ACTIVITIES = [
     "travel_mode": "drive",
     "travel_label": "Drive",
     "sessions": [
-      {
-        "date": "2026-11-20",
-        "start": "12:30",
-        "end": "13:30"
-      },
-      {
-        "date": "2026-11-20",
-        "start": "14:30",
-        "end": "15:30"
-      },
-      {
-        "date": "2026-11-20",
-        "start": "16:00",
-        "end": "17:00"
-      },
+      
+      
+      
       {
         "date": "2026-11-21",
         "start": "12:30",
@@ -8569,11 +8541,7 @@ const ACTIVITIES = [
     "travel_mode": "drive",
     "travel_label": "Drive",
     "sessions": [
-      {
-        "date": "2026-11-20",
-        "start": "09:00",
-        "end": "18:00"
-      },
+      
       {
         "date": "2026-11-21",
         "start": "09:00",
@@ -8645,10 +8613,7 @@ const ACTIVITIES = [
     "travel_mode": "drive",
     "travel_label": "Drive",
     "sessions": [
-      {
-        "date": "2026-11-20",
-        "time_text": "Open all day"
-      },
+      
       {
         "date": "2026-11-21",
         "time_text": "Open all day"
@@ -8716,10 +8681,7 @@ const ACTIVITIES = [
     "travel_mode": "drive",
     "travel_label": "Drive",
     "sessions": [
-      {
-        "date": "2026-11-20",
-        "time_text": "Open all day"
-      },
+      
       {
         "date": "2026-11-21",
         "time_text": "Open all day"
@@ -8900,11 +8862,7 @@ const ACTIVITIES = [
     "travel_mode": "drive",
     "travel_label": "Drive",
     "sessions": [
-      {
-        "date": "2026-11-20",
-        "start": "12:30",
-        "end": "13:30"
-      },
+      
       {
         "date": "2026-11-23",
         "start": "12:30",
@@ -9057,11 +9015,7 @@ const ACTIVITIES = [
     "travel_mode": "drive",
     "travel_label": "Drive",
     "sessions": [
-      {
-        "date": "2026-11-20",
-        "start": "12:00",
-        "end": "22:00"
-      },
+      
       {
         "date": "2026-11-21",
         "start": "10:00",
@@ -9180,6 +9134,450 @@ const ACTIVITIES = [
       {
         "date": "2026-11-29",
         "start": "14:00"
+      }
+    ],
+    "later": null
+  },
+  {
+    "id": "lublin-lumina-park",
+    "title": "Lumina Park",
+    "category": "events",
+    "label": "LIGHT TRAIL · EVENINGS",
+    "venue": "Lumina Park, Ogród Botaniczny UMCS",
+    "address": "ul. Willowa 58, 20-819 Lublin",
+    "town": "lublin",
+    "trip": "lublin",
+    "price_child": -1,
+    "price_adult": 0,
+    "price_note": "Online 36 zł Tue-Thu, 40 zł Fri-Sun per adult; 2 adults 72/80 zł; under-2 free not confirmed for Lublin this season, check at booking",
+    "under2_free": false,
+    "age_min_m": 0,
+    "age_max_m": 60,
+    "url": "https://luminapark.pl/lublin/",
+    "action": "Tickets",
+    "phone": "",
+    "source": "https://luminapark.pl/lublin/",
+    "verified": "2026-11-17",
+    "note": "Illuminated light trail through the botanical garden, this season Akademia Pana Kleksa, 200+ installations on a 1 km route, about 50 min, no time limit. Evenings only, outdoors in the cold and dark: dress warmly and go early in the slot. Tickets are for a specific day and hour and cannot be used another day; online is cheaper than the ticket office. Under-2s go free at other Lumina Parks this season, but the Lublin page does not state a free age, check at booking, and the birthday falls mid-trip so the rule may stop applying from Sun 22 Nov.",
+    "journal": "Added 17 Nov 2026 for the Lublin trip 21-29 Nov (day outs). Season 6 Nov 2026-14 Feb 2027, Tue-Sun 16:00-21:00, last entry 20:00, closed Mondays. Prices from luminapark.pl/lublin. Free-age threshold not stated for Lublin this season.",
+    "image": "",
+    "alt": "",
+    "travel": "about 20 min by car",
+    "travel_mode": "drive",
+    "travel_label": "Drive",
+    "sessions": [
+      {
+        "date": "2026-11-21",
+        "start": "16:00",
+        "end": "21:00"
+      },
+      {
+        "date": "2026-11-22",
+        "start": "16:00",
+        "end": "21:00"
+      },
+      {
+        "date": "2026-11-24",
+        "start": "16:00",
+        "end": "21:00"
+      },
+      {
+        "date": "2026-11-25",
+        "start": "16:00",
+        "end": "21:00"
+      },
+      {
+        "date": "2026-11-26",
+        "start": "16:00",
+        "end": "21:00"
+      },
+      {
+        "date": "2026-11-27",
+        "start": "16:00",
+        "end": "21:00"
+      },
+      {
+        "date": "2026-11-28",
+        "start": "16:00",
+        "end": "21:00"
+      },
+      {
+        "date": "2026-11-29",
+        "start": "16:00",
+        "end": "21:00"
+      }
+    ],
+    "later": null
+  },
+  {
+    "id": "lublin-zoo-zamosc",
+    "title": "Zamość Zoo",
+    "category": "events",
+    "label": "ZOO · DAY OUT",
+    "venue": "Ogród Zoologiczny im. Stefana Milera",
+    "address": "ul. Szczebrzeska 12, 22-400 Zamość",
+    "town": "lublin",
+    "trip": "lublin",
+    "price_child": -1,
+    "price_adult": 0,
+    "price_note": "Adult 50 zł, reduced 40 zł; children to 3rd birthday 1 zł; 2 adults + child 101 zł",
+    "under2_free": false,
+    "age_min_m": 0,
+    "age_max_m": 60,
+    "url": "https://www.zoo.zamosc.pl/page/134-cennik-i-godziny-otwarcia",
+    "action": "Details",
+    "phone": "84 639 34 79",
+    "source": "https://www.zoo.zamosc.pl/page/134-cennik-i-godziny-otwarcia",
+    "verified": "2026-11-17",
+    "note": "Proper zoo, 13.8 hectares: allow 2-3 hours. Mostly outdoors, so a cold morning visit with warm-up stops in the aquarium and terrarium pavilion, monkey house and heated hippo, tapir and capybara houses. Playground and petting zoo. Ticket office 09:00-15:00, you can stay about 1.5 hours after it closes. No advance booking, buy at the main ticket office, cards accepted. Some outdoor enclosures may be empty in late November. Paths can be icy or muddy, keep it short.",
+    "journal": "Added 17 Nov 2026 for the Lublin trip 21-29 Nov (day outs). Hours and prices from the zoo own price page, in force from 1 Jan 2026. Open all four weekend days of the trip.",
+    "image": "",
+    "alt": "",
+    "travel": "about 1 h 40 min by car",
+    "travel_mode": "drive",
+    "travel_label": "Drive",
+    "sessions": [
+      {
+        "date": "2026-11-21",
+        "start": "09:00",
+        "end": "15:00"
+      },
+      {
+        "date": "2026-11-22",
+        "start": "09:00",
+        "end": "15:00"
+      },
+      {
+        "date": "2026-11-28",
+        "start": "09:00",
+        "end": "15:00"
+      },
+      {
+        "date": "2026-11-29",
+        "start": "09:00",
+        "end": "15:00"
+      }
+    ],
+    "later": null
+  },
+  {
+    "id": "lublin-skansen",
+    "title": "Muzeum Wsi Lubelskiej",
+    "category": "events",
+    "label": "OPEN-AIR MUSEUM",
+    "venue": "Muzeum Wsi Lubelskiej",
+    "address": "al. Warszawska 96, 20-824 Lublin",
+    "town": "lublin",
+    "trip": "lublin",
+    "price_child": -1,
+    "price_adult": 0,
+    "price_note": "Adults 15 zł; children under 7 free",
+    "under2_free": false,
+    "age_min_m": 0,
+    "age_max_m": 60,
+    "url": "https://skansen.lublin.pl/pl/zwiedzanie/",
+    "action": "Details",
+    "phone": "",
+    "source": "https://skansen.lublin.pl/pl/zwiedzanie/",
+    "verified": "2026-11-17",
+    "note": "Wooden village buildings, farm animals, a pond and wooded paths, on the western edge of Lublin. Open daily 9:00-15:00 in winter, last entry 14:00. Interiors are open to walk into, but the buildings are unheated historic rooms, so best as a 1-2 hour morning outing in dry weather, dressed warmly, with the car nearby. Pushchair access is limited to the main gravel paths. Mondays are the free-admission day and interiors are closed that day, so Mon 23 Nov is likely grounds-only, check the museum homepage that week.",
+    "journal": "Added 17 Nov 2026 for the Lublin trip 21-29 Nov (day outs). Winter hours and prices verified on the museum own site 17 Nov 2026. Monday free day (interiors closed) not yet confirmed for 23 Nov.",
+    "image": "",
+    "alt": "",
+    "travel": "about 15 min by car",
+    "travel_mode": "drive",
+    "travel_label": "Drive",
+    "sessions": [
+      {
+        "date": "2026-11-21",
+        "start": "09:00",
+        "end": "15:00"
+      },
+      {
+        "date": "2026-11-22",
+        "start": "09:00",
+        "end": "15:00"
+      },
+      {
+        "date": "2026-11-23",
+        "start": "09:00",
+        "end": "15:00"
+      },
+      {
+        "date": "2026-11-24",
+        "start": "09:00",
+        "end": "15:00"
+      },
+      {
+        "date": "2026-11-25",
+        "start": "09:00",
+        "end": "15:00"
+      },
+      {
+        "date": "2026-11-26",
+        "start": "09:00",
+        "end": "15:00"
+      },
+      {
+        "date": "2026-11-27",
+        "start": "09:00",
+        "end": "15:00"
+      },
+      {
+        "date": "2026-11-28",
+        "start": "09:00",
+        "end": "15:00"
+      },
+      {
+        "date": "2026-11-29",
+        "start": "09:00",
+        "end": "15:00"
+      }
+    ],
+    "later": null
+  },
+  {
+    "id": "lublin-kazimierz-dolny",
+    "title": "Kazimierz Dolny",
+    "category": "events",
+    "label": "DAY OUT · RIVERSIDE TOWN",
+    "venue": "Kazimierz Dolny market square and castle",
+    "address": "Rynek, ul. Zamkowa 3, 24-120 Kazimierz Dolny",
+    "town": "lublin",
+    "trip": "lublin",
+    "price_child": -1,
+    "price_adult": 0,
+    "price_note": "Castle 15 zł adult, 10 zł reduced, under-7s free; town free to wander",
+    "under2_free": false,
+    "age_min_m": 0,
+    "age_max_m": 60,
+    "url": "https://kokpit.com.pl/zespol-zamkowy/dla-zwiedzajacych/",
+    "action": "Details",
+    "phone": "",
+    "source": "https://kokpit.com.pl/zespol-zamkowy/dla-zwiedzajacych/",
+    "verified": "2026-11-17",
+    "note": "Pretty riverside town: sloping cobbled market square, castle ruins and round tower, parish church above the square, cafes and galleries. Castle open daily 10:00-16:00, ticket office to 15:30. Best as a 2-3 hour half day: square, castle viewpoint and a warm cafe or museum (Vistula Museum branches open daily except Tuesdays, 9:00-16:00). The tower climb is steep wooden stairs and not for carrying a toddler; the gorge is slippery in November. No boat cruises in November.",
+    "journal": "Added 17 Nov 2026 for the Lublin trip 21-29 Nov (day outs). Castle hours and prices from the town cultural centre (KOKPiT) own page; aggregators list 9:00-17:00, operator says 10:00-16:00.",
+    "image": "",
+    "alt": "",
+    "travel": "about 50 min by car",
+    "travel_mode": "drive",
+    "travel_label": "Drive",
+    "sessions": [
+      {
+        "date": "2026-11-21",
+        "start": "10:00",
+        "end": "16:00"
+      },
+      {
+        "date": "2026-11-22",
+        "start": "10:00",
+        "end": "16:00"
+      },
+      {
+        "date": "2026-11-28",
+        "start": "10:00",
+        "end": "16:00"
+      },
+      {
+        "date": "2026-11-29",
+        "start": "10:00",
+        "end": "16:00"
+      }
+    ],
+    "later": null
+  },
+  {
+    "id": "lublin-naleczow",
+    "title": "Nałęczów",
+    "category": "events",
+    "label": "SPA TOWN · PARK",
+    "venue": "Park Zdrojowy, Nałęczów",
+    "address": "al. Małachowskiego, 24-150 Nałęczów",
+    "town": "lublin",
+    "trip": "lublin",
+    "price_child": -1,
+    "price_adult": 0,
+    "price_note": "Park free; Palm House 8 zł (price varies between sources, confirm on the day)",
+    "under2_free": false,
+    "age_min_m": 0,
+    "age_max_m": 60,
+    "url": "https://archenaleczow.pl/en/attractions/park-zdrojowy-z-palacem-malachowskich",
+    "action": "Details",
+    "phone": "",
+    "source": "https://archenaleczow.pl/en/attractions/park-zdrojowy-z-palacem-malachowskich",
+    "verified": "2026-11-17",
+    "note": "The gentlest day out of the lot: a flat, pushchair-friendly spa park with a duck pond, 30-60 min loop, then the Palm House for a warm stop, mineral-water tasting and a chocolate cafe. Palm House daily 10:00-17:00. The loess gorges around town are steep and muddy, skip them with a toddler.",
+    "journal": "Added 17 Nov 2026 for the Lublin trip 21-29 Nov (day outs). Park and Palm House from the town attractions pages; Palm House price quoted 6-8 zł across sources.",
+    "image": "",
+    "alt": "",
+    "travel": "about 30 min by car",
+    "travel_mode": "drive",
+    "travel_label": "Drive",
+    "sessions": [
+      {
+        "date": "2026-11-21",
+        "start": "10:00",
+        "end": "17:00"
+      },
+      {
+        "date": "2026-11-22",
+        "start": "10:00",
+        "end": "17:00"
+      },
+      {
+        "date": "2026-11-28",
+        "start": "10:00",
+        "end": "17:00"
+      },
+      {
+        "date": "2026-11-29",
+        "start": "10:00",
+        "end": "17:00"
+      }
+    ],
+    "later": null
+  },
+  {
+    "id": "lublin-zamosc-old-town",
+    "title": "Zamość Old Town",
+    "category": "events",
+    "label": "DAY OUT · OLD TOWN",
+    "venue": "Zamość Old Town",
+    "address": "Rynek Wielki, 22-400 Zamość",
+    "town": "lublin",
+    "trip": "lublin",
+    "price_child": -1,
+    "price_adult": 0,
+    "price_note": "Old town free; Muzeum Zamojskie 19 zł adult, under-7s free",
+    "under2_free": false,
+    "age_min_m": 0,
+    "age_max_m": 60,
+    "url": "https://tripto.pl/en/atrakcje/stare-miasto-w-zamosciu/",
+    "action": "Details",
+    "phone": "",
+    "source": "https://tripto.pl/en/atrakcje/stare-miasto-w-zamosciu/",
+    "verified": "2026-11-17",
+    "note": "Renaissance ideal city, UNESCO listed: a flat, traffic-free old town, 2-3 hour highlights walk around the Great Market Square, town hall, arcaded houses, cathedral and gates. Very pushchair-friendly. Museums are optional adult interest: Muzeum Zamojskie Tue-Sun 10:00-16:00, closed Mondays, so not Mon 23 Nov. The drive is the drawback, about 3.5 hours round trip.",
+    "journal": "Added 17 Nov 2026 for the Lublin trip 21-29 Nov (day outs). Museum hours from the Zamość tourism and museum pages; under-7 free at Muzeum Zamojskie not explicitly confirmed.",
+    "image": "",
+    "alt": "",
+    "travel": "about 1 h 40 min by car",
+    "travel_mode": "drive",
+    "travel_label": "Drive",
+    "sessions": [
+      {
+        "date": "2026-11-21",
+        "start": "10:00",
+        "end": "16:00"
+      },
+      {
+        "date": "2026-11-22",
+        "start": "10:00",
+        "end": "16:00"
+      },
+      {
+        "date": "2026-11-28",
+        "start": "10:00",
+        "end": "16:00"
+      },
+      {
+        "date": "2026-11-29",
+        "start": "10:00",
+        "end": "16:00"
+      }
+    ],
+    "later": null
+  },
+  {
+    "id": "lublin-stajnia-alpaka",
+    "title": "Stajnia Alpaka",
+    "category": "events",
+    "label": "ALPACA FARM · BOOK AHEAD",
+    "venue": "Stajnia Alpaka",
+    "address": "Zemborzyce Tereszyńskie 85, 20-515 Lublin",
+    "town": "lublin",
+    "trip": "lublin",
+    "price_child": -1,
+    "price_adult": 0,
+    "price_note": "30 zł per person per hour; children under 3 free; alpaca walk 150 zł for 1-2 people",
+    "under2_free": false,
+    "age_min_m": 0,
+    "age_max_m": 60,
+    "url": "https://stajniaalpaka.pl/cennik/",
+    "action": "Details",
+    "phone": "601 724 090",
+    "source": "https://stajniaalpaka.pl/cennik/",
+    "verified": "2026-11-17",
+    "note": "Alpaca farm with other animals too, rated 4.9/5. Every visit must be arranged by phone first, call 601 724 090. Open Mon-Fri 10:00-16:00, Sat-Sun 12:00-16:00. Operates in winter, the site has a winter gallery. A 45-minute walk with two alpacas is 150 zł for 1-2 people.",
+    "journal": "Added 17 Nov 2026 for the Lublin trip 21-29 Nov (day outs). Hours and prices from the farm own price list and contact page.",
+    "image": "",
+    "alt": "",
+    "travel": "about 25 min by car",
+    "travel_mode": "drive",
+    "travel_label": "Drive",
+    "sessions": [
+      {
+        "date": "2026-11-21",
+        "start": "12:00",
+        "end": "16:00"
+      },
+      {
+        "date": "2026-11-22",
+        "start": "12:00",
+        "end": "16:00"
+      },
+      {
+        "date": "2026-11-28",
+        "start": "12:00",
+        "end": "16:00"
+      },
+      {
+        "date": "2026-11-29",
+        "start": "12:00",
+        "end": "16:00"
+      }
+    ],
+    "later": null,
+    "bookAhead": "Phone first to arrange a visit"
+  },
+  {
+    "id": "lublin-kino-csk-skarpetki",
+    "title": "Niesamowite przygody skarpetek 4",
+    "category": "events",
+    "label": "CINEMA · CSK",
+    "venue": "Centrum Spotkania Kultur, Kino CSK",
+    "address": "Plac Teatralny 1, Lublin",
+    "town": "lublin",
+    "trip": "lublin",
+    "price_child": -1,
+    "price_adult": 0,
+    "price_note": "Tickets 18/20 zł",
+    "under2_free": false,
+    "age_min_m": 0,
+    "age_max_m": 48,
+    "url": "https://csklublin.pl/wydarzenia/niesamowite-przygody-skarpetek-4-do-roboty-kino-csk/",
+    "action": "Details",
+    "phone": "",
+    "source": "https://csklublin.pl/wydarzenia/niesamowite-przygody-skarpetek-4-do-roboty-kino-csk/",
+    "verified": "2026-11-17",
+    "note": "Polish animated anthology, 55 min, about a family of socks. CSK lists it as no age limit, other listings say 5+, so expect it to be aimed older than a 2-year-old even though little ones may attend. Book at the CSK box office or online.",
+    "journal": "Added 17 Nov 2026 for the Lublin trip 21-29 Nov (day outs). Sat 21 and Sun 22 Nov 14:00 from the CSK event page. Age guidance conflicts between sources (no age limit vs 5+).",
+    "image": "",
+    "alt": "",
+    "travel": "about 15 min by car",
+    "travel_mode": "drive",
+    "travel_label": "Drive",
+    "sessions": [
+      {
+        "date": "2026-11-21",
+        "start": "14:00",
+        "end": "14:55"
+      },
+      {
+        "date": "2026-11-22",
+        "start": "14:00",
+        "end": "14:55"
       }
     ],
     "later": null
@@ -9541,7 +9939,7 @@ const filters = { freeU2: false, walkable: false, napSafe: false, dropIn: false,
 function sessionMatches(s, a) {
   // Play areas live in the Parks tab only, never in Today/Week/Plan ahead.
   if (a.play_area) return false;
-  // Lublin trip records live in the Lublin view only (temporary, 20-29 Nov 2026).
+  // Lublin trip records live in the Lublin view only (temporary, 21-29 Nov 2026).
   if (a.trip === 'lublin') return false;
   if (filters.freeU2 && !(a.under2_free || a.price_child === 0)) return false;
   if (filters.walkable && a.travel_mode !== 'walk') return false;
@@ -9923,10 +10321,14 @@ function renderParks() {
   wireCards(document.getElementById('parksList'));
 }
 
-/* ============ LUBLIN TRIP VIEW (temporary, 20-29 Nov 2026) ============ */
-const LUBLIN_DAYS = ['2026-11-20', '2026-11-21', '2026-11-22', '2026-11-23', '2026-11-24', '2026-11-25', '2026-11-26', '2026-11-27', '2026-11-28', '2026-11-29'];
+/* ============ LUBLIN TRIP VIEW (temporary, 21-29 Nov 2026) ============ */
+const LUBLIN_DAYS = ['2026-11-21', '2026-11-22', '2026-11-23', '2026-11-24', '2026-11-25', '2026-11-26', '2026-11-27', '2026-11-28', '2026-11-29'];
 function renderLublin() {
-  let html = `<h2 class="day-heading">Lublin · 20–29 Nov</h2><p class="day-sub">While in Poland · Nap 12:00–14:00 · Cold, around 0–5°C, possible snow from Sun 22 Nov; sunset about 15:30</p><p><button class="btn-secondary" id="lublinBackBtn">← Back to Bexhill</button></p>`;
+  let chips = '<div class="chip-row" style="position:static;margin:0 0 0.5rem">' + LUBLIN_DAYS.map(dk => {
+    const dl = dateLabel(dk);
+    return '<button class="chip" data-day="' + dk + '">' + dl.dow + ' ' + dl.dom + '</button>';
+  }).join('') + '</div>';
+  let html = `<h2 class="day-heading">Lublin · 21–29 Nov</h2><p class="day-sub">While in Poland · Nap 12:00–14:00 · Cold, around 0–5°C, possible snow from Sun 22 Nov; sunset about 15:30</p>` + chips + `<p><button class="btn-secondary" id="lublinBackBtn">← Back to Bexhill</button></p>`;
   LUBLIN_DAYS.forEach(dk => {
     const dl = dateLabel(dk);
     let items = [];
@@ -9936,9 +10338,13 @@ function renderLublin() {
     });
     items.sort(untimedLast);
     if (!items.length) return;
-    html += `<h2 class="week-group">${dl.dow} ${dl.dom} ${dl.mon}</h2>` + items.map(x => cardHTML(x.a, x.s, dk)).join('');
+    html += `<h2 class="week-group" id="lublin-day-${dk}">${dl.dow} ${dl.dom} ${dl.mon}</h2>` + items.map(x => cardHTML(x.a, x.s, dk)).join('');
   });
   document.getElementById('lublinList').innerHTML = html;
+  document.querySelectorAll('#lublinList .chip[data-day]').forEach(b => b.addEventListener('click', () => {
+    const t = document.getElementById('lublin-day-' + b.dataset.day);
+    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }));
   document.getElementById('lublinBackBtn').addEventListener('click', hideLublin);
   wireCards(document.getElementById('lublinList'));
 }
