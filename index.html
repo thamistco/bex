@@ -189,6 +189,17 @@ body {
 }
 .tab-bar [role="tab"] .tab-icon { display: inline-flex; line-height: 1; }
 .tab-bar [role="tab"][aria-selected="true"] { color: var(--accent); font-weight: 700; }
+/* Temporary Lublin trip side button (20-29 Nov 2026) — remove after the trip */
+#lublinBtn {
+  position: fixed; right: 0; top: 42%;
+  z-index: 40;
+  writing-mode: vertical-rl;
+  background: var(--accent); color: var(--on-accent);
+  border: 0; border-radius: 0.75rem 0 0 0.75rem;
+  padding: 0.875rem 0.5rem;
+  font: inherit; font-size: 0.875rem; font-weight: 700; letter-spacing: 0.05em;
+  cursor: pointer; box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+}
 /* Icon-only tabs at large text sizes (labels kept for screen readers) */
 @media (max-width: 24rem) {
   .tab-bar .tab-label {
@@ -563,7 +574,14 @@ body {
   <section id="tab-parks" class="tab-panel" role="tabpanel" aria-label="Parks" tabindex="0">
     <div id="parksList"></div>
   </section>
+  <!-- LUBLIN TRIP TAB (temporary, 20-29 Nov 2026) -->
+  <section id="tab-lublin" class="tab-panel" role="tabpanel" aria-label="Lublin" tabindex="0">
+    <div id="lublinList"></div>
+  </section>
 </main>
+
+<!-- Temporary Lublin trip button (20-29 Nov 2026) — remove after the trip -->
+<button id="lublinBtn" aria-label="Show Lublin activities">Lublin</button>
 
 <nav class="tab-bar" aria-label="Main">
   <div role="tablist" aria-label="Sections">
@@ -8026,7 +8044,1146 @@ const ACTIVITIES = [
     "href": "https://www.visit1066country.com/whats-on/christmas?p=1",
     "copy": "Bewl Water, Lamberhurst · Christmas at Bewl Water 28 Nov–24 Dec 09:00–14:00 · festive trail, storytelling, Santa's grotto · drive ~35 min"
   }
-}
+},
+  {
+    "id": "lublin-bajkowy-labirynt-vivo",
+    "title": "Bajkowy Labirynt",
+    "category": "play",
+    "label": "SOFT PLAY · TODDLER ZONE",
+    "venue": "Bajkowy Labirynt, VIVO! Lublin",
+    "address": "al. Unii Lubelskiej 2, 20-108 Lublin",
+    "town": "lublin",
+    "trip": "lublin",
+    "price_child": -1,
+    "price_adult": 0,
+    "price_note": "1 h 39 zł weekdays, 42 zł weekends; day ticket 55/66 zł (network price list); under-2s free Mon-Fri to 16:00 with a Karta Malucha",
+    "under2_free": false,
+    "age_min_m": 0,
+    "age_max_m": 36,
+    "url": "https://vivo-shopping.com/pl/lublin/rozrywka/bajkowy-labirynt",
+    "action": "Details",
+    "phone": "",
+    "source": "https://vivo-shopping.com/pl/lublin/rozrywka/bajkowy-labirynt",
+    "verified": "2026-11-17",
+    "note": "Big soft play in the VIVO! shopping centre with a dedicated toddler zone, low slide and ball pool. Under-2s play free Mon-Fri to 16:00 with a Karta Malucha from reception; ask there whether the offer still covers a child who has just turned 2. Bring non-slip socks.",
+    "journal": "Added 17 Nov 2026 for the Lublin trip 20-29 Nov. Hours from the VIVO! page (Mon-Sat 09:00-21:00, Sun 12:00-18:00). Prices from the Fikolki network cennik, not on the VIVO! page.",
+    "image": "",
+    "alt": "",
+    "travel": "about 20 min by car",
+    "travel_mode": "drive",
+    "travel_label": "Drive",
+    "sessions": [
+      {
+        "date": "2026-11-20",
+        "start": "09:00",
+        "end": "21:00"
+      },
+      {
+        "date": "2026-11-21",
+        "start": "09:00",
+        "end": "21:00"
+      },
+      {
+        "date": "2026-11-22",
+        "start": "12:00",
+        "end": "18:00"
+      },
+      {
+        "date": "2026-11-23",
+        "start": "09:00",
+        "end": "21:00"
+      },
+      {
+        "date": "2026-11-24",
+        "start": "09:00",
+        "end": "21:00"
+      },
+      {
+        "date": "2026-11-25",
+        "start": "09:00",
+        "end": "21:00"
+      },
+      {
+        "date": "2026-11-26",
+        "start": "09:00",
+        "end": "21:00"
+      },
+      {
+        "date": "2026-11-27",
+        "start": "09:00",
+        "end": "21:00"
+      },
+      {
+        "date": "2026-11-28",
+        "start": "09:00",
+        "end": "21:00"
+      },
+      {
+        "date": "2026-11-29",
+        "start": "12:00",
+        "end": "18:00"
+      }
+    ],
+    "later": null
+  },
+  {
+    "id": "lublin-koziolk-olimp",
+    "title": "Koziołek",
+    "category": "play",
+    "label": "SOFT PLAY · TODDLER ZONE",
+    "venue": "Koziołek, Galeria Olimp",
+    "address": "al. Spółdzielczości Pracy 36, 20-400 Lublin",
+    "town": "lublin",
+    "trip": "lublin",
+    "price_child": -1,
+    "price_adult": 0,
+    "price_note": "19 zł first hour Mon-Thu, 17 zł further hours; Fri-Sun 22 zł first hour, 20 zł further",
+    "under2_free": false,
+    "age_min_m": 0,
+    "age_max_m": 36,
+    "url": "https://koziolek.net.pl/",
+    "action": "Details",
+    "phone": "690 001 368",
+    "source": "https://koziolek.net.pl/",
+    "verified": "2026-11-17",
+    "note": "Large soft play with a Strefa Malucha for up to age 2: mini ball pool with slide, play houses, ride-ons and soft toys. Opening hours are not on the provider site, phone 690 001 368 to confirm before going.",
+    "journal": "Added 17 Nov 2026 for the Lublin trip 20-29 Nov. Prices from koziolek.net.pl. Hours from a secondary listing (Mon-Fri 12:00-20:00, Sat 10:00-20:00, Sun 11:00-19:00), not on the provider site.",
+    "image": "",
+    "alt": "",
+    "travel": "about 20 min by car",
+    "travel_mode": "drive",
+    "travel_label": "Drive",
+    "sessions": [
+      {
+        "date": "2026-11-20",
+        "start": "12:00",
+        "end": "20:00"
+      },
+      {
+        "date": "2026-11-21",
+        "start": "10:00",
+        "end": "20:00"
+      },
+      {
+        "date": "2026-11-22",
+        "start": "11:00",
+        "end": "19:00"
+      },
+      {
+        "date": "2026-11-23",
+        "start": "12:00",
+        "end": "20:00"
+      },
+      {
+        "date": "2026-11-24",
+        "start": "12:00",
+        "end": "20:00"
+      },
+      {
+        "date": "2026-11-25",
+        "start": "12:00",
+        "end": "20:00"
+      },
+      {
+        "date": "2026-11-26",
+        "start": "12:00",
+        "end": "20:00"
+      },
+      {
+        "date": "2026-11-27",
+        "start": "12:00",
+        "end": "20:00"
+      },
+      {
+        "date": "2026-11-28",
+        "start": "10:00",
+        "end": "20:00"
+      },
+      {
+        "date": "2026-11-29",
+        "start": "11:00",
+        "end": "19:00"
+      }
+    ],
+    "later": null
+  },
+  {
+    "id": "lublin-kids-club-globus",
+    "title": "Kids' Club",
+    "category": "play",
+    "label": "SOFT PLAY · UNDER-3 ZONE",
+    "venue": "Kids' Club, Hala Globus",
+    "address": "ul. Kazimierza Wielkiego 8, 20-611 Lublin",
+    "town": "lublin",
+    "trip": "lublin",
+    "price_child": -1,
+    "price_adult": 0,
+    "price_note": "1 hour 28 zł Mon-Fri, 30 zł Sat-Sun; carers free",
+    "under2_free": false,
+    "age_min_m": 0,
+    "age_max_m": 36,
+    "url": "https://kids-club.com.pl/oferta/indywidualne-wejscie/",
+    "action": "Details",
+    "phone": "",
+    "source": "https://kids-club.com.pl/oferta/indywidualne-wejscie/",
+    "verified": "2026-11-17",
+    "note": "Play centre with a separate structure for under-3s plus a four-level frame for older children, ball pool and bouncy castle. Children play in socks only.",
+    "journal": "Added 17 Nov 2026 for the Lublin trip 20-29 Nov. Hours and prices from the provider page.",
+    "image": "",
+    "alt": "",
+    "travel": "about 15 min by car",
+    "travel_mode": "drive",
+    "travel_label": "Drive",
+    "sessions": [
+      {
+        "date": "2026-11-20",
+        "start": "12:00",
+        "end": "20:00"
+      },
+      {
+        "date": "2026-11-21",
+        "start": "10:00",
+        "end": "20:00"
+      },
+      {
+        "date": "2026-11-22",
+        "start": "10:00",
+        "end": "20:00"
+      },
+      {
+        "date": "2026-11-23",
+        "start": "12:00",
+        "end": "20:00"
+      },
+      {
+        "date": "2026-11-24",
+        "start": "12:00",
+        "end": "20:00"
+      },
+      {
+        "date": "2026-11-25",
+        "start": "12:00",
+        "end": "20:00"
+      },
+      {
+        "date": "2026-11-26",
+        "start": "12:00",
+        "end": "20:00"
+      },
+      {
+        "date": "2026-11-27",
+        "start": "12:00",
+        "end": "20:00"
+      },
+      {
+        "date": "2026-11-28",
+        "start": "10:00",
+        "end": "20:00"
+      },
+      {
+        "date": "2026-11-29",
+        "start": "10:00",
+        "end": "20:00"
+      }
+    ],
+    "later": null
+  },
+  {
+    "id": "lublin-sensolek",
+    "title": "Sensolek",
+    "category": "play",
+    "label": "CALM PLAYROOM · 0-6",
+    "venue": "Sensolek",
+    "address": "ul. Pana Balcera 6A, 20-631 Lublin",
+    "town": "lublin",
+    "trip": "lublin",
+    "price_child": -1,
+    "price_adult": 0,
+    "price_note": "Free-play price not published; sensory classes 60 zł single entry",
+    "under2_free": false,
+    "age_min_m": 0,
+    "age_max_m": 60,
+    "url": "https://familyfun.pl/atrakcje/sensolek-lublin",
+    "action": "Details",
+    "phone": "518 572 590",
+    "source": "https://familyfun.pl/atrakcje/sensolek-lublin",
+    "verified": "2026-11-17",
+    "note": "Calm wooden-toy playroom for ages 0-6, the closest match for a 2-year-old in Lublin: play kitchen, shop, doctor's corner, doll's house and ride-ons, no loud arcade machines. Opening hours differ between listings, phone 518 572 590 before going; closed Sundays.",
+    "journal": "Added 17 Nov 2026 for the Lublin trip 20-29 Nov. Provider site could not be fetched. Hours from two secondary listings; sessions use the hours both agree on. Closed Sundays per both listings.",
+    "image": "",
+    "alt": "",
+    "travel": "about 15 min by car",
+    "travel_mode": "drive",
+    "travel_label": "Drive",
+    "sessions": [
+      {
+        "date": "2026-11-20",
+        "start": "12:30",
+        "end": "19:00"
+      },
+      {
+        "date": "2026-11-21",
+        "start": "11:00",
+        "end": "17:00"
+      },
+      {
+        "date": "2026-11-23",
+        "start": "11:00",
+        "end": "19:00"
+      },
+      {
+        "date": "2026-11-24",
+        "start": "11:30",
+        "end": "19:00"
+      },
+      {
+        "date": "2026-11-25",
+        "start": "11:30",
+        "end": "19:00"
+      },
+      {
+        "date": "2026-11-26",
+        "start": "11:30",
+        "end": "19:00"
+      },
+      {
+        "date": "2026-11-27",
+        "start": "12:30",
+        "end": "19:00"
+      },
+      {
+        "date": "2026-11-28",
+        "start": "11:00",
+        "end": "17:00"
+      }
+    ],
+    "later": null
+  },
+  {
+    "id": "lublin-muzeum-cebularza",
+    "title": "Muzeum Cebularza",
+    "category": "events",
+    "label": "MUSEUM · BOOK AHEAD",
+    "venue": "Muzeum Cebularza",
+    "address": "ul. Rybna 9, Stare Miasto, 20-114 Lublin",
+    "town": "lublin",
+    "trip": "lublin",
+    "price_child": -1,
+    "price_adult": 0,
+    "price_note": "39 zł per person; children under 3 free",
+    "under2_free": true,
+    "age_min_m": 0,
+    "age_max_m": 60,
+    "url": "https://www.muzeumcebularza.com.pl/index.php/o-muzeum-4/bilety-new",
+    "action": "Details",
+    "phone": "690 199 160",
+    "source": "https://www.muzeumcebularza.com.pl/index.php/o-muzeum-4/bilety-new",
+    "verified": "2026-11-17",
+    "note": "Interactive baking show, about 60 min: cut onion, mill grain and shape your own cebularz flatbread with costumed presenters. Best for older children, a 2-year-old enjoys the dough and baking part. Booking required Mon-Fri, recommended at weekends. The 12:30 show overlaps the 12:00-14:00 nap.",
+    "journal": "Added 17 Nov 2026 for the Lublin trip 20-29 Nov. Shows daily 12:30, 14:30, 16:00 and prices from the provider tickets page. No special workshops published for 20-29 Nov.",
+    "image": "",
+    "alt": "",
+    "travel": "about 15 min by car",
+    "travel_mode": "drive",
+    "travel_label": "Drive",
+    "sessions": [
+      {
+        "date": "2026-11-20",
+        "start": "12:30",
+        "end": "13:30"
+      },
+      {
+        "date": "2026-11-20",
+        "start": "14:30",
+        "end": "15:30"
+      },
+      {
+        "date": "2026-11-20",
+        "start": "16:00",
+        "end": "17:00"
+      },
+      {
+        "date": "2026-11-21",
+        "start": "12:30",
+        "end": "13:30"
+      },
+      {
+        "date": "2026-11-21",
+        "start": "14:30",
+        "end": "15:30"
+      },
+      {
+        "date": "2026-11-21",
+        "start": "16:00",
+        "end": "17:00"
+      },
+      {
+        "date": "2026-11-22",
+        "start": "12:30",
+        "end": "13:30"
+      },
+      {
+        "date": "2026-11-22",
+        "start": "14:30",
+        "end": "15:30"
+      },
+      {
+        "date": "2026-11-22",
+        "start": "16:00",
+        "end": "17:00"
+      },
+      {
+        "date": "2026-11-23",
+        "start": "12:30",
+        "end": "13:30"
+      },
+      {
+        "date": "2026-11-23",
+        "start": "14:30",
+        "end": "15:30"
+      },
+      {
+        "date": "2026-11-23",
+        "start": "16:00",
+        "end": "17:00"
+      },
+      {
+        "date": "2026-11-24",
+        "start": "12:30",
+        "end": "13:30"
+      },
+      {
+        "date": "2026-11-24",
+        "start": "14:30",
+        "end": "15:30"
+      },
+      {
+        "date": "2026-11-24",
+        "start": "16:00",
+        "end": "17:00"
+      },
+      {
+        "date": "2026-11-25",
+        "start": "12:30",
+        "end": "13:30"
+      },
+      {
+        "date": "2026-11-25",
+        "start": "14:30",
+        "end": "15:30"
+      },
+      {
+        "date": "2026-11-25",
+        "start": "16:00",
+        "end": "17:00"
+      },
+      {
+        "date": "2026-11-26",
+        "start": "12:30",
+        "end": "13:30"
+      },
+      {
+        "date": "2026-11-26",
+        "start": "14:30",
+        "end": "15:30"
+      },
+      {
+        "date": "2026-11-26",
+        "start": "16:00",
+        "end": "17:00"
+      },
+      {
+        "date": "2026-11-27",
+        "start": "12:30",
+        "end": "13:30"
+      },
+      {
+        "date": "2026-11-27",
+        "start": "14:30",
+        "end": "15:30"
+      },
+      {
+        "date": "2026-11-27",
+        "start": "16:00",
+        "end": "17:00"
+      },
+      {
+        "date": "2026-11-28",
+        "start": "12:30",
+        "end": "13:30"
+      },
+      {
+        "date": "2026-11-28",
+        "start": "14:30",
+        "end": "15:30"
+      },
+      {
+        "date": "2026-11-28",
+        "start": "16:00",
+        "end": "17:00"
+      },
+      {
+        "date": "2026-11-29",
+        "start": "12:30",
+        "end": "13:30"
+      },
+      {
+        "date": "2026-11-29",
+        "start": "14:30",
+        "end": "15:30"
+      },
+      {
+        "date": "2026-11-29",
+        "start": "16:00",
+        "end": "17:00"
+      }
+    ],
+    "later": null,
+    "bookAhead": "Book ahead by phone"
+  },
+  {
+    "id": "lublin-zamek-lubelski",
+    "title": "Zamek Lubelski",
+    "category": "events",
+    "label": "CASTLE · FREE UNDER-7",
+    "venue": "Muzeum Narodowe w Lublinie, Zamek Lubelski",
+    "address": "ul. Zamkowa 9, 20-117 Lublin",
+    "town": "lublin",
+    "trip": "lublin",
+    "price_child": -1,
+    "price_adult": 0,
+    "price_note": "20 zł normal, 15 zł reduced; under-7s free; Wed 25 Nov free entry day",
+    "under2_free": true,
+    "age_min_m": 0,
+    "age_max_m": 60,
+    "url": "https://muzea.org.pl/lublin/muzea/zamek-lubelski-mnwl/",
+    "action": "Details",
+    "phone": "",
+    "source": "https://muzea.org.pl/lublin/muzea/zamek-lubelski-mnwl/",
+    "verified": "2026-11-17",
+    "note": "Lublin Castle: chapel frescoes and the tower view, best as a short visit with a toddler, in a carrier on the tower. Permanent exhibitions closed Mon 23 Nov; chapel closed Thu 26 and Fri 27 Nov. Hours and prices from the museum visitor guide, confirm on mnwl.pl before going.",
+    "journal": "Added 17 Nov 2026 for the Lublin trip 20-29 Nov. Museum own site returned 429, so hours and prices are from a guide that read the museum visitor page on 13 Nov 2026. Free day Wed 25 Nov for permanent exhibitions, Lempicka and chapel (not the tower).",
+    "image": "",
+    "alt": "",
+    "travel": "about 20 min by car",
+    "travel_mode": "drive",
+    "travel_label": "Drive",
+    "sessions": [
+      {
+        "date": "2026-11-20",
+        "start": "09:00",
+        "end": "18:00"
+      },
+      {
+        "date": "2026-11-21",
+        "start": "09:00",
+        "end": "18:00"
+      },
+      {
+        "date": "2026-11-22",
+        "start": "09:00",
+        "end": "17:00"
+      },
+      {
+        "date": "2026-11-24",
+        "start": "09:00",
+        "end": "17:00"
+      },
+      {
+        "date": "2026-11-25",
+        "start": "09:00",
+        "end": "17:00"
+      },
+      {
+        "date": "2026-11-26",
+        "start": "09:00",
+        "end": "17:00"
+      },
+      {
+        "date": "2026-11-27",
+        "start": "09:00",
+        "end": "18:00"
+      },
+      {
+        "date": "2026-11-28",
+        "start": "09:00",
+        "end": "18:00"
+      },
+      {
+        "date": "2026-11-29",
+        "start": "09:00",
+        "end": "17:00"
+      }
+    ],
+    "later": null
+  },
+  {
+    "id": "lublin-ogrod-saski",
+    "title": "Ogród Saski",
+    "category": "play",
+    "label": "PARK · FREE",
+    "venue": "Ogród Saski",
+    "address": "Aleje Racławickie, Lublin",
+    "town": "lublin",
+    "trip": "lublin",
+    "price_child": 0,
+    "price_adult": 0,
+    "price_note": "",
+    "under2_free": false,
+    "age_min_m": 0,
+    "age_max_m": 60,
+    "url": "https://polskadladzieci.pl/lubelskie/lublin/plac-zabaw-w-ogrodzie-saskim/",
+    "action": "Details",
+    "phone": "",
+    "source": "https://polskadladzieci.pl/lubelskie/lublin/plac-zabaw-w-ogrodzie-saskim/",
+    "verified": "2026-11-17",
+    "note": "Lublin's oldest park with a fenced playground, swings and slides for little ones, plus peacocks on the paths. Outdoors and unsheltered, a fair-weather fallback only in late November.",
+    "journal": "Added 17 Nov 2026 for the Lublin trip 20-29 Nov. Free public park, open year-round.",
+    "image": "",
+    "alt": "",
+    "travel": "about 15 min by car",
+    "travel_mode": "drive",
+    "travel_label": "Drive",
+    "sessions": [
+      {
+        "date": "2026-11-20",
+        "time_text": "Open all day"
+      },
+      {
+        "date": "2026-11-21",
+        "time_text": "Open all day"
+      },
+      {
+        "date": "2026-11-22",
+        "time_text": "Open all day"
+      },
+      {
+        "date": "2026-11-23",
+        "time_text": "Open all day"
+      },
+      {
+        "date": "2026-11-24",
+        "time_text": "Open all day"
+      },
+      {
+        "date": "2026-11-25",
+        "time_text": "Open all day"
+      },
+      {
+        "date": "2026-11-26",
+        "time_text": "Open all day"
+      },
+      {
+        "date": "2026-11-27",
+        "time_text": "Open all day"
+      },
+      {
+        "date": "2026-11-28",
+        "time_text": "Open all day"
+      },
+      {
+        "date": "2026-11-29",
+        "time_text": "Open all day"
+      }
+    ],
+    "later": null
+  },
+  {
+    "id": "lublin-park-ludowy",
+    "title": "Park Ludowy",
+    "category": "play",
+    "label": "PARK · FREE",
+    "venue": "Park Ludowy",
+    "address": "al. Józefa Piłsudskiego, Lublin",
+    "town": "lublin",
+    "trip": "lublin",
+    "price_child": 0,
+    "price_adult": 0,
+    "price_note": "",
+    "under2_free": false,
+    "age_min_m": 0,
+    "age_max_m": 60,
+    "url": "https://dobrzesiebaw.pl/atrakcje/park-ludowy-w-lublinie/",
+    "action": "Details",
+    "phone": "",
+    "source": "https://dobrzesiebaw.pl/atrakcje/park-ludowy-w-lublinie/",
+    "verified": "2026-11-17",
+    "note": "Large riverside park with an under-7s wooden playground. Outdoors and unsheltered, a fair-weather fallback only in late November.",
+    "journal": "Added 17 Nov 2026 for the Lublin trip 20-29 Nov. Free public park, open year-round. City page unreachable from the sandbox, source is a listings page.",
+    "image": "",
+    "alt": "",
+    "travel": "about 20 min by car",
+    "travel_mode": "drive",
+    "travel_label": "Drive",
+    "sessions": [
+      {
+        "date": "2026-11-20",
+        "time_text": "Open all day"
+      },
+      {
+        "date": "2026-11-21",
+        "time_text": "Open all day"
+      },
+      {
+        "date": "2026-11-22",
+        "time_text": "Open all day"
+      },
+      {
+        "date": "2026-11-23",
+        "time_text": "Open all day"
+      },
+      {
+        "date": "2026-11-24",
+        "time_text": "Open all day"
+      },
+      {
+        "date": "2026-11-25",
+        "time_text": "Open all day"
+      },
+      {
+        "date": "2026-11-26",
+        "time_text": "Open all day"
+      },
+      {
+        "date": "2026-11-27",
+        "time_text": "Open all day"
+      },
+      {
+        "date": "2026-11-28",
+        "time_text": "Open all day"
+      },
+      {
+        "date": "2026-11-29",
+        "time_text": "Open all day"
+      }
+    ],
+    "later": null
+  },
+  {
+    "id": "lublin-swieto-kolejarza",
+    "title": "Święto Kolejarza",
+    "category": "events",
+    "label": "RAILWAY DAY · 21 NOV",
+    "venue": "Lublin Główny station",
+    "address": "Dworzec Lublin Główny, Lublin",
+    "town": "lublin",
+    "trip": "lublin",
+    "price_child": -1,
+    "price_adult": 0,
+    "price_note": "No admission price stated; airport train rides free",
+    "under2_free": false,
+    "age_min_m": 0,
+    "age_max_m": 60,
+    "url": "https://kurier-kolejowy.pl/aktualnosci/52383/uczcij-swieto-kolejarza-razem-z-polregio.html",
+    "action": "Details",
+    "phone": "",
+    "source": "https://kurier-kolejowy.pl/aktualnosci/52383/uczcij-swieto-kolejarza-razem-z-polregio.html",
+    "verified": "2026-11-17",
+    "note": "Railwayman's Day at the station: rolling stock to look at, face painting and games for children, free train rides to Lublin Airport at 10:29 and 12:04. Outdoors on the platforms, dress for cold and keep it short.",
+    "journal": "Added 17 Nov 2026 for the Lublin trip 20-29 Nov. One-off event Sat 21 Nov 10:00-14:00, from the railway press article.",
+    "image": "",
+    "alt": "",
+    "travel": "about 15 min by car",
+    "travel_mode": "drive",
+    "travel_label": "Drive",
+    "sessions": [
+      {
+        "date": "2026-11-21",
+        "start": "10:00",
+        "end": "14:00"
+      }
+    ],
+    "later": null
+  },
+  {
+    "id": "lublin-targi-handmade",
+    "title": "Targi Rzeczy Handmade",
+    "category": "events",
+    "label": "HANDMADE FAIR · 22 NOV",
+    "venue": "Fermentownia No:2",
+    "address": "ul. Mariana Smoluchowskiego 1, 20-469 Lublin",
+    "town": "lublin",
+    "trip": "lublin",
+    "price_child": -1,
+    "price_adult": 0,
+    "price_note": "Entry price not confirmed; children under 16 free; workshops from 40 zł",
+    "under2_free": false,
+    "age_min_m": 0,
+    "age_max_m": 60,
+    "url": "https://wartoprzyjsc.pl/pl/boze-narodzenie",
+    "action": "Details",
+    "phone": "",
+    "source": "https://wartoprzyjsc.pl/pl/boze-narodzenie",
+    "verified": "2026-11-17",
+    "note": "Indoor handmade-goods fair, 65+ stalls, craft workshops and a chill zone. A shopping fair rather than a toddler activity, but warm and indoors on the birthday.",
+    "journal": "Added 17 Nov 2026 for the Lublin trip 20-29 Nov. Sun 22 Nov 11:00-18:00. Entry price conflicts between listings (free vs tickets); workshops from 40 zl per the organiser promotion.",
+    "image": "",
+    "alt": "",
+    "travel": "about 20 min by car",
+    "travel_mode": "drive",
+    "travel_label": "Drive",
+    "sessions": [
+      {
+        "date": "2026-11-22",
+        "start": "11:00",
+        "end": "18:00"
+      }
+    ],
+    "later": null
+  },
+  {
+    "id": "lublin-peppa-plaza",
+    "title": "Świąteczna zabawa z Peppą",
+    "category": "events",
+    "label": "CINEMA · PEPPA",
+    "venue": "Cinema City Plaza",
+    "address": "ul. Lipowa 13, Lublin",
+    "town": "lublin",
+    "trip": "lublin",
+    "price_child": -1,
+    "price_adult": 0,
+    "price_note": "Ticket price not confirmed for this event; standard 2D 31.90 zł normal, 27.90 zł reduced",
+    "under2_free": false,
+    "age_min_m": 0,
+    "age_max_m": 48,
+    "url": "https://kinowo.net/lublin/movie/swiateczna-zabawa-z-peppa",
+    "action": "Details",
+    "phone": "",
+    "source": "https://kinowo.net/lublin/movie/swiateczna-zabawa-z-peppa",
+    "verified": "2026-11-17",
+    "note": "About an hour of Christmas Peppa episodes and songs, dubbed in Polish, children can sing and dance along.",
+    "journal": "Added 17 Nov 2026 for the Lublin trip 20-29 Nov. Times from Kinowo (Cinema City own repertuar page is JavaScript-driven); price not confirmed for this event.",
+    "image": "",
+    "alt": "",
+    "travel": "about 15 min by car",
+    "travel_mode": "drive",
+    "travel_label": "Drive",
+    "sessions": [
+      {
+        "date": "2026-11-21",
+        "start": "11:00",
+        "end": "12:00"
+      },
+      {
+        "date": "2026-11-22",
+        "start": "11:00",
+        "end": "12:00"
+      }
+    ],
+    "later": null
+  },
+  {
+    "id": "lublin-peppa-felicity",
+    "title": "Świąteczna zabawa z Peppą",
+    "category": "events",
+    "label": "CINEMA · PEPPA",
+    "venue": "Cinema City Felicity",
+    "address": "Al. Witosa 32, Lublin",
+    "town": "lublin",
+    "trip": "lublin",
+    "price_child": -1,
+    "price_adult": 0,
+    "price_note": "Ticket price not confirmed for this event; standard 2D 31.90 zł normal, 27.90 zł reduced",
+    "under2_free": false,
+    "age_min_m": 0,
+    "age_max_m": 48,
+    "url": "https://kinowo.net/lublin/movie/swiateczna-zabawa-z-peppa",
+    "action": "Details",
+    "phone": "",
+    "source": "https://kinowo.net/lublin/movie/swiateczna-zabawa-z-peppa",
+    "verified": "2026-11-17",
+    "note": "About an hour of Christmas Peppa episodes and songs, dubbed in Polish, children can sing and dance along. The 12:30 shows overlap the 12:00-14:00 nap.",
+    "journal": "Added 17 Nov 2026 for the Lublin trip 20-29 Nov. Times from Kinowo (Cinema City own repertuar page is JavaScript-driven); price not confirmed for this event.",
+    "image": "",
+    "alt": "",
+    "travel": "about 20 min by car",
+    "travel_mode": "drive",
+    "travel_label": "Drive",
+    "sessions": [
+      {
+        "date": "2026-11-20",
+        "start": "12:30",
+        "end": "13:30"
+      },
+      {
+        "date": "2026-11-23",
+        "start": "12:30",
+        "end": "13:30"
+      },
+      {
+        "date": "2026-11-24",
+        "start": "12:30",
+        "end": "13:30"
+      }
+    ],
+    "later": null
+  },
+  {
+    "id": "lublin-fikanki-tere-fere",
+    "title": "Muzyczne Fikanki",
+    "category": "music",
+    "label": "MUSIC · BOOK AHEAD",
+    "venue": "Tere Fere",
+    "address": "ul. Zygmunta Augusta 31, Lublin",
+    "town": "lublin",
+    "trip": "lublin",
+    "price_child": -1,
+    "price_adult": 0,
+    "price_note": "50 zł per session, incl. playroom use afterwards",
+    "under2_free": false,
+    "age_min_m": 0,
+    "age_max_m": 36,
+    "url": "https://www.edumusic.pl/zajecia/muzyczne-fikanki/",
+    "action": "Details",
+    "phone": "505 012 641",
+    "source": "https://www.edumusic.pl/zajecia/muzyczne-fikanki/",
+    "verified": "2026-11-17",
+    "note": "Gordon-method music class for ages 0-3, child with carer, 45 minutes, max 10 pairs. Runs only if the minimum group is met.",
+    "journal": "Added 17 Nov 2026 for the Lublin trip 20-29 Nov. Wed 25 Nov 11:15, 50 zl, from the Tere Fere page and EduMusic listing.",
+    "image": "",
+    "alt": "",
+    "travel": "about 20 min by car",
+    "travel_mode": "drive",
+    "travel_label": "Drive",
+    "sessions": [
+      {
+        "date": "2026-11-25",
+        "start": "11:15",
+        "end": "12:00"
+      }
+    ],
+    "later": null,
+    "bookAhead": "Book ahead: sign up in advance"
+  },
+  {
+    "id": "lublin-fikanki-baby-house",
+    "title": "Muzyczne Fikanki",
+    "category": "music",
+    "label": "MUSIC · BOOK AHEAD",
+    "venue": "Cafe Baby House",
+    "address": "ul. Willowa 42A, Lublin",
+    "town": "lublin",
+    "trip": "lublin",
+    "price_child": -1,
+    "price_adult": 0,
+    "price_note": "Price not stated, confirm by phone",
+    "under2_free": false,
+    "age_min_m": 0,
+    "age_max_m": 36,
+    "url": "https://www.edumusic.pl/zajecia/muzyczne-fikanki/",
+    "action": "Details",
+    "phone": "574 719 666",
+    "source": "https://www.edumusic.pl/zajecia/muzyczne-fikanki/",
+    "verified": "2026-11-17",
+    "note": "Gordon-method music class for ages 0-3, child with carer, 45 minutes. Price not stated, confirm by phone when booking.",
+    "journal": "Added 17 Nov 2026 for the Lublin trip 20-29 Nov. Thu 26 Nov 11:15 from the EduMusic listing; price not stated there.",
+    "image": "",
+    "alt": "",
+    "travel": "about 15 min by car",
+    "travel_mode": "drive",
+    "travel_label": "Drive",
+    "sessions": [
+      {
+        "date": "2026-11-26",
+        "start": "11:15",
+        "end": "12:00"
+      }
+    ],
+    "later": null,
+    "bookAhead": "Book ahead: sign up in advance"
+  },
+  {
+    "id": "lublin-fikanki-mili-moi",
+    "title": "Muzyczne Fikanki",
+    "category": "music",
+    "label": "MUSIC · BOOK AHEAD",
+    "venue": "Mili Moi",
+    "address": "ul. Wojciechowska 5c/U1, Lublin",
+    "town": "lublin",
+    "trip": "lublin",
+    "price_child": -1,
+    "price_adult": 0,
+    "price_note": "Price not stated, confirm by phone",
+    "under2_free": false,
+    "age_min_m": 0,
+    "age_max_m": 36,
+    "url": "https://www.edumusic.pl/zajecia/muzyczne-fikanki/",
+    "action": "Details",
+    "phone": "788 722 211",
+    "source": "https://www.edumusic.pl/zajecia/muzyczne-fikanki/",
+    "verified": "2026-11-17",
+    "note": "Gordon-method music class for ages 0-3, child with carer, 45 minutes. Price not stated, confirm by phone when booking.",
+    "journal": "Added 17 Nov 2026 for the Lublin trip 20-29 Nov. Fri 27 Nov 11:15 from the EduMusic listing; price not stated there.",
+    "image": "",
+    "alt": "",
+    "travel": "about 20 min by car",
+    "travel_mode": "drive",
+    "travel_label": "Drive",
+    "sessions": [
+      {
+        "date": "2026-11-27",
+        "start": "11:15",
+        "end": "12:00"
+      }
+    ],
+    "later": null,
+    "bookAhead": "Book ahead: sign up in advance"
+  },
+  {
+    "id": "lublin-aqua-lublin",
+    "title": "Aqua Lublin",
+    "category": "sports",
+    "label": "SWIMMING · DROP-IN",
+    "venue": "Aqua Lublin",
+    "address": "Al. Zygmuntowskie 4, 20-101 Lublin",
+    "town": "lublin",
+    "trip": "lublin",
+    "price_child": -1,
+    "price_adult": 0,
+    "price_note": "Adult 39 zł/75 min weekdays, 42 zł weekends; children under 3 free",
+    "under2_free": true,
+    "age_min_m": 0,
+    "age_max_m": 48,
+    "url": "https://mosir.lublin.pl/obiekty/aqua-lublin/cennik/",
+    "action": "Details",
+    "phone": "",
+    "source": "https://mosir.lublin.pl/obiekty/aqua-lublin/cennik/",
+    "verified": "2026-11-17",
+    "note": "Drop-in family swimming: aquapark with a pirate-ship slide area and paddling facilities. Swim nappies required under 3, under-13s with an adult. Aquapark hours from listings, confirm before going.",
+    "journal": "Added 17 Nov 2026 for the Lublin trip 20-29 Nov. Prices from the MOSiR price list; hours from listings (aquapark Mon-Fri 12:00-22:00, Sat-Sun 10:00-22:00).",
+    "image": "",
+    "alt": "",
+    "travel": "about 15 min by car",
+    "travel_mode": "drive",
+    "travel_label": "Drive",
+    "sessions": [
+      {
+        "date": "2026-11-20",
+        "start": "12:00",
+        "end": "22:00"
+      },
+      {
+        "date": "2026-11-21",
+        "start": "10:00",
+        "end": "22:00"
+      },
+      {
+        "date": "2026-11-22",
+        "start": "10:00",
+        "end": "22:00"
+      },
+      {
+        "date": "2026-11-23",
+        "start": "12:00",
+        "end": "22:00"
+      },
+      {
+        "date": "2026-11-24",
+        "start": "12:00",
+        "end": "22:00"
+      },
+      {
+        "date": "2026-11-25",
+        "start": "12:00",
+        "end": "22:00"
+      },
+      {
+        "date": "2026-11-26",
+        "start": "12:00",
+        "end": "22:00"
+      },
+      {
+        "date": "2026-11-27",
+        "start": "12:00",
+        "end": "22:00"
+      },
+      {
+        "date": "2026-11-28",
+        "start": "10:00",
+        "end": "22:00"
+      },
+      {
+        "date": "2026-11-29",
+        "start": "10:00",
+        "end": "22:00"
+      }
+    ],
+    "later": null
+  },
+  {
+    "id": "lublin-andrzejki-filia38",
+    "title": "Andrzejki dla dzieci",
+    "category": "library",
+    "label": "LIBRARY PARTY · FREE",
+    "venue": "Filia nr 38 MBP",
+    "address": "ul. Relaksowa 25, Lublin",
+    "town": "lublin",
+    "trip": "lublin",
+    "price_child": 0,
+    "price_adult": 0,
+    "price_note": "",
+    "under2_free": false,
+    "age_min_m": 0,
+    "age_max_m": 60,
+    "url": "https://www.facebook.com/filia38relaksowa/posts/pfbid07YqBpAnj6ZcVWBxWK14YLpdxvsxw5E9R34gam7jDr9UCb7HHzpJot6zn64o1DS5Vl",
+    "action": "Details",
+    "phone": "81 311 01 12",
+    "source": "https://www.facebook.com/filia38relaksowa/posts/pfbid07YqBpAnj6ZcVWBxWK14YLpdxvsxw5E9R34gam7jDr9UCb7HHzpJot6zn64o1DS5Vl",
+    "verified": "2026-11-17",
+    "note": "St Andrew's party at the library for ages 0-7: dance games, animations, scarf games and art workshops. Free, no registration. Bring snacks and drinks, a change of shoes; costumes welcome. Listed on the branch's Facebook page.",
+    "journal": "Added 17 Nov 2026 for the Lublin trip 20-29 Nov. Fri 27 Nov 17:00, from the branch own Facebook page; not yet on mbp.lublin.pl.",
+    "image": "",
+    "alt": "",
+    "travel": "about 15 min by car",
+    "travel_mode": "drive",
+    "travel_label": "Drive",
+    "sessions": [
+      {
+        "date": "2026-11-27",
+        "start": "17:00"
+      }
+    ],
+    "later": null
+  },
+  {
+    "id": "lublin-chmurka-multikino",
+    "title": "Chmurka i Burza",
+    "category": "events",
+    "label": "CINEMA · PREMIERE EVENT",
+    "venue": "Multikino Lublin, Galeria Olimp",
+    "address": "Al. Spółdzielczości Pracy 36B, 20-147 Lublin",
+    "town": "lublin",
+    "trip": "lublin",
+    "price_child": -1,
+    "price_adult": 0,
+    "price_note": "Ticket price not found on the cinema's site, check at booking",
+    "under2_free": false,
+    "age_min_m": 0,
+    "age_max_m": 48,
+    "url": "https://www.multikino.pl/newsy/juz-29-listopada-w-multikinie-lublin-event-premierowy-animacji-chmurka-i-burza",
+    "action": "Details",
+    "phone": "",
+    "source": "https://www.multikino.pl/newsy/juz-29-listopada-w-multikinie-lublin-event-premierowy-animacji-chmurka-i-burza",
+    "verified": "2026-11-17",
+    "note": "Pre-premiere event for a Polish animation about two dog sisters, with no dialogue so no language barrier. Workshops, face painting and mascots in the foyer 11:00-16:00, screenings at 12:00 and 14:00.",
+    "journal": "Added 17 Nov 2026 for the Lublin trip 20-29 Nov. Sun 29 Nov event, from the Multikino news page; ticket price not found there.",
+    "image": "",
+    "alt": "",
+    "travel": "about 20 min by car",
+    "travel_mode": "drive",
+    "travel_label": "Drive",
+    "sessions": [
+      {
+        "date": "2026-11-29",
+        "start": "12:00"
+      },
+      {
+        "date": "2026-11-29",
+        "start": "14:00"
+      }
+    ],
+    "later": null
+  }
 ];
 </script>
 <script>
@@ -8269,7 +9426,7 @@ function isStaleDim(a) {
 }
 
 /* ============ Helpers ============ */
-const TOWN_NAMES = { bexhill:'Bexhill', hastings:'Hastings', 'st-leonards':'St Leonards', eastbourne:'Eastbourne', battle:'Battle', hailsham:'Hailsham', villages:'Nearby villages' };
+const TOWN_NAMES = { bexhill:'Bexhill', hastings:'Hastings', 'st-leonards':'St Leonards', eastbourne:'Eastbourne', battle:'Battle', hailsham:'Hailsham', villages:'Nearby villages', lublin:'Lublin' };
 function townName(t) { return TOWN_NAMES[t] || t; }
 function fmtPrice(n) { return '£' + Number(n).toFixed(2); }
 function priceText(a) {
@@ -8307,13 +9464,17 @@ function priceLong(a) {
     }
   }
   else {
-    parts.push('Price unconfirmed');
-    if (a.price_note) parts.push(a.price_note);
+    if (a.price_note && /zł/.test(a.price_note)) parts.push(a.price_note);
+    else {
+      parts.push('Price unconfirmed');
+      if (a.price_note) parts.push(a.price_note);
+    }
   }
   return parts.join(' · ');
 }
 // Status: green=confirmed, amber=call first, grey=unconfirmed price
 function activityStatus(a) {
+  if (a.price_child === -1 && a.verified && /zł/.test(a.price_note || '')) return { key: 'confirmed', label: 'Confirmed', cls: 'fact-status-confirmed' };
   if (a.price_child === -1) return { key: 'unconfirmed', label: 'Price unconfirmed', cls: 'fact-status-unconfirmed' };
   if (!a.verified) return { key: 'call', label: 'Call first', cls: 'fact-status-call' };
   return { key: 'confirmed', label: 'Confirmed', cls: 'fact-status-confirmed' };
@@ -8380,6 +9541,8 @@ const filters = { freeU2: false, walkable: false, napSafe: false, dropIn: false,
 function sessionMatches(s, a) {
   // Play areas live in the Parks tab only, never in Today/Week/Plan ahead.
   if (a.play_area) return false;
+  // Lublin trip records live in the Lublin view only (temporary, 20-29 Nov 2026).
+  if (a.trip === 'lublin') return false;
   if (filters.freeU2 && !(a.under2_free || a.price_child === 0)) return false;
   if (filters.walkable && a.travel_mode !== 'walk') return false;
   if (filters.napSafe && !isNapSafe(s, a)) return false;
@@ -8760,6 +9923,42 @@ function renderParks() {
   wireCards(document.getElementById('parksList'));
 }
 
+/* ============ LUBLIN TRIP VIEW (temporary, 20-29 Nov 2026) ============ */
+const LUBLIN_DAYS = ['2026-11-20', '2026-11-21', '2026-11-22', '2026-11-23', '2026-11-24', '2026-11-25', '2026-11-26', '2026-11-27', '2026-11-28', '2026-11-29'];
+function renderLublin() {
+  let html = `<h2 class="day-heading">Lublin · 20–29 Nov</h2><p class="day-sub">While in Poland · Nap 12:00–14:00 · Cold, around 0–5°C, possible snow from Sun 22 Nov; sunset about 15:30</p><p><button class="btn-secondary" id="lublinBackBtn">← Back to Bexhill</button></p>`;
+  LUBLIN_DAYS.forEach(dk => {
+    const dl = dateLabel(dk);
+    let items = [];
+    ACTIVITIES.forEach(a => {
+      if (a.trip !== 'lublin') return;
+      expandSessions(a, dk, dk).forEach(s => { if (!isStaleHidden(a)) items.push({ a, s }); });
+    });
+    items.sort(untimedLast);
+    if (!items.length) return;
+    html += `<h2 class="week-group">${dl.dow} ${dl.dom} ${dl.mon}</h2>` + items.map(x => cardHTML(x.a, x.s, dk)).join('');
+  });
+  document.getElementById('lublinList').innerHTML = html;
+  document.getElementById('lublinBackBtn').addEventListener('click', hideLublin);
+  wireCards(document.getElementById('lublinList'));
+}
+function showLublin() {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-lublin').classList.add('active');
+  document.querySelector('.tab-bar').style.display = 'none';
+  document.getElementById('lublinBtn').style.display = 'none';
+  renderLublin();
+  window.scrollTo(0, 0);
+}
+function hideLublin() {
+  document.getElementById('tab-lublin').classList.remove('active');
+  document.querySelector('.tab-bar').style.display = '';
+  document.getElementById('lublinBtn').style.display = '';
+  const active = document.querySelector('.tab-bar [aria-selected="true"]');
+  if (active) document.getElementById('tab-' + active.dataset.tab).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
 /* ============ FILTER CHIPS ============ */
 const QUICK_FILTERS = [
   { key: 'freeU2', label: 'Free for under-2s' },
@@ -8972,6 +10171,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.tab-bar [role="tab"]').forEach(b => {
     b.addEventListener('click', () => { switchTab(b.dataset.tab); refresh(); });
   });
+  document.getElementById('lublinBtn').addEventListener('click', showLublin);
   document.getElementById('scrim').addEventListener('click', closeSheets);
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSheets(); });
   // Drag to close sheets
