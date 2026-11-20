@@ -404,6 +404,11 @@ body {
   position: sticky; top: 3.5rem; z-index: 15;
   background: var(--bg);
 }
+/* Wide screens: the panel is capped at 40rem, so let chips wrap instead of
+   scrolling the Filters button out of view. Phones keep the swipeable row. */
+@media (min-width: 40rem) {
+  .chip-row { flex-wrap: wrap; overflow-x: visible; }
+}
 .chip {
   flex: 0 0 auto;
   display: inline-flex; align-items: center; gap: 0.375rem;
@@ -9940,42 +9945,6 @@ const ACTIVITIES = [
     "copy": "De La Warr Terrace, Bexhill · Santa Dash Santa Paws Sun 6 Dec, warm-up 11:00 · 2km or 5km · £15 adult / £10 child / £5 dog · family run, toddler in buggy plausible"
   },
   "bookAhead": "Book via Bexhill Lions."
-},
-  {
-  "id": "mini-movers-under-5s-dance",
-  "title": "Mini Movers (under-5s dance)",
-  "category": "sports",
-  "label": "DANCE · UNDER-5S · BOOK",
-  "venue": "Hollington Youth Hub",
-  "address": "Hollington Youth Hub, Wishing Tree Road North, Hollington, St Leonards-on-Sea TN38 9LL",
-  "town": "st-leonards",
-  "price_child": 0,
-  "price_adult": 3,
-  "price_note": "Children free · adults £3/£2/free sliding scale",
-  "under2_free": true,
-  "age_min_m": 0,
-  "age_max_m": 60,
-  "url": "https://www.hastings.gov.uk/sport_play/getactive/activehastings_listings/Mini-Movers-Under-5s-Dance-Group/",
-  "action": "Details",
-  "phone": "",
-  "source": "https://www.hastings.gov.uk/sport_play/getactive/activehastings_listings/Mini-Movers-Under-5s-Dance-Group/",
-  "verified": "2026-11-20",
-  "note": "Mini Movers under-5s dance, Mondays term time 11:15–12:15, at Hollington Youth Hub. Children free; adults £3/£2/free sliding scale. Booking essential via EEQU (link on the council page). Ends 12:15, so it slightly overlaps the start of the nap window.",
-  "journal": "Added 20 Nov: Mini Movers, Mondays term time 11:15-12:15, Hollington Youth Hub TN38 9LL. Adult £3/£2/free sliding scale, children free. BOOKING ESSENTIAL via EEQU. Verified on the Hastings Borough Council Active Hastings page 20 Nov.",
-  "image": "",
-  "alt": "",
-  "travel": "Stagecoach 98/99 to St Leonards, about 25 min.",
-  "travel_mode": "transit",
-  "travel_label": "Coast bus",
-  "sessions": [
-    {
-      "date": "2026-11-23",
-      "start": "11:15",
-      "end": "12:15"
-    }
-  ],
-  "later": null,
-  "bookAhead": "Booking essential via EEQU."
 },
   {
   "id": "free-park-tennis-alexandra-park",
