@@ -11327,18 +11327,37 @@ function renderParks() {
 
 /* ============ LUBLIN TRIP VIEW (temporary, 21-29 Nov 2026) ============ */
 const LUBLIN_DAYS = ['2026-11-21', '2026-11-22', '2026-11-23', '2026-11-24', '2026-11-25', '2026-11-26', '2026-11-27', '2026-11-28', '2026-11-29'];
+/* Lublin dates use the visitor's own device date/time (they are in Poland),
+   not Europe/London like the Bexhill view. Past days drop off the chips
+   and the list, and today's finished sessions are hidden, like Today. */
+function lublinTodayKey() {
+  const p = new Intl.DateTimeFormat('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date());
+  const o = {}; p.forEach(x => o[x.type] = x.value);
+  return `${o.year}-${o.month}-${o.day}`;
+}
+function lublinNowHM() {
+  const p = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false }).formatToParts(new Date());
+  const o = {}; p.forEach(x => o[x.type] = x.value);
+  return `${o.hour}:${o.minute}`;
+}
 function renderLublin() {
-  let chips = '<div class="chip-row" style="position:static;margin:0 0 0.5rem">' + LUBLIN_DAYS.map(dk => {
+  const tk = lublinTodayKey(), hm = lublinNowHM();
+  const days = LUBLIN_DAYS.filter(dk => dk >= tk);
+  const first = days[0], last = days[days.length - 1];
+  const rangeTxt = days.length ? `${dateLabel(first).dom}–${dateLabel(last).dom} ${dateLabel(last).mon}` : '';
+  let chips = '<div class="chip-row" style="position:static;margin:0 0 0.5rem">' + days.map(dk => {
     const dl = dateLabel(dk);
     return '<button class="chip" data-day="' + dk + '">' + dl.dow + ' ' + dl.dom + '</button>';
   }).join('') + '</div>';
-  let html = `<h2 class="day-heading">Lublin · 21–29 Nov</h2><p class="day-sub">While in Poland · Nap 12:00–14:00 · Cold, around 0–5°C, possible snow from Sun 22 Nov; sunset about 15:30</p>` + chips + `<p><button class="btn-secondary" id="lublinBackBtn">← Back to Bexhill</button></p>`;
-  LUBLIN_DAYS.forEach(dk => {
+  let html = days.length
+    ? `<h2 class="day-heading">Lublin · ${rangeTxt}</h2><p class="day-sub">While in Poland · Nap 12:00–14:00 · Cold, around 0–5°C, possible snow from Sun 22 Nov; sunset about 15:30</p>` + chips + `<p><button class="btn-secondary" id="lublinBackBtn">← Back to Bexhill</button></p>`
+    : `<h2 class="day-heading">Lublin · 21–29 Nov</h2><p class="day-sub">The trip has ended.</p><p><button class="btn-secondary" id="lublinBackBtn">← Back to Bexhill</button></p>`;
+  days.forEach(dk => {
     const dl = dateLabel(dk);
     let items = [];
     ACTIVITIES.forEach(a => {
       if (a.trip !== 'lublin') return;
-      expandSessions(a, dk, dk).forEach(s => { if (!isStaleHidden(a)) items.push({ a, s }); });
+      expandSessions(a, dk, dk).forEach(s => { if (!isStaleHidden(a) && !isFinished(dk, s, a, tk, hm)) items.push({ a, s }); });
     });
     items.sort(untimedLast);
     if (!items.length) return;
